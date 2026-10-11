@@ -25,7 +25,6 @@ Linuxが稼働中に突然電源を切断されると、ファイルシステム
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
-![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_158_1.png)
 
 ```mermaid
 flowchart TD

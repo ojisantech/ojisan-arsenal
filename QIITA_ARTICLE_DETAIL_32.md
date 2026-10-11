@@ -30,7 +30,6 @@ Pingのような小さなパケット（64バイト等）は通るのに、SSL�
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
-![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_32_1.png)
 
 ```mermaid
 flowchart LR

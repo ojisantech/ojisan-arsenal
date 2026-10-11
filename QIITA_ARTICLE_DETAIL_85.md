@@ -33,7 +33,6 @@ docker compose down -v
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
-![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_85_1.png)
 
 ```mermaid
 flowchart TD

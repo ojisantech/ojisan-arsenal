@@ -24,7 +24,6 @@ PostgreSQLはトランザクションID（XID）に32ビット符号なし整数
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
-![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_111_1.png)
 
 ```mermaid
 flowchart TD

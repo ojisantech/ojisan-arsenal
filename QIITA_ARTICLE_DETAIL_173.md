@@ -25,7 +25,6 @@ UCバークレーが開発した次世代推論エンジン **`vLLM`** は、OS�
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
-![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_173_1.png)
 
 ```mermaid
 flowchart TD

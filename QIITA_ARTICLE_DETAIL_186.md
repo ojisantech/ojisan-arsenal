@@ -24,7 +24,6 @@ Pythonを用いた**「通信時間間隔のデルタ（差分）分析」**と*
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
-![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_186_1.png)
 
 ```mermaid
 flowchart TD

@@ -24,7 +24,6 @@ Linux Foundation傘下のOSS **`Longhorn`** を使えば、クラスタ内の各
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
-![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_103_1.png)
 
 ```mermaid
 flowchart TD

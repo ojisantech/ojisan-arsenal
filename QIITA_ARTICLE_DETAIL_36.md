@@ -36,7 +36,6 @@ appuser   1234  0.0  0.0      0     0 ?   Z    08:00   0:00 [python3] <defunct>
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
-![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_36_1.png)
 
 ```mermaid
 sequenceDiagram

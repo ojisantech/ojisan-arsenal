@@ -24,7 +24,6 @@ FIDOアライアンスとW3Cが定めた最新の標準規格 **`WebAuthn (Passk
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
-![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_143_1.png)
 
 ```mermaid
 flowchart LR
