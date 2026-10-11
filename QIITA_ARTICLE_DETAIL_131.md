@@ -23,6 +23,8 @@ ZFSスナップショットはOS上のいかなる権限（root含む）から�
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_131_1.png)
+
 ```mermaid
 flowchart TD
     Client["社員PC / 共有フォルダアクセス"] --> SMB["Samba / NFS 共有"]

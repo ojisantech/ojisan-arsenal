@@ -25,6 +25,8 @@ LDAP平文通信（ポート389）はパスワードが盗聴されるため、�
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_144_1.png)
+
 ```mermaid
 flowchart LR
     App["社内システム / Keycloak"]

@@ -26,6 +26,8 @@ Kubernetesで最も初心者がハマるのが `requests` と `limits` の設計
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_104_1.png)
+
 ```mermaid
 flowchart TD
     AppPod["業務アプリ Pod (Memory Limit: 512Mi)"]

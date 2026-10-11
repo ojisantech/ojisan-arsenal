@@ -33,6 +33,8 @@
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_46_1.png)
+
 ```mermaid
 flowchart TD
     PowerOut["⚡ 停電発生！(商用電源遮断)"] --> UPS["🔋 UPS (無停電電源装置)<br/>バッテリー給電開始 (残り10分)"]

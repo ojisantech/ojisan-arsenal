@@ -25,6 +25,8 @@ S3 APIは現代の開発における事実上の標準プロトコル（デフ�
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_132_1.png)
+
 ```mermaid
 flowchart LR
     subgraph Clients["アプリケーション・クライアント"]

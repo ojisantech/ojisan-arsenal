@@ -30,6 +30,8 @@ SNMPでは「バイト数の合計」しか分からないため、この質問�
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_52_1.png)
+
 ```mermaid
 flowchart TD
     Client["💻 社内PC (192.168.1.145)"] -->|"大容量通信"| Router["🏢 社内ルーター (Yamaha / Cisco / FortiGate)"]

@@ -25,6 +25,8 @@
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_70_1.png)
+
 ```mermaid
 flowchart LR
     Cron["cron トリガー (毎朝 07:00)"] --> FetchWeather["気象条件取得<br/>(当日の天候・気温)"]

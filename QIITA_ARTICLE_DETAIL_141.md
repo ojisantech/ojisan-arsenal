@@ -24,6 +24,8 @@ OpenID Connect (OIDC) および SAML 2.0 に完全対応し、既存の社内Act
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_141_1.png)
+
 ```mermaid
 flowchart TD
     Client["社員ブラウザ"]

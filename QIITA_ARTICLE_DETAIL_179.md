@@ -25,6 +25,8 @@ CI/CDパイプラインに組み込むことで、精度の退行（デグレー
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_179_1.png)
+
 ```mermaid
 flowchart TD
     PR["開発者のPR: 『チャンクサイズを500から1000に変更』"] --> CI["GitHub Actions / CI/CD"]

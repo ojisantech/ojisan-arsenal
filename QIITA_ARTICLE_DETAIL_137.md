@@ -24,6 +24,8 @@ P2P（ピア・ツー・ピア）型のオープンソース分散同期ソフ�
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_137_1.png)
+
 ```mermaid
 flowchart LR
     subgraph HeadOffice["本社拠点 (プライマリ基盤)"]

@@ -24,6 +24,8 @@
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_151_1.png)
+
 ```mermaid
 flowchart LR
     Machine["工場計測器 / 電子天秤<br/>(RS-485 D+/D- 端子台)"]

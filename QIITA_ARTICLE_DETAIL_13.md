@@ -32,6 +32,8 @@ ITエンジニアがAIチャットを作るとき、画面の真ん中に「テ�
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_13_1.png)
+
 ```mermaid
 sequenceDiagram
     autonumber

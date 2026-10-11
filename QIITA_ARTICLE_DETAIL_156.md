@@ -25,6 +25,8 @@ OSSのLoRaWANネットワークサーバー **`ChirpStack`** を自前サーバ�
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_156_1.png)
+
 ```mermaid
 flowchart LR
     Sensor["屋外センサー (温湿度 / 水位)<br/>LoRa 端末 (920MHz帯)<br/>乾電池駆動 (寿命3年)"]

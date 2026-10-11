@@ -27,6 +27,8 @@ GitHub Actionsを活用し、**Pull Requestが作られた瞬間に「ShellCheck
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_86_1.png)
+
 ```mermaid
 flowchart TD
     Dev["エンジニアがコードをPush / PR作成"] --> GHActions["GitHub Actions Runner"]

@@ -31,6 +31,8 @@
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_35_1.png)
+
 ```mermaid
 flowchart TD
     PC["💻 一般PC"] -->|"1. ARPリクエスト送信<br/>(who has 192.168.1.1?)"| HubA["🏢 スイッチ A"]

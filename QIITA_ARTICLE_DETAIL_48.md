@@ -31,6 +31,8 @@ BIOSのデフォルト設定が **「瞬間的に過剰な電力（15W〜25W）�
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_48_1.png)
+
 ```mermaid
 flowchart TD
     subgraph DefaultBehavior ["❌ 無調律 (デフォルト): 瞬間ブースト自滅型"]

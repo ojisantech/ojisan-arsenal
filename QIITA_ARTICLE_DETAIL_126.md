@@ -25,6 +25,8 @@ Linuxカーネルの次世代パケットフィルタリング基盤 **`nftables
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_126_1.png)
+
 ```mermaid
 flowchart TD
     subgraph iptables_Arch["従来の iptables (線形探索 O(N))"]

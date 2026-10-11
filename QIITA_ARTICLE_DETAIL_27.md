@@ -30,6 +30,8 @@ AIはあくまで「付加価値（アドオン）」であるべきです。AI�
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_27_1.png)
+
 ```mermaid
 flowchart TD
     ScanData["📡 スキャン生データ<br/>(ポート、バナー、TTL、OS名)"] --> HealthCheck{"LLMコンテナ健全性<br/>(GET /api/tags / ping)"}

@@ -24,6 +24,8 @@
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_195_1.png)
+
 ```mermaid
 flowchart TD
     Searcher["困っている見込み客 (Google検索: 『Docker OOM 解決策』)"]

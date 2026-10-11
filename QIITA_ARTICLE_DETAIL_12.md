@@ -30,6 +30,8 @@ Difyを使って社内FAQやナレッジ検索用のRAG（Retrieval-Augmented Ge
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_12_1.png)
+
 ```mermaid
 sequenceDiagram
     autonumber

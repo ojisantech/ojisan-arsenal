@@ -26,6 +26,8 @@
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_69_1.png)
+
 ```mermaid
 flowchart LR
     Doc["社外秘ドキュメント<br/>(設計書 / 顧客情報)"] --> EmbedModel["bge-m3 (ローカル実行)<br/>完全オフライン推論"]

@@ -24,6 +24,8 @@ Linuxカーネルにネイティブ統合された最新のVPNプロトコル **
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_147_1.png)
+
 ```mermaid
 flowchart TD
     Admin["情シス管理者"]

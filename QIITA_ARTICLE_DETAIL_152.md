@@ -25,6 +25,8 @@ C言語製のオープンソースブローカー **`Eclipse Mosquitto`** を使
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_152_1.png)
+
 ```mermaid
 flowchart TD
     subgraph EdgeSensors["エッジ端末群 (Pub: 送信者)"]

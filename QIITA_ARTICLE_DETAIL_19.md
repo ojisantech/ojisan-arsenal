@@ -31,6 +31,8 @@ WindowsやLinuxサーバーであれば、Pingに応答し、SSH（22）やWinRM
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_19_1.png)
+
 ```mermaid
 flowchart TD
     UnknownHost["📱 正体不明の端末 (ポート全閉)"]

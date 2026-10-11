@@ -24,6 +24,8 @@ Prometheus Node Exporterには、**「指定ディレクトリ内のテキスト
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_169_1.png)
+
 ```mermaid
 flowchart LR
     Script["現場の自作スクリプト (Bash / Python)<br/>(crontabで毎分実行)"]

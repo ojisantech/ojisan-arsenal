@@ -34,6 +34,8 @@
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_15_1.png)
+
 ```mermaid
 flowchart TD
     subgraph DangerOld ["❌ 従来：ルーターのポート開放（危険・拒否される）"]

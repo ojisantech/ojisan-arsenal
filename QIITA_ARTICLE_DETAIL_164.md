@@ -24,6 +24,8 @@ Prometheusエコシステムの通知エンジン **`Alertmanager`** は、**「
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_164_1.png)
+
 ```mermaid
 flowchart TD
     SwitchFail["🚨 L2スイッチ停止障害発生！"]

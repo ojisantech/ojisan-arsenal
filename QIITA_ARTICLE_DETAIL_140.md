@@ -25,6 +25,8 @@
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_140_1.png)
+
 ```mermaid
 flowchart TD
     Data["重要保存データ (年次決算 / 知財特許 / 顧客元帳)"]

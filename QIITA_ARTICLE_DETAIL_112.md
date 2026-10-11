@@ -24,6 +24,8 @@
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_112_1.png)
+
 ```mermaid
 flowchart TD
     SlowQuery["遅延SQL発行<br/>(SELECT * FROM orders WHERE tenant_id=5 AND status='pending')"]

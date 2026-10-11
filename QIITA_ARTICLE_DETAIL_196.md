@@ -24,6 +24,8 @@
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_196_1.png)
+
 ```mermaid
 flowchart TD
     LaunchDay["🚀 ローンチ当日 (火曜日 朝 00:01 PST / 日本時間 16:01)"]

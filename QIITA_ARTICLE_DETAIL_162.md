@@ -24,6 +24,8 @@ Elasticsearchのようにログの本文全体にインデックスを貼るの�
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_162_1.png)
+
 ```mermaid
 flowchart LR
     subgraph Nodes["各サーバー / コンテナ"]

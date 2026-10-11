@@ -19,6 +19,8 @@
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_100_1.png)
+
 ```mermaid
 flowchart TD
     subgraph Layer7["【レイヤー7: 生存戦略・知財・個人ビジネス】 (第91〜100弾)"]

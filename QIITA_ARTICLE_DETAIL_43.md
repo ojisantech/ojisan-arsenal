@@ -30,6 +30,8 @@ SSDには「NANDフラッシュメモリの書き換え寿命（P/Eサイクル�
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_43_1.png)
+
 ```mermaid
 flowchart TD
     Drive["💾 NVMe SSD (/dev/nvme0n1)"] --> Controller["⚙️ SSD内蔵コントローラ<br/>(SMARTログ保持)"]

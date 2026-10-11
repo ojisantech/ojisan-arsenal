@@ -25,6 +25,8 @@ Borgは**「コンテンツ定義チャンキング（可変長ブロック重�
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_136_1.png)
+
 ```mermaid
 flowchart TD
     Day1["Day 1: 全データ 100GB"] --> Borg["Borg 重複排除エンジン<br/>(可変長チャンク分割 + ZSTD圧縮)"]

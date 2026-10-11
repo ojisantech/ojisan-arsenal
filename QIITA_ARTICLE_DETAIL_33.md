@@ -37,6 +37,8 @@ df -h
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_33_1.png)
+
 ```mermaid
 flowchart TD
     Process["⚙️ 稼働中プロセス<br/>(Nginx / Java / Python)"] -->|"ファイル記述子 (FD) を保持"| Inode["📁 Inode (ディスクブロック実体 50GB)"]

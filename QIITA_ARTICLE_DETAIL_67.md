@@ -25,6 +25,8 @@
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_67_1.png)
+
 ```mermaid
 flowchart TD
     Scan["複合機スキャン画像 (PDF / JPEG)"] --> Crop["指定座標（受領印枠）を自動クロップ"]

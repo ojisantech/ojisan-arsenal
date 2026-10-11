@@ -31,6 +31,8 @@
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_94_1.png)
+
 ```mermaid
 flowchart TD
     Income["副業収入 (雑所得 / 事業所得)"] --> TaxReturn["税務署へ確定申告書を提出 (e-Tax)"]

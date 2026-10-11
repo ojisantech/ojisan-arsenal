@@ -24,6 +24,8 @@ IBMがオープンソース公開した最新のドキュメント解析エン�
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_176_1.png)
+
 ```mermaid
 flowchart LR
     RawPDF["社内PDFドキュメント<br/>(2段組、結合セル表、図表混在)"]

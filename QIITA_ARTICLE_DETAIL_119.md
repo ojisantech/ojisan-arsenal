@@ -25,6 +25,8 @@
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_119_1.png)
+
 ```mermaid
 flowchart LR
     BaseBackup["日曜深夜 03:00<br/>ベースバックアップ<br/>(pg_basebackup)"]

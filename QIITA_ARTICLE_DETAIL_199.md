@@ -26,6 +26,8 @@ SaaSの4大重要指標（CAC, LTV, Churn Rate, MRR Growth）と、決して破�
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_199_1.png)
+
 ```mermaid
 flowchart TD
     subgraph Milestone["MRR 100万円への4段階ロードマップ"]

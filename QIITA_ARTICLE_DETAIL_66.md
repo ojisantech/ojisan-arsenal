@@ -26,6 +26,8 @@
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_66_1.png)
+
 ```mermaid
 flowchart LR
     Mic["作業員 Bluetoothマイク<br/>『棚番B-05、M6ボルト、80個』"] --> VAD["音声区間検出 (Silero VAD)<br/>無音・雑音を自動カット"]

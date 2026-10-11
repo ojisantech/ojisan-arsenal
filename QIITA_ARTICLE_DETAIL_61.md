@@ -26,6 +26,8 @@ Difyの**ワークフロー機能（LLM Node + Code Node）**を活用すれば�
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_61_1.png)
+
 ```mermaid
 flowchart LR
     Report["現場からの自由記述日報<br/>(チャット / メール本文)"] --> Webhook["Dify Workflow API / Webhook"]

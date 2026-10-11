@@ -24,6 +24,8 @@ OAuth2 / OIDC連携において、開発者が最もハマるのが「認可コ�
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_142_1.png)
+
 ```mermaid
 flowchart TD
     User["ブラウザ"]

@@ -25,6 +25,8 @@ Pythonの標準的ライブラリ **`pymodbus`** を使えば、**わずか数�
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_153_1.png)
+
 ```mermaid
 flowchart LR
     PLC["工場現場 PLC (三菱 / オムロン)<br/>Modbus TCP サーバー (:502)<br/>Holding Register: 40001〜40010"]

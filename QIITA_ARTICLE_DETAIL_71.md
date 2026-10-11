@@ -26,6 +26,8 @@
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_71_1.png)
+
 ```mermaid
 flowchart TD
     Cron["定期監査ジョブ (月次 / 週次)"] --> Connect["Python ldap3 で AD に接続 (LDAPS:636)"]

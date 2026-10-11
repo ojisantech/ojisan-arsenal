@@ -33,6 +33,8 @@ LLMは確率的な文章生成エンジンである以上、「プロンプト�
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_22_1.png)
+
 ```mermaid
 flowchart LR
     User["👤 ユーザー入力"] --> PreFilter["🛡️ 1. 入力バリデーター<br/>(インジェクション検知)"]

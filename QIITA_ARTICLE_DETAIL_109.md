@@ -26,6 +26,8 @@ Kubernetesの標準仕様では、**「全Pod間で通信がデフォルト全�
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_109_1.png)
+
 ```mermaid
 flowchart TD
     subgraph WebNS["Namespace: frontend"]

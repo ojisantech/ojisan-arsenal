@@ -29,6 +29,8 @@ Windows標準の **WinRM（レジストリ走査）** と、Linux標準の **SSH
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_25_1.png)
+
 ```mermaid
 flowchart TD
     Scanner["🕵️ SAM自動監査エンジン (Python)"]

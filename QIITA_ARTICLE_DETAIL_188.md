@@ -24,6 +24,8 @@ MD5やSHA-1はもちろん、単なるSHA-256であっても、現代の市販GP
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_188_1.png)
+
 ```mermaid
 flowchart TD
     DB["漏洩したパスワードハッシュ一覧<br/>(sha256 $2b$12$ argon2id)"]

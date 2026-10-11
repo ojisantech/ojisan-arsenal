@@ -25,6 +25,8 @@ Linuxの認証機構の中核である **PAM（Pluggable Authentication Modules�
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_77_1.png)
+
 ```mermaid
 flowchart TD
     subgraph PasswordPolicy["① パスワード変更時 (pam_pwquality)"]

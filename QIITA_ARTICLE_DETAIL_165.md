@@ -22,6 +22,8 @@ Prometheus公式の **`Blackbox Exporter`** は、対象サーバーにエージ
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_165_1.png)
+
 ```mermaid
 flowchart LR
     Blackbox["Prometheus Blackbox Exporter (:9115)<br/>(外形監視プローブエンジン)"]

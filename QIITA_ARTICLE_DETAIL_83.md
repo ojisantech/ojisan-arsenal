@@ -27,6 +27,8 @@ Docker公式の **`registry:2`** イメージを使えば、社内サーバー1�
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_83_1.png)
+
 ```mermaid
 flowchart LR
     subgraph RegistryServer["レジストリサーバー (registry.corp.local:5000)"]

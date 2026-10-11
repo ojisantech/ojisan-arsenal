@@ -24,6 +24,8 @@
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_134_1.png)
+
 ```mermaid
 flowchart TD
     WinClient["Windows 11 クライアント<br/>NIC 1 (2.5GbE) & NIC 2 (2.5GbE)"]

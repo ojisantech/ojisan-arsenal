@@ -24,6 +24,8 @@
 
 システムの全体構造および通信・処理フローは以下の通りです。
 
+![システム構成・アーキテクチャ図](https://raw.githubusercontent.com/ojisantech/ojisan-arsenal/main/images/diagram_article_128_1.png)
+
 ```mermaid
 flowchart TD
     Runaway["暴走バッチプロセス (メモリリーク & ディスク過剰書き込み)"]
