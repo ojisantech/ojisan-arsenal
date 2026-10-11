@@ -42,9 +42,9 @@ flowchart TD
         DB_Writer["時系列DB書き込みワーカー<br/>Sub: sensors/#"]
     end
 
-    S1 -->|MQTT Publish (2バイトヘッダ)| Broker
-    S2 -->|MQTT Publish| Broker
-    S3 -->|MQTT Publish| Broker
+    S1 -->|"MQTT Publish (2バイトヘッダ)"| Broker
+    S2 -->|"MQTT Publish"| Broker
+    S3 -->|"MQTT Publish"| Broker
 
     Broker --> Dashboard
     Broker --> DB_Writer

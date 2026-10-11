@@ -30,7 +30,7 @@ flowchart TD
     C2Server["攻撃者のC2サーバー (悪意ある外部IP)"]
     FWLog["ファイアウォール / プロキシログ (数百万行)"]
 
-    InfectedPC -.->|300秒(±5秒)おきに定周期ビーコン送信| C2Server
+    InfectedPC -.->|"300秒(±5秒)おきに定周期ビーコン送信"| C2Server
     InfectedPC --> FWLog
 
     subgraph BeaconDetector["自作 ビーコニング検知エンジン (Python)"]

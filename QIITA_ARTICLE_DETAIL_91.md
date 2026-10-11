@@ -44,8 +44,6 @@ flowchart TD
 
     User -->|cd ~/work/...| WorkDir --> WorkGit
     User -->|cd ~/personal/...| PersonalDir --> PersonalGit
-    
-    Note over User,PersonalGit: ~/.gitconfig の includeIf により<br/>手動切り替え不要で100%自動適用！
 ```
 
 ### 内部動作メカニズムのステップ解説

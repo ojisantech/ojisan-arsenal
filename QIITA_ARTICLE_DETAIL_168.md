@@ -36,12 +36,12 @@ flowchart LR
     Prometheus["Prometheus 監視基盤 (:9090)"]
     Grafana["Grafana ダッシュボード<br/>(全スイッチポート帯域・エラー率一覧)"]
 
-    Prometheus -->|Pullスクレイプ: /snmp?target=192.168.1.254| SNMP_Exp
-    SNMP_Exp -->|SNMP Get / Walk (UDP 161)| RT
-    SNMP_Exp -->|SNMP Get| SW
-    SNMP_Exp -->|SNMP Get| UPS
+    Prometheus -->|"Pullスクレイプ: /snmp?target=192.168.1.254"| SNMP_Exp
+    SNMP_Exp -->|"SNMP Get / Walk (UDP 161)"| RT
+    SNMP_Exp -->|"SNMP Get"| SW
+    SNMP_Exp -->|"SNMP Get"| UPS
 
-    SNMP_Exp -->|OIDをPrometheusメトリクスに変換して返却| Prometheus
+    SNMP_Exp -->|"OIDをPrometheusメトリクスに変換して返却"| Prometheus
     Prometheus --> Grafana
 ```
 

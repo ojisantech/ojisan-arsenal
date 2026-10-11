@@ -30,13 +30,13 @@ flowchart LR
     Backend["FastAPI バックエンド (:8000)"]
     Stripe["Stripe Checkout (:443)<br/>(月額 $29 / 月額サブスク課金)"]
 
-    User -->|1. 会員登録| Frontend --> Backend
-    User -->|2. 『Proプランへアップグレード』| Frontend
-    Frontend -->|3. Checkout Session 作成| Backend
-    Backend -->|4. リダイレクトURL返却| Stripe
-    User -->|5. クレジットカード決済完了| Stripe
-    Stripe -->|6. Webhook (checkout.session.completed)| Backend
-    Backend -->|7. ユーザーのプランを 'PRO' に更新！| DB[(Database)]
+    User -->|"1. 会員登録"| Frontend --> Backend
+    User -->|"2. 『Proプランへアップグレード』"| Frontend
+    Frontend -->|"3. Checkout Session 作成"| Backend
+    Backend -->|"4. リダイレクトURL返却"| Stripe
+    User -->|"5. クレジットカード決済完了"| Stripe
+    Stripe -->|"6. Webhook (checkout.session.completed)"| Backend
+    Backend -->|"7. ユーザーのプランを 'PRO' に更新！"| DB[(Database)]
 ```
 
 ### 内部動作メカニズムのステップ解説

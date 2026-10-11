@@ -31,10 +31,10 @@ flowchart LR
     Relay["機械式リレーモジュール (5V)<br/>接点: COM / NO"]
     TargetServer["ハングした対象サーバー<br/>マザーボード Front Panel: PWR_SW"]
 
-    Admin -->|API呼び出し: POST /hard-reset| Pi
-    Pi -->|GPIO 17 を HIGH (5秒間)| Relay
-    Relay -->|接点が物理短絡 (電源ボタン長押し)| TargetServer
-    TargetServer -->|強制電源切断 ➔ 再度1秒短絡で再起動！| TargetServer
+    Admin -->|"API呼び出し: POST /hard-reset"| Pi
+    Pi -->|"GPIO 17 を HIGH (5秒間)"| Relay
+    Relay -->|"接点が物理短絡 (電源ボタン長押し)"| TargetServer
+    TargetServer -->|"強制電源切断 ➔ 再度1秒短絡で再起動！"| TargetServer
 ```
 
 ### 内部動作メカニズムのステップ解説

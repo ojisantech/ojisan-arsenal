@@ -46,7 +46,7 @@ flowchart LR
         end
     end
 
-    VSCodeUI <==|"SSH トンネル (暗号化通信)"|==> SSHServer
+    VSCodeUI <-->|"SSH トンネル (暗号化通信)"| SSHServer
     SSHServer --> VSCodeServer
     VSCodeServer -->|"直接ファイル編集 / ターミナル実行"| DockerEnv
 ```

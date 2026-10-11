@@ -32,8 +32,8 @@ flowchart TD
     ExecSSH --> Analyze["3. 出力結果の解析 (LLMノード)"]
 
     Analyze --> Check{"原因特定完了？"}
-    Check -->|未特定: 別コマンドで深掘り| DecideCmd
-    Check -->|特定完了 (ループ脱出)| Report["4. 最終レポート生成 (Slack通知)<br/>『原因: Pythonプロセスの無限ループ (PID: 4120)』"]
+    Check -->|"未特定: 別コマンドで深掘り"| DecideCmd
+    Check -->|"特定完了 (ループ脱出)"| Report["4. 最終レポート生成 (Slack通知)<br/>『原因: Pythonプロセスの無限ループ (PID: 4120)』"]
 ```
 
 ### 内部動作メカニズムのステップ解説

@@ -33,13 +33,13 @@ flowchart TD
     subgraph DefaultMode["デフォルト (DELETE / ROLLBACK)"]
         W1["プロセスA (書き込み)"] ==>|"ファイル排他ロック (EXCLUSIVE)"| DB1[("database.db")]
         R1["プロセスB (読み取り)"] -. "ブロック！" .-> DB1
-        Note over R1: ❌ database is locked エラー発生！
+
     end
 
     subgraph WALMode["チューニング後 (WAL: Write-Ahead Logging)"]
         W2["プロセスA (書き込み)"] -->|"追記書き込み"| WALFile[("database.db-wal")]
         R2["プロセスB (読み取り)"] -->|"スナップショット読み取り"| DB2[("database.db")]
-        Note over W2,R2: ✅ 読み取りと書き込みが一切ブロックせず並行動作！
+
     end
 ```
 

@@ -35,9 +35,9 @@ flowchart TD
         GPU["NVIDIA GPU / RTX 4090 / L40S"]
     end
 
-    Clients -->|POST /v1/chat/completions| Scheduler
+    Clients -->|"POST /v1/chat/completions"| Scheduler
     Scheduler --> PagedAttn --> GPU
-    vLLM_Server -->|超低遅延ストリーミング返却 (TTFT < 50ms)| Clients
+    vLLM_Server -->|"超低遅延ストリーミング返却 (TTFT < 50ms)"| Clients
 ```
 
 ### 内部動作メカニズムのステップ解説

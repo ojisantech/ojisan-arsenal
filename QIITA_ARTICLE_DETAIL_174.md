@@ -34,9 +34,9 @@ flowchart TD
     end
 
     User --> LLM
-    ToolSchema -.->|利用可能ツールとして注入| LLM
+    ToolSchema -.->|"利用可能ツールとして注入"| LLM
 
-    LLM -->|Tool Call出力: {'name': 'get_employee_pto', 'args': {'employee_id': 1042}}| Validator
+    LLM -->|"Tool Call出力: {'name': 'get_employee_pto', 'args': {'employee_id': 1042}}"| Validator
 
     subgraph BackendSafety["バックエンド安全実行層"]
         Validator["型検証 & 権限チェック (Pydantic)"]

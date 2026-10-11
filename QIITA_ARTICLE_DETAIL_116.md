@@ -34,11 +34,11 @@ flowchart TD
     ChildProcess["BGSAVE 子プロセス (PID: 12345)"]
     Disk["NVMe SSD /var/lib/redis/dump.rdb"]
 
-    MainProcess -->|fork() 実行時: ページテーブル複製| Block["🚨 メインスレッド一時凍結 (Latency Spike)"]
+    MainProcess -->|"fork() 実行時: ページテーブル複製"| Block["🚨 メインスレッド一時凍結 (Latency Spike)"]
     ForkCall --> ChildProcess
-    ChildProcess -->|ディスクへ逐次書き出し| Disk
+    ChildProcess -->|"ディスクへ逐次書き出し"| Disk
 
-    KernelTuning["Linux調律<br/>1. THP無効化 (never)<br/>2. vm.overcommit_memory=1"] -.->|CoWメモリ肥大化を完全阻止| MainProcess
+    KernelTuning["Linux調律<br/>1. THP無効化 (never)<br/>2. vm.overcommit_memory=1"] -.->|"CoWメモリ肥大化を完全阻止"| MainProcess
 ```
 
 ### 内部動作メカニズムのステップ解説

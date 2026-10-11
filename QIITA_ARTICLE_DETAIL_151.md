@@ -31,10 +31,10 @@ flowchart LR
     Pi["Raspberry Pi / Linux SBC<br/>(/dev/ttyUSB0)"]
     Cloud["社内DB / クラウド可視化<br/>(PostgreSQL / Grafana)"]
 
-    Machine <==|ツイストペア線 (最大1.2km伝送)| Converter
-    Converter -->|USB 仮想COMポート| Pi
-    Pi -->|Python pyserial でパケット受信・パース| Pi
-    Pi -->|Wi-Fi / LAN 経由でJSON送信| Cloud
+    Machine <-->|"ツイストペア線 (最大1.2km伝送)"| Converter
+    Converter -->|"USB 仮想COMポート"| Pi
+    Pi -->|"Python pyserial でパケット受信・パース"| Pi
+    Pi -->|"Wi-Fi / LAN 経由でJSON送信"| Cloud
 ```
 
 ### 内部動作メカニズムのステップ解説

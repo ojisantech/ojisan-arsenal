@@ -39,7 +39,7 @@ flowchart LR
     end
 
     SQLiteDB --> Engine
-    Engine -->|数万行を一括バルクインサート (高速)| PG
+    Engine -->|"数万行を一括バルクインサート (高速)"| PG
 ```
 
 ### 内部動作メカニズムのステップ解説

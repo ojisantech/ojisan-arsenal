@@ -30,10 +30,10 @@ flowchart LR
     Cloudflared["cloudflared デーモン<br/>(社内サーバー内で常駐)"]
     InternalWeb["社内管理画面 (:8000)<br/>(ポート開放なし / 完全閉域)"]
 
-    RemoteUser -->|HTTPS アクセス: app.mycompany.com| CF_Edge
-    CF_Edge -->|2要素認証クリア後のみ許可| CF_Edge
-    Cloudflared <==>|外向き暗号化トンネル (QUIC / UDP 7844)| CF_Edge
-    Cloudflared -->|ローカルループバック転送| InternalWeb
+    RemoteUser -->|"HTTPS アクセス: app.mycompany.com"| CF_Edge
+    CF_Edge -->|"2要素認証クリア後のみ許可"| CF_Edge
+    Cloudflared <==>|"外向き暗号化トンネル (QUIC / UDP 7844)"| CF_Edge
+    Cloudflared -->|"ローカルループバック転送"| InternalWeb
 ```
 
 ### 内部動作メカニズムのステップ解説

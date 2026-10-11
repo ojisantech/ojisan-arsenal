@@ -35,9 +35,9 @@ flowchart TD
         Excluded["※ 医療機器 / 基幹DB (除外リスト登録済)"]
     end
 
-    Tester -->|1. Nmap NSE スクリプトスキャン (脆弱性有無の検知)| Target1
-    Tester -->|2. Metasploit check モジュール (非破壊チェック)| Target2
-    Tester -.->|スキャン対象から完全除外| Excluded
+    Tester -->|"1. Nmap NSE スクリプトスキャン (脆弱性有無の検知)"| Target1
+    Tester -->|"2. Metasploit check モジュール (非破壊チェック)"| Target2
+    Tester -.->|"スキャン対象から完全除外"| Excluded
 
     Report["📊 社内脆弱性監査レポート<br/>(CVSSスコア順の改善チケット自動発行)"]
     Target1 --> Report

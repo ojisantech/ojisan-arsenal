@@ -30,11 +30,11 @@ flowchart TD
     App["Webアプリ (キャッシュ書き込み)"] --> Redis["Redis インスタンス (maxmemory 4GB)"]
     Redis --> Check{"メモリ 4GB 到達時"}
 
-    Check -->|noeviction (デフォルト)| Error["🚨 OOM Error: 書込コマンド拒否 (アプリ停止)"]
-    Check -->|allkeys-lru (推奨)| LRU["最も古く参照されていないキャッシュを自動蒸発 (安全継続)"]
-    Check -->|volatile-ttl| TTL["有効期限の近いキーから優先削除"]
+    Check -->|"noeviction (デフォルト)"| Error["🚨 OOM Error: 書込コマンド拒否 (アプリ停止)"]
+    Check -->|"allkeys-lru (推奨)"| LRU["最も古く参照されていないキャッシュを自動蒸発 (安全継続)"]
+    Check -->|"volatile-ttl"| TTL["有効期限の近いキーから優先削除"]
 
-    Scanner["自作 BigKey & メモリ診断スクリプト"] -.->|MEMORY USAGE 分析| Redis
+    Scanner["自作 BigKey & メモリ診断スクリプト"] -.->|"MEMORY USAGE 分析"| Redis
 ```
 
 ### 内部動作メカニズムのステップ解説

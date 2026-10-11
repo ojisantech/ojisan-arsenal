@@ -29,15 +29,15 @@ flowchart TD
     Client["クライアント"] --> API["FastAPI 認可ミドルウェア"]
     API --> JWT_Check{"1. 暗号署名 & 有効期限検証"}
 
-    JWT_Check -->|署名不正 / 期限切れ| Reject["401 Unauthorized (即時拒否)"]
-    JWT_Check -->|署名正常| Redis_Check{"2. Redis ブラックリスト照合 (jti)"}
+    JWT_Check -->|"署名不正 / 期限切れ"| Reject["401 Unauthorized (即時拒否)"]
+    JWT_Check -->|"署名正常"| Redis_Check{"2. Redis ブラックリスト照合 (jti)"}
 
     Redis["Redis インスタンス<br/>(ブラックリスト登録キー: block:{jti} TTL=15分)"]
 
-    Redis_Check -->|キーが存在する (失効済)| Blacklisted["🚨 401 Unauthorized (失効済トークン)"]
-    Redis_Check -->|キーなし| Allow["200 OK (リクエスト処理通過)"]
+    Redis_Check -->|"キーが存在する (失効済)"| Blacklisted["🚨 401 Unauthorized (失効済トークン)"]
+    Redis_Check -->|"キーなし"| Allow["200 OK (リクエスト処理通過)"]
 
-    Logout["ユーザーがログアウト要求"] -->|jti を Redis に登録| Redis
+    Logout["ユーザーがログアウト要求"] -->|"jti を Redis に登録"| Redis
 ```
 
 ### 内部動作メカニズムのステップ解説

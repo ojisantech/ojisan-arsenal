@@ -33,8 +33,8 @@ flowchart LR
     JSON["構造化メトリクス JSON<br/>{cpu_pct: 12.5, mem_used_mb: 2048, io_iops: 420}"]
     Out["Prometheus Exporter / SQLite / Webhook"]
 
-    Kernel -.->|カーネルがテキストとして動的生成| ProcFS
-    ProcFS -->|open() & read() 高速パース| Collector
+    Kernel -.->|"カーネルがテキストとして動的生成"| ProcFS
+    ProcFS -->|"open() & read() 高速パース"| Collector
     Collector --> JSON --> Out
 ```
 

@@ -30,14 +30,14 @@ flowchart TD
     Backend["FastAPI バックエンド (:8000)"]
     IdP["Keycloak / Azure AD (:8080)"]
 
-    User -->|1. ログイン要求| Backend
-    Backend -->|2. リダイレクト (code_challenge付)| User
-    User -->|3. 認証・同意画面| IdP
-    IdP -->|4. 認可コード返却 (?code=XYZ)| User
-    User -->|5. コールバックURLへ転送| Backend
-    Backend -->|6. POST /token (code + code_verifier)| IdP
-    IdP -->|7. ID Token & Access Token (JWT) 返却| Backend
-    Backend -->|8. JWKSエンドポイントから公開鍵取得・署名検証| IdP
+    User -->|"1. ログイン要求"| Backend
+    Backend -->|"2. リダイレクト (code_challenge付)"| User
+    User -->|"3. 認証・同意画面"| IdP
+    IdP -->|"4. 認可コード返却 (?code=XYZ)"| User
+    User -->|"5. コールバックURLへ転送"| Backend
+    Backend -->|"6. POST /token (code + code_verifier)"| IdP
+    IdP -->|"7. ID Token & Access Token (JWT) 返却"| Backend
+    Backend -->|"8. JWKSエンドポイントから公開鍵取得・署名検証"| IdP
 ```
 
 ### 内部動作メカニズムのステップ解説

@@ -43,7 +43,6 @@ flowchart LR
     end
 
     CorporateValue ==>|"40代・50代でのシフト"| IndependentValue
-    Note over IndependentValue: 会社の看板に依存しない<br/>「個人の信用資本」が完成！
 ```
 
 ### 内部動作メカニズムのステップ解説

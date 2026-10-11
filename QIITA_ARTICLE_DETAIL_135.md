@@ -36,7 +36,7 @@ flowchart LR
         Backstore["バックストア: LVM / ZFS / 物理NVMe"]
     end
 
-    Initiator -->|TCP/IP ポート 3260 (iSCSI PDU)| Target
+    Initiator -->|"TCP/IP ポート 3260 (iSCSI PDU)"| Target
     Target --> Backstore
     Initiator --> LocalDisk
 ```

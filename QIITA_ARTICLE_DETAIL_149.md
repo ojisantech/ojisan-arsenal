@@ -32,9 +32,9 @@ flowchart TD
     WinPC1["社内PC 1 (ドメイン参加済)"]
     WinPC2["社内PC 2 (ドメイン参加済)"]
 
-    Admin -->|GUIでユーザー追加 & GPO配布| SambaDC
-    SambaDC -->|Kerberos チケット発行| WinPC1
-    SambaDC -->|グループポリシー適用 (USB禁止/壁紙統一)| WinPC1
+    Admin -->|"GUIでユーザー追加 & GPO配布"| SambaDC
+    SambaDC -->|"Kerberos チケット発行"| WinPC1
+    SambaDC -->|"グループポリシー適用 (USB禁止/壁紙統一)"| WinPC1
     SambaDC --> WinPC2
 ```
 

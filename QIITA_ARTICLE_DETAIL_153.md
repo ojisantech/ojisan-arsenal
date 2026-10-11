@@ -32,10 +32,10 @@ flowchart LR
     PythonWorker["社内 Linux サーバー<br/>Python pymodbus ワーカー"]
     DB["社内 ERP / 生産管理 DB<br/>(PostgreSQL)"]
 
-    PLC <==|Modbus TCP 通信 (ポート 502)| Ethernet
+    PLC <-->|"Modbus TCP 通信 (ポート 502)"| Ethernet
     Ethernet <==> PythonWorker
-    PythonWorker -->|保持レジスタ読取 (Read Holding Registers)| PLC
-    PythonWorker -->|生産個数・チョコ停フラグをパース| DB
+    PythonWorker -->|"保持レジスタ読取 (Read Holding Registers)"| PLC
+    PythonWorker -->|"生産個数・チョコ停フラグをパース"| DB
 ```
 
 ### 内部動作メカニズムのステップ解説

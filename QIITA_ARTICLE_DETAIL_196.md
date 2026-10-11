@@ -1,4 +1,4 @@
-# 【第196弾 詳細解説】Product Hunt / はてブ ローンチ初動バズ編 - Product Hunt / はてなブックマーク / Hacker News ローンチ戦略と初動バズ獲得実務
+# 【第196弾 詳細解説】Product Hunt / はてブ ローンチ初期獲得編 - Product Hunt / はてなブックマーク / Hacker News ローンチ戦略と初期ユーザー獲得実務
 
 > **対象読者**: 海外展開志望者、プロダクトビルダー  
 > **主要技術スタック**: Product Hunt火曜ローンチ, Show HN, 動くGIFバナー, 初日3,000ユニーク獲得  
@@ -40,7 +40,7 @@ flowchart TD
     LaunchDay --> Hatena
     LaunchDay --> X_Post
 
-    subgraph Virality["初動バズ & 拡散ループ"]
+    subgraph Virality["初期トラフィック & 認知獲得ループ"]
         PH_Rank["Product Hunt: Top 5 of the Day 獲得！"]
         Backlinks["海外テックメディアからの自動被リンク獲得"]
         Users["初日に海外・国内から3,000ユニークビジター流入！"]

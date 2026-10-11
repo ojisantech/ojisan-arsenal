@@ -170,7 +170,7 @@
 | **第92弾** | [`QIITA_ARTICLE_DETAIL_92.md`](./QIITA_ARTICLE_DETAIL_92.md) | **J-PlatPat先行特許調査・侵害回避出願編**<br/>J-PlatPatで先行技術を完全調査！エンジニアが自作アイデアの特許侵害を避けて独自特許を出願する戦略 | 個人開発者、知財・起業志望者 | J-PlatPat無料調査, FI/Fターム<br/>クレーム構成要件充足論, 減免制度活用 |
 | **第93弾** | [`QIITA_ARTICLE_DETAIL_93.md`](./QIITA_ARTICLE_DETAIL_93.md) | **大企業副業申請100%通過文面・交渉ロジック編**<br/>大企業の副業申請を「100%通す」ための申請書文面と交渉ロジック（社内法務・人事の急所） | 大企業エンジニア、社内SE | 競業避止・労務管理・知財漏洩対策<br/>「無人販売型デジタル著作物」申請ハック |
 | **第94弾** | [`QIITA_ARTICLE_DETAIL_94.md`](./QIITA_ARTICLE_DETAIL_94.md) | **住民税「普通徴収」確定申告・鉄壁防衛編**<br/>住民税の特別徴収で副業バレする恐怖を断ち切る！「普通徴収」選択と確定申告の鉄壁防衛 | 副業サラリーマン、個人事業主 | 確定申告第二表「自分で納付」<br/>雑所得/事業所得, 自治体税務課念押し確認 |
-| **第95弾** | [`QIITA_ARTICLE_DETAIL_95.md`](./QIITA_ARTICLE_DETAIL_95.md) | **オープンコアモデル・Ed25519ライセンス編**<br/>「無料公開でバズったツール」をどうマネタイズするか？オープンコアモデルと機能制限キー発行の設計 | プロダクトビルダー、OSS作者 | オープンコア境界線設計, Ed25519公開鍵署名<br/>完全オフラインライセンスキー改ざん検証 |
+| **第95弾** | [`QIITA_ARTICLE_DETAIL_95.md`](./QIITA_ARTICLE_DETAIL_95.md) | **オープンコアモデル・Ed25519ライセンス編**<br/>「無料公開した自作ツール」を持続可能なOSSへ導くオープンコアモデルとライセンス設計 | プロダクトビルダー、OSS作者 | オープンコア境界線設計, Ed25519公開鍵署名<br/>完全オフラインライセンスキー改ざん検証 |
 | **第96弾** | [`QIITA_ARTICLE_DETAIL_96.md`](./QIITA_ARTICLE_DETAIL_96.md) | **Stripe/BOOTHデジタルツール無人販売編**<br/>Gumroad / BOOTH / Stripeで作る！デジタルツール・スクリプトの完全無人販売パイプライン | 個人開発者、デジタル物販派 | Stripe Payment Links, FastAPI Webhook<br/>自動ライセンス発行・即時納品メール送信 |
 | **第97弾** | [`QIITA_ARTICLE_DETAIL_97.md`](./QIITA_ARTICLE_DETAIL_97.md) | **QiitaからGitHubスター・ファン化誘導編**<br/>Qiitaの技術記事からGitHubスター・個人プロダクトへ自然に誘導する「読者をファンにする記事構成」 | 技術ブロガー、エンジニア発信者 | 黄金の5段構成 (ペイン共感・Mermaid・コード)<br/>好感を持たれる自然なCTA導線テンプレート |
 | **第98弾** | [`QIITA_ARTICLE_DETAIL_98.md`](./QIITA_ARTICLE_DETAIL_98.md) | **40代50代シニアエンジニア資産化戦略編**<br/>40代・50代エンジニアのための「定年・役職定年を見据えた個人ブランディングと技術ポートフォリオ」 | ベテランエンジニア、シニア層 | 役職定年対策, 泥臭いトラブル知見の資産化<br/>生きたGitHubポートフォリオ, 顧問・マイクロSaaS |
@@ -185,7 +185,6 @@
 | **第30弾** | [`QIITA_ARTICLE_DETAIL_30.md`](./QIITA_ARTICLE_DETAIL_30.md) | **大企業エンジニアのハイブリッド生存戦略編**<br/>会社に依存せず、討ち死にもしない。大企業インフラエンジニアが給与と社保を守りながら水面下で自作プロダクトを育てる「ハイブリッド生存戦略」 | 30代〜50代エンジニア、大企業勤務者、自作開発者 | キャリア論、知財防衛、副業規程<br/>二段階起業、個人ブランディング |
 
 ---
-
 
 ### ☸️ シリーズ N：Kubernetes・コンテナオーケストレーション現場実務・軽量クラスタ運用編
 | 弾数 | ファイル | タイトル・テーマ | 対象読者 | 主要技術 |
@@ -338,13 +337,12 @@
 | **第192弾** | [`QIITA_ARTICLE_DETAIL_192.md`](./QIITA_ARTICLE_DETAIL_192.md) | **3日で組むマイクロSaaSボイラープレート編**<br/>認証・課金・ダッシュボードを3日で組むマイクロSaaSボイラープレート設計（FastAPI × Stripe） | 個人開発者、スタートアップ | `FastAPI`, `Stripe Checkout`<br/>Webhook署名検証, Customer Portal |
 | **第193弾** | [`QIITA_ARTICLE_DETAIL_193.md`](./QIITA_ARTICLE_DETAIL_193.md) | **独自ドメイン ＆ メール到達率100%DNS編**<br/>独自ドメイン取得からCloudflare・メール配信（Resend / SendGrid）到達率100%設定 | Webマスター、SaaS開発者 | `Cloudflare DNS`, `Resend`<br/>SPF, DKIM, DMARC (`p=reject`), 到達率100% |
 | **第194弾** | [`QIITA_ARTICLE_DETAIL_194.md`](./QIITA_ARTICLE_DETAIL_194.md) | **利用規約・プライバシー・特商法実務作成編**<br/>サービス利用規約・プライバシーポリシー・特商法表記のエンジニア向け実務作成術 | 個人起業家、デジタル物販派 | 損害賠償上限 (直近月額), バーチャルオフィス<br/>特商法住所・電話番号合法非公開テクニック |
-| **第195弾** | [`QIITA_ARTICLE_DETAIL_195.md`](./QIITA_ARTICLE_DETAIL_195.md) | **検索流入（SEO）爆発テクニカルライティング編**<br/>検索流入（SEO）と技術ブログ集客を爆発させるテクニカルライティング・キーワード設計 | 技術ブロガー、個人マーケター | ロングテールペイン解決, コード100%公開<br/>自然なCTA誘導, 広告費0円オウンドメディア |
-| **第196弾** | [`QIITA_ARTICLE_DETAIL_196.md`](./QIITA_ARTICLE_DETAIL_196.md) | **Product Hunt / はてブ ローンチ初動バズ編**<br/>Product Hunt / はてなブックマーク / Hacker News ローンチ戦略と初動バズ獲得実務 | 海外展開志望者、プロダクトビルダー | Product Hunt火曜ローンチ, Show HN<br/>動くGIFバナー, 初日3,000ユニーク獲得 |
+| **第195弾** | [`QIITA_ARTICLE_DETAIL_195.md`](./QIITA_ARTICLE_DETAIL_195.md) | **検索流入（SEO）テクニカルライティング編**<br/>検索流入（SEO）と技術ブログで現場課題を届けるテクニカルライティング・キーワード設計 | 技術ブロガー、個人マーケター | ロングテールペイン解決, コード100%公開<br/>自然なCTA誘導, 広告費0円オウンドメディア |
+| **第196弾** | [`QIITA_ARTICLE_DETAIL_196.md`](./QIITA_ARTICLE_DETAIL_196.md) | **Product Hunt / はてブ ローンチ初期獲得編**<br/>Product Hunt / はてなブックマーク / Hacker News ローンチ戦略と初期ユーザー獲得実務 | 海外展開志望者、プロダクトビルダー | Product Hunt火曜ローンチ, Show HN<br/>動くGIFバナー, 初日3,000ユニーク獲得 |
 | **第197弾** | [`QIITA_ARTICLE_DETAIL_197.md`](./QIITA_ARTICLE_DETAIL_197.md) | **1人運営サポート自動化（AI返信＋Sentry）編**<br/>1人運用を可能にするカスタマーサポート自動化（AI一次返信＋Sentryエラー直結）設計 | 1人起業家、マイクロSaaS運用者 | RAG自動一次回答メール (Resend)<br/>Sentryクラスタレント即時Slack通知 |
 | **第198弾** | [`QIITA_ARTICLE_DETAIL_198.md`](./QIITA_ARTICLE_DETAIL_198.md) | **合同会社設立 ＆ マイクロ法人税務最適化編**<br/>会社員から合同会社設立・マイクロ法人化による税務最適化（役員報酬・社宅・経費化）実務 | 副業エンジニア、独立準備中 | 合同会社 (設立費6万), 家賃社宅化<br/>本業社保の盾, 役員報酬ゼロスキーム |
 | **第199弾** | [`QIITA_ARTICLE_DETAIL_199.md`](./QIITA_ARTICLE_DETAIL_199.md) | **ひとり起業・MRR100万円ロードマップ編**<br/>ひとり起業・マイクロSaaSのMRR（月次経常収益）100万円ロードマップと撤退基準 | 自立志望エンジニア、SaaS創業者 | $29×220社モデル, LTV/CAC<br/>月次解約率 (Churn < 4%), 6ヶ月撤退ルール |
 | **第200弾** | [`QIITA_ARTICLE_DETAIL_200.md`](./QIITA_ARTICLE_DETAIL_200.md) | **【第200弾完全完結記念碑】生涯自立型プロダクトビルダー宣言**<br/>【第200弾完全完結記念碑】現場の労働者から自由なる「生涯自立型プロダクトビルダー」へ！全200記事完走記念碑 | 全エンジニア、OjisanTech氏、現場の全同志 | 14層大系総括, 自立型ビルダー宣言<br/>月額0円実装力, 生涯生存エコシステム完結 |
-
 
 ---
 ---

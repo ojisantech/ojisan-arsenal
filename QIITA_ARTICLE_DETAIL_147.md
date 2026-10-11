@@ -37,9 +37,9 @@ flowchart TD
 
     Admin --> Script --> Server
     Script --> QRCode
-    Phone -->|カメラでQRコードをスキャン| QRCode
-    Phone <==>|超高速 WireGuard トンネル (ChaCha20-Poly1305)| Server
-    Laptop <==>|超高速 WireGuard トンネル| Server
+    Phone -->|"カメラでQRコードをスキャン"| QRCode
+    Phone <==>|"超高速 WireGuard トンネル (ChaCha20-Poly1305)"| Server
+    Laptop <==>|"超高速 WireGuard トンネル"| Server
 ```
 
 ### 内部動作メカニズムのステップ解説

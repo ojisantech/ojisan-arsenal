@@ -35,8 +35,8 @@ flowchart TD
         NIC1["物理 NIC 1 (enp1s0: 2.5GbE)"]
         NIC2["物理 NIC 2 (enp2s0: 2.5GbE)"]
         Bond["🔗 論理インターフェース (bond0)<br/>IP: 192.168.1.100<br/>帯域合計: 5Gbps (2.5G + 2.5G)"]
-        NIC1 === Bond
-        NIC2 === Bond
+        NIC1 --- Bond
+        NIC2 --- Bond
     end
 
     subgraph ManagedSwitch ["🏢 LACP対応スイッチ (2.5GbE)"]
@@ -44,8 +44,8 @@ flowchart TD
         Port2["Port 2 (LAG Group 1)"]
     end
 
-    NIC1 <==|"2.5Gbps"|==> Port1
-    NIC2 <==|"2.5Gbps"|==> Port2
+    NIC1 <-->|"2.5Gbps"| Port1
+    NIC2 <-->|"2.5Gbps"| Port2
 
     Note["【メリット】<br/>1. 複数クライアント通信時に最大5Gbpsのスループット<br/>2. ケーブルが1本抜けてもパケットロスほぼゼロで通信継続！"]
 ```

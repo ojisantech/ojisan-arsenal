@@ -31,13 +31,13 @@ flowchart LR
     ServerService["バックエンド基盤 API<br/>(サーバー証明書 + 秘密鍵保持)"]
     InternalCA["社内プライベート CA<br/>(ルートCA証明書)"]
 
-    InternalCA -.->|証明書発行・署名| ClientService
-    InternalCA -.->|証明書発行・署名| ServerService
+    InternalCA -.->|"証明書発行・署名"| ClientService
+    InternalCA -.->|"証明書発行・署名"| ServerService
 
-    ClientService <==>|mTLS ハンドシェイク (双方が相手の証明書をCAで検証)| ServerService
+    ClientService <==>|"mTLS ハンドシェイク (双方が相手の証明書をCAで検証)"| ServerService
 
-    Attacker["悪意ある侵入者 / 未承認端末"] -.->|証明書なしでアクセス| ServerService
-    ServerService -.->|TLSレベルで即座に接続切断 (HTTPすら届かない！)| Attacker
+    Attacker["悪意ある侵入者 / 未承認端末"] -.->|"証明書なしでアクセス"| ServerService
+    ServerService -.->|"TLSレベルで即座に接続切断 (HTTPすら届かない！)"| Attacker
 ```
 
 ### 内部動作メカニズムのステップ解説

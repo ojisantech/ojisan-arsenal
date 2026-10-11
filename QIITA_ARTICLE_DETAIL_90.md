@@ -32,7 +32,7 @@ flowchart TD
         ReqA["ユーザーA: GET /heavy-task"] --> Loop1["メインイベントループ (シングルスレッド)"]
         Loop1 --> Block["time.sleep(10) または requests.get()<br/>🚨 イベントループ全体が10秒間完全停止！"]
         ReqB["ユーザーB: GET /healthz"] -. "待たされる..." .-> Loop1
-        Note over ReqB: ❌ ユーザーBがタイムアウトエラー！
+
     end
 
     subgraph GoodPattern["安全パターン: 別スレッドへ退避 (asyncio.to_thread)"]

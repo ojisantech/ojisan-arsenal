@@ -32,8 +32,8 @@ flowchart LR
     ChirpStack["社内サーバー: ChirpStack (OSS)<br/>(Network & Application Server)"]
     Alert["異常検知 & Slack / メール通知"]
 
-    Sensor ==|見通し 3〜5km 無線通信 (月額0円)|=> Gateway
-    Gateway -->|有線LAN / Wi-Fi (IPパケット)| ChirpStack
+    Sensor -->|"見通し 3〜5km 無線通信 (月額0円)"| Gateway
+    Gateway -->|"有線LAN / Wi-Fi (IPパケット)"| ChirpStack
     ChirpStack --> Alert
 ```
 

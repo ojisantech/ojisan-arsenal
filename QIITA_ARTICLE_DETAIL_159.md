@@ -30,7 +30,7 @@ flowchart LR
     GPS_Module["GPS 受信機 (u-blox NEO-6M / 8M)<br/>アンテナを窓際に設置"]
     Pi["Raspberry Pi (Stratum 1 NTP Server)"]
 
-    subgraph PPS_Hardware["物理GPIO直結"]
+    subgraph PPS_Hardware ["物理GPIO直結"]
         UART["UART (/dev/ttyAMA0): NMEA時刻データ"]
         PPS_Pin["GPIO 18: PPS 物理パルス (ナノ秒精度)"]
     end
@@ -38,11 +38,11 @@ flowchart LR
     Chrony["chrony デーモン<br/>PPS + NMEA 補正"]
     LAN_Clients["社内LAN 閉域サーバー群<br/>(Windows, Linux, DB, ログ基盤)"]
 
-    GPS_Sat ==|1.5GHz 衛星電波|=> GPS_Module
+    GPS_Sat -->|"1.5GHz 衛星電波"| GPS_Module
     GPS_Module --> UART --> Pi
     GPS_Module --> PPS_Pin --> Pi
     Pi --> Chrony
-    Chrony -->|社内LAN NTP配信 (UDP 123)| LAN_Clients
+    Chrony -->|"社内LAN NTP配信 (UDP 123)"| LAN_Clients
 ```
 
 ### 内部動作メカニズムのステップ解説

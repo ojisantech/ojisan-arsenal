@@ -31,12 +31,12 @@ flowchart TD
     Keycloak["Keycloak IdP サーバー (:8080)<br/>(Docker Compose / PostgreSQL)"]
     AD["既存 Active Directory (LDAPS)<br/>社員アカウントマスタ"]
 
-    Client -->|アクセス| WebApp
-    WebApp -->|未認証: OIDCリダイレクト| Keycloak
-    Keycloak -->|認証画面表示| Client
-    Keycloak -->|ユーザー認証 & グループ照合| AD
-    Keycloak -->|署名済み JWT (ID/Access Token) 発行| WebApp
-    WebApp -->|認証完了・ダッシュボード表示| Client
+    Client -->|"アクセス"| WebApp
+    WebApp -->|"未認証: OIDCリダイレクト"| Keycloak
+    Keycloak -->|"認証画面表示"| Client
+    Keycloak -->|"ユーザー認証 & グループ照合"| AD
+    Keycloak -->|"署名済み JWT (ID/Access Token) 発行"| WebApp
+    WebApp -->|"認証完了・ダッシュボード表示"| Client
 ```
 
 ### 内部動作メカニズムのステップ解説

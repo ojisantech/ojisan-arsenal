@@ -35,13 +35,13 @@ flowchart TD
         Node2["Node-2: Standby (Patroni)<br/>ストリーミングレプリケーション"]
     end
 
-    Node1 -->|WAL Stream (TCP 5432)| Node2
-    Node1 -->|Leader Lock保持| etcd
-    Node2 -->|Leader Lock監視| etcd
+    Node1 -->|"WAL Stream (TCP 5432)"| Node2
+    Node1 -->|"Leader Lock保持"| etcd
+    Node2 -->|"Leader Lock監視"| etcd
 
-    Node1 -.->|※ 物理電源断 / カーネルハング| Fail["障害発生"]
-    etcd -->|TTL失効検知| Node2
-    Node2 -->|自動昇格 (Promote to Primary)| NewMaster["Node-2 が新Primaryに昇格 (5秒以内)"]
+    Node1 -.->|"※ 物理電源断 / カーネルハング"| Fail["障害発生"]
+    etcd -->|"TTL失効検知"| Node2
+    Node2 -->|"自動昇格 (Promote to Primary)"| NewMaster["Node-2 が新Primaryに昇格 (5秒以内)"]
 ```
 
 ### 内部動作メカニズムのステップ解説

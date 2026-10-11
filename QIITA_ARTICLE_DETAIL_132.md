@@ -39,15 +39,15 @@ flowchart LR
         Drive4["Drive 4: /data4 (Parity)"]
     end
 
-    App -->|S3 REST API (HTTPS)| MinIO_Cluster
-    BackupTool -->|S3 REST API| MinIO_Cluster
+    App -->|"S3 REST API (HTTPS)"| MinIO_Cluster
+    BackupTool -->|"S3 REST API"| MinIO_Cluster
 
-    MinIO_Cluster -->|Erasure Coding 4分割| Drive1
+    MinIO_Cluster -->|"Erasure Coding 4分割"| Drive1
     MinIO_Cluster --> Drive2
     MinIO_Cluster --> Drive3
     MinIO_Cluster --> Drive4
 
-    Drive1 -.->|※ 2台同時物理破損でもデータ生還| Drive2
+    Drive1 -.->|"※ 2台同時物理破損でもデータ生還"| Drive2
 ```
 
 ### 内部動作メカニズムのステップ解説

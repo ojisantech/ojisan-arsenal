@@ -40,7 +40,6 @@ flowchart TD
     end
 
     PatentClaim -. 比較 .-> ProductX
-    Note over ProductX: クレームの要件が1つでも欠けていれば<br/>✅ 原則として特許侵害は成立しない！
 ```
 
 ### 内部動作メカニズムのステップ解説

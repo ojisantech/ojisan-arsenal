@@ -33,11 +33,11 @@ flowchart TD
     NormalServer["正規業務サーバー (192.168.1.10)"]
     Canary["OpenCanary おとり端末 (192.168.1.99)<br/>偽のWindows共有 (SMB) & RDP ポート開放"]
 
-    Attacker -->|社内ポートスキャン (Nmap / ARP)| LAN
-    Attacker -->|正規アクセスに擬態| NormalServer
-    Attacker -->|美味しそうなファイルサーバーを発見して接続！| Canary
+    Attacker -->|"社内ポートスキャン (Nmap / ARP)"| LAN
+    Attacker -->|"正規アクセスに擬態"| NormalServer
+    Attacker -->|"美味しそうなファイルサーバーを発見して接続！"| Canary
 
-    Canary -->|🚨 罠が発動！即時Slack / Syslog警報| Slack["Slack: 『侵入者検知！IP 192.168.1.45 がハニーポットに接触』"]
+    Canary -->|"🚨 罠が発動！即時Slack / Syslog警報"| Slack["Slack: 『侵入者検知！IP 192.168.1.45 がハニーポットに接触』"]
 ```
 
 ### 内部動作メカニズムのステップ解説

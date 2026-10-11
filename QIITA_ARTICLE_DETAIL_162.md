@@ -38,10 +38,10 @@ flowchart LR
 
     GrafanaUI["Grafana ダッシュボード (:3000)<br/>LogQL: {app='payment'} |= 'error'"]
 
-    P1 -->|HTTP POST (snappy圧縮)| Loki
-    P2 -->|HTTP POST| Loki
+    P1 -->|"HTTP POST (snappy圧縮)"| Loki
+    P2 -->|"HTTP POST"| Loki
     Loki --> Disk
-    Loki -->|検索結果即時返却| GrafanaUI
+    Loki -->|"検索結果即時返却"| GrafanaUI
 ```
 
 ### 内部動作メカニズムのステップ解説

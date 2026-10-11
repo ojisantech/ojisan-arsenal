@@ -35,12 +35,12 @@ flowchart LR
 
     GhostApp["gh-ost プロセス"]
 
-    GhostApp -->|1. 新テーブル作成 (新スキーマ)| GhostTable
-    GhostApp -->|2. 既存データをチャンク単位で裏コピー| GhostTable
-    OrigTable -->|通常業務の書込| Binlog
-    Binlog -->|3. 差分変更をBinlogから読取・即時反映| GhostApp
-    GhostApp -->|差分同期| GhostTable
-    GhostApp -->|4. 原子的なテーブル名入れ替え (RENAME)| MySQL
+    GhostApp -->|"1. 新テーブル作成 (新スキーマ)"| GhostTable
+    GhostApp -->|"2. 既存データをチャンク単位で裏コピー"| GhostTable
+    OrigTable -->|"通常業務の書込"| Binlog
+    Binlog -->|"3. 差分変更をBinlogから読取・即時反映"| GhostApp
+    GhostApp -->|"差分同期"| GhostTable
+    GhostApp -->|"4. 原子的なテーブル名入れ替え (RENAME)"| MySQL
 ```
 
 ### 内部動作メカニズムのステップ解説

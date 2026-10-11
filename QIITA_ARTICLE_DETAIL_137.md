@@ -8,7 +8,7 @@
 ## 1. 概要と背景（サマリーからの深掘り）
 
 ### なぜこの技術が現場で不可欠なのか
-「BCP（事業継続計画）のために東京本社と大阪支社でデータをリアルタイム同期したいが、専用線やクラウドの費用が出ない」
+「BCP（事業継続計画）のために本社拠点と大阪支社でデータをリアルタイム同期したいが、専用線やクラウドの費用が出ない」
 「VPNを常時張っておくのはルーターの保守コストが高く、VPNが切れたときのファイル同期停止が心配」
 
 P2P（ピア・ツー・ピア）型のオープンソース分散同期ソフトウェア **`Syncthing`** を使えば、中央サーバーやパブリッククラウドを一切介さず、**複数拠点間のサーバー同士をエンドツーエンド暗号化（TLS 1.3）で直接メッシュ同期**できます。
@@ -26,20 +26,20 @@ P2P（ピア・ツー・ピア）型のオープンソース分散同期ソフ�
 
 ```mermaid
 flowchart LR
-    subgraph TokyoOffice["東京本社 (プライマリ基盤)"]
-        ServerTokyo["ファイルサーバー (東京)<br/>192.168.10.5<br/>Syncthing Node A"]
+    subgraph HeadOffice["本社拠点 (プライマリ基盤)"]
+        ServerHead["ファイルサーバー (本社)<br/>192.168.10.5<br/>Syncthing Node A"]
     end
 
     subgraph OsakaOffice["大阪支社 (DRスタンバイ基盤)"]
         ServerOsaka["ファイルサーバー (大阪)<br/>192.168.20.5<br/>Syncthing Node B"]
     end
 
-    ServerTokyo <==>|インターネット経由 (P2P TLS 1.3 暗号化)| ServerOsaka
+    ServerHead <==>|"インターネット経由 (P2P TLS 1.3 暗号化)"| ServerOsaka
 
-    User["本社ユーザー (ファイル作成・編集)"] --> ServerTokyo
-    ServerTokyo -.->|変更検知 (inotify) 即時差分同期| ServerOsaka
+    User["本社ユーザー (ファイル作成・編集)"] --> ServerHead
+    ServerHead -.->|"変更検知 (inotify) 即時差分同期"| ServerOsaka
 
-    Disaster["※ 東京本社被災・電源喪失時"] -.-> SwitchDR["大阪支社サーバーへ即座に切り替えて業務継続！"]
+    Disaster["※ 本社拠点被災・電源喪失時"] -.-> SwitchDR["大阪支社サーバーへ即座に切り替えて業務継続！"]
     ServerOsaka --> SwitchDR
 ```
 
