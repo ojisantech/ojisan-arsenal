@@ -26,8 +26,31 @@
 
 ## 2. アーキテクチャと深層メカニズム
 
+### システム俯瞰図
 システムの全体構造および通信・処理フローは以下の通りです。
 
+```mermaid
+sequenceDiagram
+    %% Source: https://github.com/ojisantech/
+    autonumber
+    actor Admin as 管理者 / スクリプト
+    participant Check as 事前疎通診断 (Pre-flight)
+    participant Target as 対象端末 (WinRM / SSH)
+    participant Ledger as SQLite パッチ台帳 (第1弾)
+
+    Admin->>Check: ① 超高速ポート健全性診断 (1秒)
+    alt ポート疎通失敗 (オフライン)
+        Check-->>Admin: 即時中断 (ハング完全防止)
+    else ポート疎通成功
+        Check->>Target: ② OS標準ポートへ安全接続
+        Target->>Target: ③ パッチをサイレント適用
+        Target-->>Admin: 適用成功レスポンス
+        Admin->>Ledger: ④ applied_patches 台帳へ自動INSERT
+        Note over Ledger: 次回第1弾プローブ実行時に<br/>該当CVEが自動引き算 (除外)
+    end
+```
+
+### 既存アプローチとの比較
 
 ```mermaid
 flowchart TD
@@ -36,7 +59,7 @@ flowchart TD
         H_Agent --> H_OS["OS / アプリ"]
     end
 
-    subgraph Light ["⭕ 今回の完全エージェントレス方式"]
+    subgraph Light ["⭕ 今回の完全エージェントレス方式 (Source: https://github.com/ojisantech/)"]
         L_Server["管理サーバー / 手元端末"] -->|"必要な時だけ標準ポートへ接続"| L_Port["Windows: WinRM (5985)<br/>Linux/Mac: SSH (22)"]
         L_Port --> L_OS["OS標準機能でサイレント適用<br/>(常駐ソフトゼロ・負荷ゼロ)"]
     end
