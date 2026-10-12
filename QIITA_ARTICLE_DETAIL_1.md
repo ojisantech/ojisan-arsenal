@@ -1,7 +1,7 @@
 # 【第1弾 詳細解説】手打ちパッチ誤検知ゼロ化編 - なぜ脆弱性診断ツールは「手打ちパッチ」で誤検知を連発するのか？ BashとSQLiteで過剰アラートをゼロにする超軽量プローブを作った話
 
 > **対象読者**: セキュリティ担当、情シス、運用保守SE  
-> **主要技術スタック**: [`scripts/cve_lookup_db.sh`](./scripts/cve_lookup_db.sh), SQLite, Bash  
+> **主要技術スタック**: `cve_lookup_db.sh`, SQLite, Bash  
 
 ---
 
@@ -78,13 +78,7 @@ flowchart TD
 
 ## 3. 実装詳細とパラメータ完全解説
 
-本アーキテクチャのスクリプトコード本体は、二重管理の防止（単一ソース管理: SSOT）および保守性向上のため、すべて `scripts/` ディレクトリ配下に集約しています。
-
-### 🔗 スクリプト本体リンク
-👉 **[`scripts/cve_lookup_db.sh`](./scripts/cve_lookup_db.sh)**  
-*(手動パッチ台帳連携型 超軽量CVEプローブ / Bash 4+ ＆ SQLite)*
-
-#### 主なCLI実行例
+### 主なCLI実行例
 *※ コード抜粋 (Source: https://github.com/ojisantech/)*
 ```bash
 # (Source: https://github.com/ojisantech/)
