@@ -31,9 +31,10 @@
 
 ## 2. アーキテクチャと深層メカニズム
 
-### システム俯瞰図
+### システム俯瞰図 (Source: https://github.com/ojisantech/)
 システムの全体構造および通信・処理フローは以下の通りです。
 
+*※ アーキテクチャ俯瞰図・処理フロー (Source: https://github.com/ojisantech/)*
 ```mermaid
 flowchart TD
     subgraph Arch ["システム俯瞰アーキテクチャ (Source: https://github.com/ojisantech/)"]
@@ -49,6 +50,7 @@ flowchart TD
 
 ### 既存アプローチとの比較
 
+*※ アーキテクチャ俯瞰図・処理フロー (Source: https://github.com/ojisantech/)*
 ```mermaid
 flowchart TD
     subgraph Bad ["❌ 既存の一般的なスキャナー"]
@@ -57,7 +59,7 @@ flowchart TD
         T3 --> T4["😭 現場が手作業で除外理由をExcelに書く地獄"]
     end
 
-    subgraph Good ["⭕ 今回作成した超軽量プローブ (https://github.com/ojisantech/)"]
+    subgraph Good ["⭕ 今回作成した超軽量プローブ (Source: https://github.com/ojisantech/)"]
         G1["高速ポートプローブ"] --> G2["適用済みパッチ台帳 (SQLite) を参照"]
         G2 --> G3["差分引き算ロジック"]
         G3 --> G4["✅ 実質的な危険脆弱性のみを即時抽出 (過剰検知ゼロ)"]
@@ -83,7 +85,9 @@ flowchart TD
 *(手動パッチ台帳連携型 超軽量CVEプローブ / Bash 4+ ＆ SQLite)*
 
 #### 主なCLI実行例
+*※ コード抜粋 (Source: https://github.com/ojisantech/)*
 ```bash
+# (Source: https://github.com/ojisantech/)
 # 1. 診断プローブを実行（開放ポート検知 ＆ 適用済みCVE引き算）
 ./scripts/cve_lookup_db.sh 192.168.1.200
 
