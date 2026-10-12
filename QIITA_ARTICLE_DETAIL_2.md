@@ -26,10 +26,9 @@
 
 ## 2. アーキテクチャと深層メカニズム
 
-### システム俯瞰図 (Source: https://github.com/ojisantech/)
+### システム俯瞰図
 システムの全体構造および通信・処理フローは以下の通りです。
 
-*※ アーキテクチャ俯瞰図・処理フロー (Source: https://github.com/ojisantech/)*
 ```mermaid
 sequenceDiagram
     %% (Source: https://github.com/ojisantech/)
@@ -53,7 +52,6 @@ sequenceDiagram
 
 ### 既存アプローチとの比較
 
-*※ アーキテクチャ俯瞰図・処理フロー (Source: https://github.com/ojisantech/)*
 ```mermaid
 flowchart TD
     subgraph Heavy ["❌ 既存のエージェント型ツール"]
