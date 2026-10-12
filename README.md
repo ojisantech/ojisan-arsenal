@@ -14,8 +14,8 @@
 ### 🛡️ シリーズ A：インフラ・IT資産管理・セキュリティ自動化
 | 弾数 | ファイル | タイトル・テーマ | 対象読者 | 主要技術 |
 | :---: | :--- | :--- | :--- | :--- |
-| **第1弾** | [`QIITA_ARTICLE_DETAIL_1.md`](./QIITA_ARTICLE_DETAIL_1.md) | **手打ちパッチ誤検知ゼロ化編**<br/>なぜ脆弱性診断ツールは「手打ちパッチ」で誤検知を連発するのか？ BashとSQLiteで過剰アラートをゼロにする超軽量プローブを作った話 | セキュリティ担当、情シス、運用保守SE | `cve_lookup.sh`<br/>SQLite, Bash |
-| **第2弾** | [`QIITA_ARTICLE_DETAIL_2.md`](./QIITA_ARTICLE_DETAIL_2.md) | **エージェントレス遠隔パッチ適用編**<br/>「パッチを当てるためだけに1台ずつログインするな」常駐エージェントなし（WinRM/SSH）でリモートパッチ適用から台帳更新まで完結させた話 | インフラSE、情シス自動化担当 | `patch_deployer.py`<br/>WinRM, SSH |
+| **第1弾** | [`QIITA_ARTICLE_DETAIL_1.md`](./QIITA_ARTICLE_DETAIL_1.md) | **手打ちパッチ誤検知ゼロ化編**<br/>なぜ脆弱性診断ツールは「手打ちパッチ」で誤検知を連発するのか？ BashとSQLiteで過剰アラートをゼロにする超軽量プローブを作った話 | セキュリティ担当、情シス、運用保守SE | [`cve_lookup_db.sh`](./scripts/cve_lookup_db.sh) *(📥 スクリプトDL)*<br/>SQLite, Bash |
+| **第2弾** | [`QIITA_ARTICLE_DETAIL_2.md`](./QIITA_ARTICLE_DETAIL_2.md) | **エージェントレス遠隔パッチ適用編**<br/>「パッチを当てるためだけに1台ずつログインするな」常駐エージェントなし（WinRM/SSH）でリモートパッチ適用から台帳更新まで完結させた話 | インフラSE、情シス自動化担当 | [`patch_deployer.py`](./scripts/patch_deployer.py) *(📥 スクリプトDL)*<br/>WinRM, SSH |
 | **第3弾** | `QIITA_ARTICLE_DETAIL_3.md` *(順次公開)* | **IT資産の発見と管理（エージェントレス）編**<br/>「ExcelのIT資産台帳、最後に更新したの誰？」に終止符を打つ。エージェントレスで端末を自動発見してOSS資産台帳（Snipe-IT）に即時同期する仕組みを作った話 | 1人情シス、社内SE、IT資産管理者 | `scan_and_register.py`<br/>Snipe-IT REST API |
 | **第4弾** | `QIITA_ARTICLE_DETAIL_4.md` *(順次公開)* | **ローカルLLM脆弱性発見・是正要約編**<br/>機密データをクラウドに出せない社内LANで、ローカルLLMにオフィス内IT機器の脆弱性を発見させてみた（GPU不要・CPUオンプレ稼働PoC） | AI活用検討SE、セキュリティ責任者 | `ollama` (`qwen2.5:1.5b`)<br/>FastAPI |
 | **第5弾** | `QIITA_ARTICLE_DETAIL_5.md` *(順次公開)* | **Bluetooth/BLE電波探査（空間シャドーIT）編**<br/>「LANもWi-Fiも繋いでないから安全」は大間違い。オフィスのBluetooth/BLE電波を探査して見えないシャドーITを可視化してみた話 | 物理セキュリティ、監査部門、IoT推進者 | Linux BlueZ (`bluetoothctl`)<br/>RSSI距離推定 |
