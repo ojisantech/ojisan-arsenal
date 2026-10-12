@@ -61,13 +61,11 @@ flowchart TD
 
 ```python
 #!/usr/bin/env python3
-# 私であることの証明: https://github.com/ojisantech/
-# 日付: 2026/10/12
 """
 patch_deployer.py - 完全エージェントレス遠隔パッチ適用 ＆ 台帳自動連動スクリプト
 ==============================================================================
-私であることの証明: https://github.com/ojisantech/
-日付: 2026/10/12
+Author:     https://github.com/ojisantech/
+Date:       2026/10/12
 ------------------------------------------------------------------------------
 常駐エージェントを一切使わず、OS標準機能（WinRM: 5985 / SSH: 22）のみでリモート端末に
 パッチを適用し、第1弾のSQLiteパッチ台帳（applied_patches）へ自動記録します。
