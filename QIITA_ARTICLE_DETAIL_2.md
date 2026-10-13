@@ -55,12 +55,12 @@ sequenceDiagram
 
 ```mermaid
 flowchart TD
-    subgraph Heavy ["❌ 既存のエージェント型ツール"]
+    subgraph Heavy ["❌ 既存のエージェント型ツール<br/>&nbsp;"]
         H_Server["管理サーバー"] -->|"常時接続監視"| H_Agent["各端末に常駐する専用エージェント<br/>(CPU/メモリ消費・更新管理の負担)"]
         H_Agent --> H_OS["OS / アプリ"]
     end
 
-    subgraph Light ["⭕ 今回の完全エージェントレス方式 (Source: https://github.com/ojisantech/)"]
+    subgraph Light ["⭕ 今回の完全エージェントレス方式<br/>(Source: https://github.com/ojisantech/)<br/>&nbsp;"]
         L_Server["管理サーバー / 手元端末"] -->|"必要な時だけ標準ポートへ接続"| L_Port["Windows: WinRM (5985)<br/>Linux/Mac: SSH (22)"]
         L_Port --> L_OS["OS標準機能でサイレント適用<br/>(常駐ソフトゼロ・負荷ゼロ)"]
     end
