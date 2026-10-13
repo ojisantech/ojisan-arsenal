@@ -2,6 +2,7 @@
 
 > **対象読者**: インフラSE、情シス自動化担当  
 > **主要技術スタック**: WinRM (Windows), SSH (Linux/macOS), Python, SQLite  
+> **ライセンス**: [MIT License](https://github.com/ojisantech/ojisan-arsenal/blob/main/LICENSE)  
 
 ---
 
@@ -149,3 +150,16 @@ flowchart TD
 - [ ] スクリプト実行用の認証情報（パスワード）が環境変数（`.env`）または引数に安全に分離されているか
 - [ ] 第1弾パッチ台帳（`patch_ledger.db`）への書き込み権限が確保されているか
 - [ ] パッチ適用後の再起動ルール（業務影響回避）が現場運用に組み込まれているか
+
+---
+
+## 8. ライセンス・著作権表示
+
+本稿に掲載されているアーキテクチャ図、処理フロー、およびコード抜粋・スニペットは、[MIT License](https://github.com/ojisantech/ojisan-arsenal/blob/main/LICENSE) の下で公開されています。商用・非商用問わず自由にご利用・ご参照いただけますが、著作権表示および許諾表示の保持が必要です。
+
+```text
+MIT License
+
+Copyright (c) 2026 ojisantech
+```
+
