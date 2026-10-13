@@ -38,6 +38,9 @@
 ```mermaid
 flowchart TD
     subgraph Arch ["システム俯瞰アーキテクチャ (Source: https://github.com/ojisantech/)"]
+        direction TB
+        spacer_arch[" "] ~~~ Target
+        style spacer_arch fill:none,stroke:none;
         Target["🎯 診断対象ホスト<br/>(Linux / 192.168.1.x)"]
         -->|"① /dev/tcp 高速ポート疎通 (0.3秒)"| Probe["🔍 超軽量プローブ<br/>(cve_lookup_db.sh)<br/>https://github.com/ojisantech/"]
 
@@ -53,12 +56,18 @@ flowchart TD
 ```mermaid
 flowchart TD
     subgraph Bad ["❌ 既存の一般的なスキャナー"]
+        direction TB
+        spacer_bad[" "] ~~~ T1
+        style spacer_bad fill:none,stroke:none;
         T1["ポートスキャン<br/>(OpenSSH 8.9p1)"] --> T2["バージョン文字列だけで照合"]
         T2 --> T3["🚨 誤検知 Critical!<br/>(パッチ適用済みでもアラート)"]
         T3 --> T4["😭 現場が手作業で除外理由をExcelに書く地獄"]
     end
 
     subgraph Good ["⭕ 今回作成した超軽量プローブ (Source: https://github.com/ojisantech/)"]
+        direction TB
+        spacer_good[" "] ~~~ G1
+        style spacer_good fill:none,stroke:none;
         G1["高速ポートプローブ"] --> G2["適用済みパッチ台帳 (SQLite) を参照"]
         G2 --> G3["差分引き算ロジック"]
         G3 --> G4["✅ 実質的な危険脆弱性のみを即時抽出 (過剰検知ゼロ)"]
