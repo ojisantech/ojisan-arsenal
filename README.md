@@ -54,20 +54,20 @@
 | **第4弾** | [`QIITA_ARTICLE_DETAIL_4.md`](./QIITA_ARTICLE_DETAIL_4.md) | **ローカルLLM脆弱性発見・是正要約編**<br/>機密データをクラウドに出せない閉域LAN想定で、ローカルLLMにIT機器の脆弱性を発見させてみた（GPU不要・CPUオンプレ稼働の自宅ラボPoC） | AI活用検討SE、セキュリティ責任者 | `ollama` (`qwen2.5:1.5b`)<br/>FastAPI |
 | **第5弾** | [`QIITA_ARTICLE_DETAIL_5.md`](./QIITA_ARTICLE_DETAIL_5.md) | **Bluetooth/BLE電波探査（空間シャドーIT）編**<br/>「LANもWi-Fiも繋いでないから安全」は大間違い。Bluetooth/BLE電波を探査して見えない空間シャドーITを可視化する自宅ラボ検証PoC | 物理セキュリティ、監査部門、IoT推進者 | Linux BlueZ (`bluetoothctl`)<br/>RSSI距離推定 |
 | **第6弾** | `QIITA_ARTICLE_DETAIL_6.md` *(順次公開)* | **100%実機トポロジー ＆ ワンクリック遠隔接続編**<br/>「仮想ゴミノードで画面が埋まる…」にサヨナラ。HTML5 Canvasで実機100%の7大分類トポロジーを描画し、ワンクリックでRDP/SSH接続するハブを作った話【個人検証PoC】 | インフラエンジニア、運用監視担当 | HTML5 Canvas<br/>.rdp動的生成, TCP Socket |
-| **第7弾** | `QIITA_ARTICLE_DETAIL_7.md` *(順次公開)* | **OSSライセンス監査・GPL汚染回避編**<br/>自作ツールを商用化しようとしたら「python-nmap (GPL-3.0)」で自社コード全公開の危機に。GPL汚染を根絶して合法的プロプライエタリ製品に仕上げた実務記録 | 個人開発者、スタートアップ、技術法務 | `subprocess` + `ElementTree`<br/>AGPL/LGPL隔離 |
+| **第7弾** | `QIITA_ARTICLE_DETAIL_7.md` *(順次公開)* | **OSSライセンス監査・GPL汚染回避編**<br/>自作ツールを商用化しようとしたら「python-nmap (GPL-3.0)」でコード全公開の危機に。GPL汚染を根絶してクリーンな構成に仕上げた個人検証記録 | 個人開発者、スタートアップ、技術法務 | `subprocess` + `ElementTree`<br/>AGPL/LGPL隔離 |
 | **第8弾** | `QIITA_ARTICLE_DETAIL_8.md` *(順次公開)* | **エージェントレス思想 ＆ マスターキー防衛編**<br/>「全社PCに常駐エージェントを入れる」は本当に安全か？ CrowdStrike障害以降に再考するエージェントレス型資産管理のメリデメとマスターキー防衛 | セキュリティアーキテクト、CIO、情シス責任者 | WinRM, SSH公開鍵認証<br/>AES-256メモリ復号 |
-| **第9弾** | `QIITA_ARTICLE_DETAIL_9.md` *(順次公開)* | **Windows 11怪奇現象 ＆ WinRM現場トラブル編**<br/>Windows 11 なのに「Win32_OperatingSystem」が Windows 10 と返してくる怪奇現象。現場でWinRMエージェントレス管理を実装してハマった5つの罠と解決策 | Windowsインフラ管理者、ヘルプデスクSE | PowerShell, WMI BuildNumber<br/>UACリモート制限解除 |
+| **第9弾** | `QIITA_ARTICLE_DETAIL_9.md` *(順次公開)* | **Windows 11怪奇現象 ＆ WinRM現場トラブル編**<br/>Windows 11 なのに「Win32_OperatingSystem」が Windows 10 と返してくる怪奇現象。自宅ラボでWinRMエージェントレス管理を実装してハマった5つの罠と解決策 | Windowsインフラ管理者、ヘルプデスクSE | PowerShell, WMI BuildNumber<br/>UACリモート制限解除 |
 | **第10弾** | `QIITA_ARTICLE_DETAIL_10.md` *(順次公開)* | **20系統脆弱性フィード ＆ ローカルキャッシュ編**<br/>NVDのAPI上限・遅延に泣かない。CISA KEV・EPSS・国内JVN・OSベンダーOVALなど「20系統の脆弱性フィード」をローカルで超高速突合する設計 | セキュリティエンジニア、SOC、診断士 | CISA KEV, FIRST EPSS<br/>OVAL, SQLiteキャッシュ |
-| **第11弾** | `QIITA_ARTICLE_DETAIL_11.md` *(順次公開)* | **Intel N100ミニPC 自立型アプライアンス編**<br/>原価3万円のIntel N100ミニPCで「社内LANに挿すだけで自立稼働する資産管理アプライアンス」を作ってみた（TDP 10W・ファンレス・2.5GbE Dual） | ホームラボ愛好家、自作派、ハードウェアSE | Intel N100, Ubuntu 24.04<br/>USBクローニング, Docker |
+| **第11弾** | `QIITA_ARTICLE_DETAIL_11.md` *(順次公開)* | **Intel N100ミニPC 自立型アプライアンス編**<br/>原価3万円のIntel N100ミニPCで「LANに挿すだけで自立稼働する資産管理アプライアンス（PoC）」を自宅ラボで作ってみた（TDP 10W・ファンレス・2.5GbE Dual） | ホームラボ愛好家、自作派、ハードウェアSE | Intel N100, Ubuntu 24.04<br/>USBクローニング, Docker |
 
 ---
 
 ### 🐟 シリーズ B：現場DX・オンプレミスAI・エッジ運用
 | 弾数 | ファイル | タイトル・テーマ | 対象読者 | 主要技術 |
 | :---: | :--- | :--- | :--- | :--- |
-| **第12弾** | `QIITA_ARTICLE_DETAIL_12.md` *(順次公開)* | **複合機スキャン ➔ Samba ➔ Dify自動RAG登録編**<br/>「現場にWeb画面からPDFをアップロードさせようとするな」複合機でスキャンして共有フォルダに放り込むだけでDifyに自動RAG登録されるPython監視パイプラインを作った話 | DX推進担当、情シス、社内RAG導入者 | Python `watchdog`<br/>Samba (SMB), Dify Dataset API |
-| **第13弾** | `QIITA_ARTICLE_DETAIL_13.md` *(順次公開)* | **水濡れ現場向け Web Speech API × Dify音声UI編**<br/>手が濡れてても手袋しててもOK。水産市場の現場向けに「声で質問して声で答える」Dify音声対話UIをWeb Speech APIだけで作った話（追加ライブラリ不要） | フロントエンド開発者、工場・現場DX担当 | Web Speech API<br/>Vanilla JS, Dify Chat API |
-| **第14弾** | `QIITA_ARTICLE_DETAIL_14.md` *(順次公開)* | **自作AI基盤CPU爆死 ➔ Dify分離アーキテクチャ編**<br/>自作AI基盤（FastAPI + Whisper + Voicevox + Qdrant）がCPU 100%スパイクで爆死した話。現場で本当に安定稼働した「Difyバックエンド ＋ Nginx軽量UI」分離アーキテクチャの結論 | AIエンジニア、インフラエンジニア | Dify オフロード<br/>Nginx, Docker Compose |
+| **第12弾** | `QIITA_ARTICLE_DETAIL_12.md` *(順次公開)* | **複合機スキャン ➔ Samba ➔ Dify自動RAG登録編**<br/>「現場にWeb画面からPDFをアップロードさせようとするな」スキャンPDFを共有フォルダに放り込むだけでDifyに自動RAG登録されるPython監視パイプライン構築PoC | DX推進担当、情シス、社内RAG導入者 | Python `watchdog`<br/>Samba (SMB), Dify Dataset API |
+| **第13弾** | `QIITA_ARTICLE_DETAIL_13.md` *(順次公開)* | **水濡れ現場向け Web Speech API × Dify音声UI編**<br/>手が濡れてても手袋しててもOK。水濡れ現場想定で「声で質問して声で答える」Dify音声対話UIをWeb Speech APIだけで作った話（個人検証PoC） | フロントエンド開発者、工場・現場DX担当 | Web Speech API<br/>Vanilla JS, Dify Chat API |
+| **第14弾** | `QIITA_ARTICLE_DETAIL_14.md` *(順次公開)* | **自作AI基盤CPU爆死 ➔ Dify分離アーキテクチャ編**<br/>自作AI基盤（FastAPI + Whisper + Voicevox + Qdrant）がCPU 100%スパイクで爆死した話。自宅ラボ検証で安定稼働した「Difyバックエンド ＋ Nginx軽量UI」分離アーキテクチャの結論 | AIエンジニア、インフラエンジニア | Dify オフロード<br/>Nginx, Docker Compose |
 | **第15弾** | `QIITA_ARTICLE_DETAIL_15.md` *(順次公開)* | **Tailscaleによる100台エッジAI無料保守編**<br/>ルーターのポート開放も固定IPも不要。100拠点のオンプレエッジAIサーバーをTailscale（ZTNA）で安全にリモート保守する設計と無料枠活用法 | IoT/エッジエンジニア、MSP、フィールドSE | Tailscale (WireGuard / ZTNA)<br/>DERP, Tailscale SSH |
 | **第16弾** | `QIITA_ARTICLE_DETAIL_16.md` *(順次公開)* | **カメラ × Vision LLM による現物伝票の構造化編**<br/>紙の現物伝票をスマホで撮るだけ。Vision LLMで仕入れ品目・数量を瞬時にJSON構造化するプロンプトと現場BPMN設計 | アナログ現場DX、物流・市場担当SE | Vision LLM (マルチモーダル)<br/>Base64, JSON Schema |
 | **第17弾** | `QIITA_ARTICLE_DETAIL_17.md` *(順次公開)* | **職人の暗黙知・ボイスナレッジ化編**<br/>「あのベテランにしか分からない」をなくす。現場でボソッと呟いたノウハウ音声をAIが自動で構造化・ベクトル蓄積する業務フロー | 業務継承・ナレッジマネジメント | 音声認識 (STT)<br/>LLM正規化, VectorDB (RAG) |
@@ -77,8 +77,8 @@
 ### 📡 シリーズ C：ネットワーク深層探索・シャドーIT検知
 | 弾数 | ファイル | タイトル・テーマ | 対象読者 | 主要技術 |
 | :---: | :--- | :--- | :--- | :--- |
-| **第18弾** | `QIITA_ARTICLE_DETAIL_18.md` *(順次公開)* | **ゼロコンフィグ機器探索（mDNS / SSDP）編**<br/>IPアドレスが分からなくても見つけ出せる。mDNSとSSDPで社内のスマート家電・プリンタ・Macを一網打尽にするPython探索術 | ネットワークエンジニア、情シス | mDNS (Bonjour / 5353)<br/>SSDP (UPnP / 1900), zeroconf |
-| **第19弾** | `QIITA_ARTICLE_DETAIL_19.md` *(順次公開)* | **モバイル・私用スマホの受動特定編**<br/>社員の私用スマホ（iPhone/Android）が勝手に社内Wi-Fiに繋がってないか？ 受信パケットからOSを暴くエージェントレス判定ロジック | セキュリティ担当、ネットワーク管理者 | 初期TTL (64/128)<br/>User-Agent, DHCP Option 55 |
+| **第18弾** | `QIITA_ARTICLE_DETAIL_18.md` *(順次公開)* | **ゼロコンフィグ機器探索（mDNS / SSDP）編**<br/>IPアドレスが分からなくても見つけ出せる。mDNSとSSDPでLAN内のスマート家電・プリンタ・Macを一網打尽にするPython探索術【自宅ラボ検証】 | ネットワークエンジニア、情シス | mDNS (Bonjour / 5353)<br/>SSDP (UPnP / 1900), zeroconf |
+| **第19弾** | `QIITA_ARTICLE_DETAIL_19.md` *(順次公開)* | **モバイル・私用スマホの受動特定編**<br/>スマホ（iPhone/Android）のWi-Fi接続をどう見分けるか？ 受信パケットからOSを判別するエージェントレス判定ロジック【自宅ラボ検証PoC】 | セキュリティ担当、ネットワーク管理者 | 初期TTL (64/128)<br/>User-Agent, DHCP Option 55 |
 | **第20弾** | `QIITA_ARTICLE_DETAIL_20.md` *(順次公開)* | **未知端末の即時アラート（超軽量通知）編**<br/>見知らぬMACアドレスが現れた瞬間、1秒で画面に警報を飛ばす。SQLite×ポーリングで作る超軽量リアルタイム検知パイプライン | フルスタックエンジニア、情シス | SQLite `notifications`<br/>MAC正規化, ショートポーリング |
 
 ---
@@ -111,7 +111,7 @@
 | **第32弾** | `QIITA_ARTICLE_DETAIL_32.md` *(順次公開)* | **MTU/MSS不整合によるパケット消失編**<br/>MTU/MSS不整合によるパケット消失。Pingは通るのにWebやSSHが開かない怪奇現象の調査手順 | ネットワークエンジニア、VPN運用者 | DFビットPing, TCP MSS Clamping<br/>`iptables`, `netsh` |
 | **第33弾** | `QIITA_ARTICLE_DETAIL_33.md` *(順次公開)* | **ディスク容量100%と「df vs du」問題編**<br/>ディスク容量100%の真犯人。消したはずのログをプロセスが掴み続けて容量が減らない「df vs du」問題 | SRE、Linux運用保守担当 | `lsof +L1`, `/proc/<PID>/fd`<br/>`truncate -s 0` |
 | **第34弾** | `QIITA_ARTICLE_DETAIL_34.md` *(順次公開)* | **NTP時刻ズレと認証死防衛編**<br/>NTP時刻ズレが引き起こす認証死。KerberosやSSLが全滅する前に仕込むchrony設定と監視 | インフラ設計者、Active Directory管理者 | `chrony` (`makestep`), RTC<br/>時刻オフセット監視スクリプト |
-| **第35弾** | `QIITA_ARTICLE_DETAIL_35.md` *(順次公開)* | **ルーティングループとARPストーム復旧編**<br/>ルーティングループとARPストーム。LANケーブルのタコ足配線で社内NWが死んだ日の復旧記録 | 社内SE、ネットワーク保守担当 | L2ループ, ブロードキャストストーム<br/>Loop Guard, STP, BPDU Guard |
+| **第35弾** | `QIITA_ARTICLE_DETAIL_35.md` *(順次公開)* | **ルーティングループとARPストーム復旧編**<br/>ルーティングループとARPストーム。LANケーブルのタコ足配線でネットワークが死ぬメカニズムと復旧・防止設計【検証解説】 | 社内SE、ネットワーク保守担当 | L2ループ, ブロードキャストストーム<br/>Loop Guard, STP, BPDU Guard |
 | **第36弾** | `QIITA_ARTICLE_DETAIL_36.md` *(順次公開)* | **ゾンビプロセス大量発生と正しい掃除法編**<br/>ゾンビプロセス大量発生。親プロセスが死んでinit/systemdに養子入りしたプロセスの正しい掃除法 | Linuxシステムエンジニア、アプリ開発者 | `[defunct]`, PID枯渇<br/>PPID特定, `systemd` (PID 1) 供養 |
 | **第37弾** | `QIITA_ARTICLE_DETAIL_37.md` *(順次公開)* | **Linuxカーネルパニック防止とOOM Killer調律編**<br/>Linuxカーネルパニックを防ぐ。OOM Killerの優先度調整（oom_score_adj）とスワップ調律で重要サービスを死守する設計 | インフラエンジニア、DBA、SRE | `oom_score_adj` (-1000/1000)<br/>`vm.swappiness=10`, Docker Compose |
 | **第38弾** | `QIITA_ARTICLE_DETAIL_38.md` *(順次公開)* | **ステートフルFWの罠と非対称ルーティング解消編**<br/>ファイアウォールのステートフルインスペクションの罠。非対称ルーティングで戻りパケットが消える問題の解決手順 | ネットワーク設計者、セキュリティ担当 | 非対称ルーティング, RPF (`rp_filter`)<br/>ポリシーベースルーティング (`ip rule`) |
