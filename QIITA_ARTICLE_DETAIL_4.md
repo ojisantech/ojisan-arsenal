@@ -1,7 +1,8 @@
-# 【第4弾 詳細解説】ローカルLLM脆弱性発見・是正要約編 - 機密データをクラウドに出せない社内LANで、ローカルLLMにオフィス内IT機器の脆弱性を発見させてみた（GPU不要・CPUオンプレ稼働PoC）
+# 【第4弾 詳細解説】ローカルLLM脆弱性発見・是正要約編 - 機密データをクラウドに出せない閉域LAN想定で、ローカルLLMにIT機器の脆弱性を発見させてみた（GPU不要・CPUオンプレ稼働の自宅ラボPoC）
 
 > **対象読者**: AI活用検討SE、セキュリティ責任者  
 > **主要技術スタック**: `ollama` (`qwen2.5:1.5b`), FastAPI, Python  
+> **検証環境・位置づけ**: 個人自宅ラボ（ホームラボ／仮想環境）における公開情報・OSSベースの個人研究（PoC）  
 > **ライセンス**: [MIT License](https://github.com/ojisantech/ojisan-arsenal/blob/main/LICENSE)  
 
 ---
