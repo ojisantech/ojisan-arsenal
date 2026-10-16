@@ -1,7 +1,8 @@
-# 【第5弾 詳細解説】Bluetooth/BLE電波探査（空間シャドーIT）編 - 「LANもWi-Fiも繋いでないから安全」は大間違い。オフィスのBluetooth/BLE電波を探査して見えないシャドーITを可視化してみた話
+# 【第5弾 詳細解説】Bluetooth/BLE電波探査（空間シャドーIT）編 - 「LANもWi-Fiも繋いでないから安全」は大間違い。Bluetooth/BLE電波を探査して見えない空間シャドーITを可視化する自宅ラボ検証PoC
 
 > **対象読者**: 物理セキュリティ、監査部門、IoT推進者  
 > **主要技術スタック**: Linux BlueZ (`bluetoothctl`), RSSI距離推定  
+> **検証環境・位置づけ**: 個人自宅ラボ（ホームラボ／仮想環境）における公開情報・OSSベースの個人研究（PoC）  
 > **ライセンス**: [MIT License](https://github.com/ojisantech/ojisan-arsenal/blob/main/LICENSE)  
 
 ---
