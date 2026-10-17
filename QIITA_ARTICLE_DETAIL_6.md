@@ -35,34 +35,34 @@ Zabbixのマップ機能、PRTG、オープンソースのトポロジーツー�
 ```mermaid
 sequenceDiagram
     autonumber
-    actor Admin as 💻 管理者 (ブラウザ)
-    participant UI as 🎨 HTML5 Canvas (/topology)
-    participant API as 🌐 FastAPI バックエンド
-    participant Target as 🖥️ 社内実機端末 (192.168.1.XXX)
+    actor Admin as 💻 管理者<br/>(ブラウザ)
+    participant UI as 🎨 Canvas UI<br/>(/topology)
+    participant API as 🌐 FastAPI<br/>バックエンド
+    participant Target as 🖥️ 実機端末<br/>(192.168.1.X)
 
-    Admin->>UI: トポロジー画面を開く
+    Admin->>UI: トポロジー画面表示
     UI->>API: GET /api/v1/topology
-    API->>API: 仮想ノード排除・実機のみ7大Podへグルーピング
-    API-->>UI: ノード＆エッジJSON返却 (実機25台)
-    UI->>UI: Canvas上に7大Podクラスタ＆レーザー描画
+    Note over API: 仮想ノード排除<br/>実機のみ7大Pod分類
+    API-->>UI: ノード＆エッジJSON<br/>(実機25台)
+    Note over UI: 7大Podクラスタ<br/>＆レーザー描画
 
-    opt 1. リアルタイム・ポート疎通テスト
-        Admin->>UI: 「⚡ ポート疎通確認」ボタン押下 (Port 3389)
-        UI->>API: GET /api/v1/test-port/{ip}/3389
-        API->>Target: 短タイムアウト (0.8s) TCP Socket接続
+    opt 1. リアルタイム疎通テスト
+        Admin->>UI: ⚡ 疎通確認 (Port 3389)
+        UI->>API: GET /test-port/{ip}/3389
+        API->>Target: TCP接続 (Timeout 0.8s)
         Target-->>API: ACK (開放)
         API-->>UI: { "open": true }
-        UI-->>Admin: 🟢 ポート開放中アイコン表示
+        UI-->>Admin: 🟢 開放アイコン表示
     end
 
     opt 2. ワンクリック遠隔接続
         alt Windows端末 (RDP)
-            Admin->>UI: 「📥 .rdp ダウンロード」クリック
+            Admin->>UI: 📥 .rdp DL クリック
             UI->>API: GET /api/v1/rdp/{ip}
-            API-->>Admin: カスタム.rdpファイル即時ダウンロード ➔ 開いて即接続
+            API-->>Admin: .rdp即時DL<br/>➔ 開いて即接続
         else Linux/Mac端末 (SSH)
-            Admin->>UI: 「🔗 ssh:// 起動」クリック
-            UI-->>Admin: OSの規定ターミナルが即時起動
+            Admin->>UI: 🔗 ssh:// 起動クリック
+            UI-->>Admin: 規定ターミナル<br/>即時起動
         end
     end
 ```
