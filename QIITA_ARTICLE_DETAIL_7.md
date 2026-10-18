@@ -92,11 +92,11 @@ flowchart TD
 
 ## 3. 実装詳細とパラメータ完全解説
 
-本アーキテクチャの核となる「脱 `python-nmap` の完全実装コード」「動的プロビジョニングスクリプト」「CIライセンス自動監査設定」の完全版です。
+本アーキテクチャの核となる「脱 `python-nmap` のコア実装コード」「動的プロビジョニングスクリプト」「CIライセンス自動監査設定」の抜粋です。
 
 ### 1. 脱 `python-nmap`：Python標準ライブラリのみによるNmap XML実行・解析コード
 
-外部のサードパーティ製ライブラリを一切使わず、Python標準の `subprocess` と `xml.etree.ElementTree` のみでNmapを実行し、メモリ上でXMLを高速パースする完全な実装です。
+外部のサードパーティ製ライブラリを一切使わず、Python標準の `subprocess` と `xml.etree.ElementTree` のみでNmapを実行し、メモリ上でXMLを高速パースするコア関数実装です。
 
 #### ❌ 改善前の危険なコード（`python-nmap` 依存: GPL-3.0）
 ```python
@@ -106,7 +106,7 @@ nm = nmap.PortScanner()
 nm.scan("192.168.1.1", arguments="-sV -Pn")
 ```
 
-#### ⭕ 改善後のクリーンな完全版コード（Python標準モジュール100%）
+#### ⭕ 改善後のクリーンなコア実装コード（Python標準モジュール100%）
 ```python
 import subprocess
 import xml.etree.ElementTree as ET
