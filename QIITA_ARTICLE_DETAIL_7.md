@@ -47,7 +47,7 @@ flowchart TD
         direction TB
         spacer_danger[" "] ~~~ App_Old
         style spacer_danger fill:none,stroke:none;
-        App_Old["自社製コアシステム<br/>(クローズド販売したい)"]
+        App_Old["自作コアシステム<br/>(クローズド販売したい)"]
         PyNmap["python-nmap<br/>(GPL-3.0)"]
         App_Old -->|"import (静的結合)"| PyNmap
         PyNmap -.->|"GPL感染 (ソース全公開義務)"| App_Old
@@ -57,7 +57,7 @@ flowchart TD
         direction TB
         spacer_safe[" "] ~~~ App_New
         style spacer_safe fill:none,stroke:none;
-        App_New["自社製コアシステム<br/>(プロプライエタリ完全防衛)"]
+        App_New["自作コアシステム<br/>(プロプライエタリ完全防衛)"]
         StdLib["Python標準ライブラリ<br/>(subprocess + ElementTree)"]
         NmapBin["OS標準 Nmap バイナリ<br/>(独立プロセス実行)"]
         Snipe["Snipe-IT<br/>(AGPL-3.0 コンテナ)"]
