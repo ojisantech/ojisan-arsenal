@@ -168,7 +168,7 @@
 | **第66弾** | `QIITA_ARTICLE_DETAIL_66.md` *(順次公開)* | **ローカルWhisper音声ハンズフリー棚卸し編**<br/>音声入力（Whisper）で倉庫・工場の「ハンズフリー在庫棚卸し」を実現するローカルPythonパイプライン | 倉庫・製造業SE、現場作業員 | faster-whisper, Silero VAD, initial_prompt<br/>完全オフラインSTT, 音声在庫パース |
 | **第67弾** | `QIITA_ARTICLE_DETAIL_67.md` *(順次公開)* | **帳票の受領印・チェック漏れ自動検知編**<br/>帳票・伝票の「手書き受領印・チェック漏れ」をOpenCVとVision APIで自動検知・仕分けする技術 | バックLAN内DX、経理・総務SE | OpenCV HSV色空間 (朱色抽出)<br/>捺印枠クロップ, 0.01秒高速仕分け |
 | **第68弾** | `QIITA_ARTICLE_DETAIL_68.md` *(順次公開)* | **Difyセルフホスト自動日次ダンプ・リカバリ編**<br/>Difyセルフホスト運用の要！PostgreSQL / Vector DBの自動日次ダンプと無瞬断リカバリ検証 | Dify運用者、インフラエンジニア、SRE | pg_dump (-F c), Qdrant Snapshot API<br/>ストレージtar.gz, 世代管理cron |
-| **第69弾** | `QIITA_ARTICLE_DETAIL_69.md` *(順次公開)* | **完全オフライン埋め込み基盤 (bge-m3 × ChromaDB)編**<br/>社外持ち出し厳禁データのための完全オフライン・ローカルEmbedding基盤（bge-m3 × ChromaDB） | セキュリティ重視企業、AI基盤SE | BAAI/bge-m3 (8192トークン長)<br/>ChromaDB, エアギャップ環境RAG |
+| **第69弾** | `QIITA_ARTICLE_DETAIL_69.md` *(順次公開)* | **完全オフライン埋め込み基盤 (bge-m3 × ChromaDB)編**<br/>外部持ち出し厳禁データのための完全オフライン・ローカルEmbedding基盤（bge-m3 × ChromaDB） | セキュリティ重視企業、AI基盤SE | BAAI/bge-m3 (8192トークン長)<br/>ChromaDB, エアギャップ環境RAG |
 | **第70弾** | `QIITA_ARTICLE_DETAIL_70.md` *(順次公開)* | **朝礼安全注意事項・ヒヤリハット自動配信編**<br/>朝礼の「今日のヒヤリハット・安全衛生注意事項」を過去事例DBから毎日自動生成するリマインダーボット | 労働安全管理者、現場リーダー | SQLite過去事故事例, 季節・天候連動<br/>1分間スピーチ生成, Teams/Slack配信 |
 
 ---
@@ -295,7 +295,7 @@
 ### 🔑 シリーズ R：次世代認証・IdP連携・ゼロトラストアクセス編
 | 弾数 | ファイル | タイトル・テーマ | 対象読者 | 主要技術 |
 | :---: | :--- | :--- | :--- | :--- |
-| **第141弾** | `QIITA_ARTICLE_DETAIL_141.md` *(順次公開)* | **KeycloakオンプレSSO ＆ Active Directory統合編**<br/>Keycloakによるオンプレミスシングルサインオン（SSO / OIDC）構築とActive Directory透過統合 | 全社認証基盤担当、情シス責任者 | `Keycloak 24.x`, PostgreSQL<br/>User Federation, LDAP同期, OIDC |
+| **第141弾** | `QIITA_ARTICLE_DETAIL_141.md` *(順次公開)* | **KeycloakオンプレSSO ＆ Active Directory統合編**<br/>Keycloakによるオンプレミスシングルサインオン（SSO / OIDC）構築とActive Directory透過統合 | 統合認証基盤担当、情シス責任者 | `Keycloak 24.x`, PostgreSQL<br/>User Federation, LDAP同期, OIDC |
 | **第142弾** | `QIITA_ARTICLE_DETAIL_142.md` *(順次公開)* | **OAuth2 / OIDC認可コードフロー ＆ JWT署名検証編**<br/>OAuth2 / OpenID Connect (OIDC) 認可コードフローの現場トラブルシュートとトークン署名検証 | Webアプリ開発者、セキュリティSE | `PyJWT`, PyJWKClient<br/>PKCE (RFC 7636), RS256公開鍵検証 |
 | **第143弾** | `QIITA_ARTICLE_DETAIL_143.md` *(順次公開)* | **WebAuthn / Passkey 生体認証ログイン実装編**<br/>WebAuthn / Passkey (パスキー) を自作Web管理画面に組み込む完全実装（生体認証ログイン） | フロントエンド・バックエンドエンジニア | FIDO2 / `py_webauthn`<br/>Windows Hello / Touch ID, パスワードレス |
 | **第144弾** | `QIITA_ARTICLE_DETAIL_144.md` *(順次公開)* | **LDAPS (ポート636) 証明書失効検知 ＆ 自動テスト編**<br/>LDAP over TLS (LDAPS: 636) 証明書失効・更新の現場落とし穴と接続自動検証スクリプト | AD管理者、LAN内システム担当 | LDAPS (TCP 636), OpenSSL<br/>証明書期限切れ30日前警告, SAN検証 |
