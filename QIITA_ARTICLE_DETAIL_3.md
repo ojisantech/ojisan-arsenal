@@ -1,6 +1,6 @@
 # 【第3弾 詳細解説】IT資産の発見と管理（エージェントレス）編 - 「ExcelのIT資産台帳、最後に更新したの誰？」に終止符を打つ。エージェントレスで端末を自動発見してOSS資産台帳（Snipe-IT）に即時同期する自宅ラボ構築PoC
 
-> **対象読者**: 1人情シス、社内SE、IT資産管理者  
+> **対象読者**: 1人情シス、SE、IT資産管理者  
 > **主要技術スタック**: Python, ARP, mDNS (Zeroconf), WinRM, Snipe-IT REST API  
 > **検証環境・位置づけ**: 個人自宅ラボ（ホームラボ／仮想環境）における公開情報・OSSベースの個人研究（PoC）  
 > **ライセンス**: [MIT License](https://github.com/ojisantech/ojisan-arsenal/blob/main/LICENSE)  
