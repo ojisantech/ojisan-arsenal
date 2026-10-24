@@ -191,7 +191,7 @@ def record_patch_success(db_path: str, ip: str, cve_id: str, memo: str) -> None:
 実際にラッパースクリプトを実行し、SSH疎通確認からパッケージ更新、SQLite台帳記録、そして第1弾プローブによる再検証までが数秒で完結する様子です。
 
 ```text
-$ ./patch_and_verify.sh 192.168.1.15 CVE-2024-6387
+# 対象IP (192.168.1.15) と CVE-2024-6387 を指定してパッチ適用＆再検証を実行
 [PRE-FLIGHT] 192.168.1.15 の SSH(Port:22) 疎通確認 ... OK (0.05s)
 [DEPLOY] 遠隔パッチ適用中 (DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y --only-upgrade openssh-server) ...
 [DEPLOY] 適用完了 (ExitCode: 0)

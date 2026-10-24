@@ -105,13 +105,11 @@ flowchart TD
 
 本アーキテクチャの中核となる「`/dev/tcp` 疎通関数」「SQLiteパッチ台帳スキーマ＆引き算クエリ」「CLI実行・動作ログ」の完全解説です。
 
-### ① コア実装スクリプト（Bash `/dev/tcp` 疎通 ＆ SQLite 引き算ロジック）
+### ① コア実装ロジック抜粋（Bash `/dev/tcp` 疎通 ＆ SQLite 引き算クエリ）
 
 ```bash
-#!/usr/bin/env bash
-# (Source: https://github.com/ojisantech/)
-# 外部依存ゼロ: Bash標準 /dev/tcp と sqlite3 のみで動作する誤検知ゼロ化CVEプローブ
-set -euo pipefail
+# (Source: https://github.com/ojisantech/ - 要点抜粋)
+# 外部依存ゼロ: Bash標準 /dev/tcp と sqlite3 のみで動作する誤検知ゼロ化CVEプローブ（中核関数抜粋）
 
 DB_PATH="${PATCH_LEDGER_DB:-./patch_ledger.db}"
 
@@ -179,7 +177,7 @@ SQL
 
 #### Step 1: 初回スキャン実行（パッチ未記録時）
 ```text
-$ ./scripts/cve_lookup_db.sh 192.168.1.200
+# 対象IPを指定してプローブ実行
 [TARGET] 192.168.1.200 (OS: Ubuntu 24.04)
 [PROBE] ポート 22 (SSH), 80 (HTTP) 開放確認 (所要時間: 0.28秒)
 [WARN] 以下の重要CVEが検出されました:
@@ -188,15 +186,14 @@ $ ./scripts/cve_lookup_db.sh 192.168.1.200
 ```
 
 #### Step 2: パッチ適用実績を台帳に1行記録
-```bash
-# apt update && apt upgrade によりバックポートパッチを適用した事実を記録
-$ ./scripts/cve_lookup_db.sh --record 192.168.1.200 CVE-2024-6387 "apt update && OpenSSHバックポート更新適用済み"
+```text
+# apt update && apt upgrade によりバックポートパッチを適用した事実を台帳へ記録（--record モード実行）
 [SUCCESS] 192.168.1.200 の CVE-2024-6387 を適用済み台帳に記録しました。
 ```
 
 #### Step 3: 再スキャン実行（SQL引き算ロジックが作動）
 ```text
-$ ./scripts/cve_lookup_db.sh 192.168.1.200
+# 同一対象IPへプローブ再実行
 [TARGET] 192.168.1.200 (OS: Ubuntu 24.04)
 [PROBE] ポート 22, 80 開放確認 (所要時間: 0.26秒)
 [INFO] CVE-2024-6387 は適用済み（手動台帳確認: apt update && OpenSSHバックポート更新適用済み）のため除外されました。
@@ -242,7 +239,7 @@ $ ./scripts/cve_lookup_db.sh 192.168.1.200
 
 | 障害事象・エラーメッセージ | 想定原因 | 一次切り分け・復旧コマンド |
 | :--- | :--- | :--- |
-| **`/dev/tcp: No such file or directory` または構文エラー** | スクリプトが `bash` ではなく `sh`（`dash` 等）で実行されている（`/dev/tcp` はBash固有機能） | `bash ./scripts/cve_lookup_db.sh <IP>` で実行するか、先頭行のシバンが `#!/usr/bin/env bash` になっているか確認 |
+| **`/dev/tcp: No such file or directory` または構文エラー** | スクリプトが `bash` ではなく `sh`（`dash` 等）で実行されている（`/dev/tcp` はBash固有機能） | `bash` 明示指定で実行するか、先頭行のシバンが `#!/usr/bin/env bash` になっているか確認 |
 | **`Error: database is locked`** | WALモードが未設定のまま複数プロセスから同時書き込みが発生している | `sqlite3 patch_ledger.db "PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000;"` を実行して設定を確認 |
 | **記録したはずのCVEが除外されない** | 登録時のCVE文字列の空白混入、または小文字（`cve-2024-...`）での表記ゆれ | `sqlite3 patch_ledger.db "SELECT * FROM applied_patches WHERE ip='<IP>';"` で登録文字列を大文字統一（`CVE-...`）で確認 |
 | **開放されているはずのポートが検知されない** | VPN越しや高遅延回線で `timeout 1`（1秒）以内にTCPハンドシェイクが完了していない | 拠点間通信の場合はタイムアウト値を `timeout 2` または `timeout 3` に調整して再試行 |

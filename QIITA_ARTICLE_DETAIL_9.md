@@ -22,7 +22,7 @@
 * 「管理者パスワードは合っているのに、なぜかAccess is denied（アクセス拒否）される」
 * 「セットアップ用PowerShellを実行しようとしたらセキュリティで弾かれる」
 
-本記事では、筆者がLAN内のサーバー、PC、十数台をエージェントレス管理化する中で踏み抜いた **「5つの巨大な罠」** と、それらを一撃で解決する **「全自動セットアップバッチ」** を全公開します。
+本記事では、筆者がLAN内のサーバー、PC、十数台をエージェントレス管理化する中で踏み抜いた **「5つの巨大な罠」** と、それらを一撃で解決する **「全自動セットアップバッチ（要点抜粋）」** を解説します。
 
 従来の画一的なアプローチや商用ブラックボックス製品に頼る運用では、ライセンス費用の高騰や仕様変更に伴うベンダーロックイン、さらには現場特有のエッジケースに対する対応力の欠如が深刻なボトルネックとなります。
 本稿では、オープンソースおよび標準技術の基本原理に立ち返り、外部コストゼロかつ自立運用可能なアーキテクチャの完全実装と運用基準を詳細に解説します。
@@ -92,7 +92,7 @@ WinRMの標準ポートは **`5985/tcp` (HTTP)** です。LAN内に接続して�
 
 ## 3. 実装詳細とパラメータ完全解説
 
-本アーキテクチャの要となるコアコードおよび「一撃解消セットアップバッチ」の完全版です。
+本アーキテクチャの要となるコアコードおよび「一撃解消セットアップバッチ」の要点抜粋です。
 
 ### ① 罠 1 の再現と Python 側での正確な Windows 11 ビルド判定ロジック
 
@@ -145,40 +145,28 @@ wmic useraccount where "name='AssetAdmin'" set PasswordExpires=FALSE
 
 ---
 
-### ③ 決定版：全LAN内に配る「一撃解消バッチ（`setup_winrm.bat`）」
+### ③ 決定版：全LAN内に配る「一撃解消バッチ（要点抜粋）」
 
-以上の5つの罠をすべて対策し、対象PCで右クリックして「管理者として実行」するだけでWinRMエージェントレス環境が完成する統合バッチファイルです。
+以上の5つの罠をすべて対策し、対象PCで「管理者として実行」する際に組み込むコア処理の抜粋です。
 
 ```bat
-@echo off
-:: (Source: https://github.com/ojisantech/)
-:: 管理者権限チェック
-net session >nul 2>&1
-if %errorLevel% neq 0 (
-    echo [ERROR] このバッチは右クリックから「管理者として実行」してください。
-    pause
-    exit /b 1
-)
+:: (Source: https://github.com/ojisantech/ - 要点抜粋)
+:: ※実行時は管理者権限（昇格プロンプト）で実行してください
 
-echo [+] 1. WinRM サービスを有効化＆自動起動設定中...
+:: 1. WinRM サービスを有効化＆自動起動設定
 powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Set-Service -Name WinRM -StartupType Automatic; Start-Service -Name WinRM"
 call winrm quickconfig -q
 
-echo [+] 2. UAC リモート制限 (LocalAccountTokenFilterPolicy) を解除中...
+:: 2. UAC リモート制限 (LocalAccountTokenFilterPolicy) を解除
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f
 
-echo [+] 3. ファイアウォール 5985番ポートをLAN内サブネット向けに開放中...
+:: 3. ファイアウォール 5985番ポートをLAN内サブネット向けに開放
 netsh advfirewall firewall add rule name="WinRM-AssetScan" dir=in action=allow protocol=TCP localport=5985 remoteip=localsubnet profile=any
 
-echo [+] 4. 診断用ローカルアカウント作成 ＆ パスワード無期限化...
-net user AssetAdmin StrongPassword999! /add /comment:"Asset Scanner User"
+:: 4. 診断用ローカルアカウント作成 ＆ パスワード無期限化
+net user AssetAdmin StrongPassword999! /add
 net localgroup Administrators AssetAdmin /add
 powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Set-LocalUser -Name 'AssetAdmin' -PasswordNeverExpires $true"
-
-echo ========================================================
-echo [SUCCESS] WinRM エージェントレス設定が正常に完了しました！
-echo ========================================================
-pause
 ```
 
 ---
