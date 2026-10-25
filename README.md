@@ -70,7 +70,7 @@
 ### 🐟 シリーズ B：現場DX・オンプレミスAI・エッジ運用
 | 弾数 | ファイル | タイトル・テーマ | 対象読者 | 主要技術 |
 | :---: | :--- | :--- | :--- | :--- |
-| **第12弾** | `QIITA_ARTICLE_DETAIL_12.md` *(順次公開)* | **複合機スキャン ➔ Samba ➔ Dify自動RAG登録編**<br/>「現場にWeb画面からPDFをアップロードさせようとするな」スキャンPDFを共有フォルダに放り込むだけでDifyに自動RAG登録されるPython監視パイプライン構築PoC | DX推進担当、情シス、LAN内RAG導入者 | Python `watchdog`<br/>Samba (SMB), Dify Dataset API |
+| **第12弾** | [`QIITA_ARTICLE_DETAIL_12.md`](./QIITA_ARTICLE_DETAIL_12.md) | **複合機スキャン ➔ Samba ➔ Dify自動RAG登録編**<br/>「現場にWeb画面からPDFをアップロードさせようとするな」スキャンPDFを共有フォルダに放り込むだけでDifyに自動RAG登録されるPython監視パイプライン構築PoC | DX推進担当、情シス、LAN内RAG導入者 | Python `watchdog`<br/>Samba (SMB), Dify Dataset API |
 | **第13弾** | `QIITA_ARTICLE_DETAIL_13.md` *(順次公開)* | **水濡れ現場向け Web Speech API × Dify音声UI編**<br/>手が濡れてても手袋しててもOK。水濡れ現場想定で「声で質問して声で答える」Dify音声対話UIをWeb Speech APIだけで作った話（個人検証PoC） | フロントエンド開発者、工場・現場DX担当 | Web Speech API<br/>Vanilla JS, Dify Chat API |
 | **第14弾** | `QIITA_ARTICLE_DETAIL_14.md` *(順次公開)* | **自作AI基盤CPU爆死 ➔ Dify分離アーキテクチャ編**<br/>自作AI基盤（FastAPI + Whisper + Voicevox + Qdrant）がCPU 100%スパイクで爆死した話。自宅ラボ検証で安定稼働した「Difyバックエンド ＋ Nginx軽量UI」分離アーキテクチャの結論 | AIエンジニア、インフラエンジニア | Dify オフロード<br/>Nginx, Docker Compose |
 | **第15弾** | `QIITA_ARTICLE_DETAIL_15.md` *(順次公開)* | **Tailscaleによる100台エッジAI無料保守編**<br/>ルーターのポート開放も固定IPも不要。100拠点のオンプレエッジAIサーバーをTailscale（ZTNA）で安全にリモート保守する設計と無料枠活用法 | IoT/エッジエンジニア、MSP、フィールドSE | Tailscale (WireGuard / ZTNA)<br/>DERP, Tailscale SSH |
