@@ -84,7 +84,7 @@
 | :---: | :--- | :--- | :--- | :--- |
 | **第18弾** | `QIITA_ARTICLE_DETAIL_18.md` *(順次公開)* | **ゼロコンフィグ機器探索（mDNS / SSDP）編**<br/>IPアドレスが分からなくても見つけ出せる。mDNSとSSDPでLAN内のスマート家電・プリンタ・Macを一網打尽にするPython探索術【自宅ラボ検証】 | ネットワークエンジニア、情シス | mDNS (Bonjour / 5353)<br/>SSDP (UPnP / 1900), zeroconf |
 | **第19弾** | [`QIITA_ARTICLE_DETAIL_19.md`](./QIITA_ARTICLE_DETAIL_19.md) | **モバイル・私用スマホの受動特定編**<br/>スマホ（iPhone/Android）のWi-Fi接続をどう見分けるか？ 受信パケットからOSを判別するエージェントレス判定ロジック【自宅ラボ検証PoC】 | セキュリティ担当、ネットワーク管理者 | 初期TTL (64/128)<br/>User-Agent, DHCP Option 55 |
-| **第20弾** | `QIITA_ARTICLE_DETAIL_20.md` *(順次公開)* | **未知端末の即時アラート（超軽量通知）編**<br/>見知らぬMACアドレスが現れた瞬間、1秒で画面に警報を飛ばす。SQLite×ポーリングで作る超軽量リアルタイム検知パイプライン | フルスタックエンジニア、情シス | SQLite `notifications`<br/>MAC正規化, ショートポーリング |
+| **第20弾** | [`QIITA_ARTICLE_DETAIL_20.md`](./QIITA_ARTICLE_DETAIL_20.md) | **未知端末の即時アラート（超軽量通知）編**<br/>見知らぬMACアドレスが現れた瞬間、1秒で画面に警報を飛ばす。SQLite×ポーリングで作る超軽量リアルタイム検知パイプライン | フルスタックエンジニア、情シス | SQLite `notifications`<br/>MAC正規化, ショートポーリング |
 
 ---
 
