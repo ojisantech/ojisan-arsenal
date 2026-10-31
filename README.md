@@ -101,7 +101,7 @@
 | 弾数 | ファイル | タイトル・テーマ | 対象読者 | 主要技術 |
 | :---: | :--- | :--- | :--- | :--- |
 | **第24弾** | [`QIITA_ARTICLE_DETAIL_24.md`](./QIITA_ARTICLE_DETAIL_24.md) | **Excelライクなテーブル操作（Vanilla JS）編**<br/>「Excelの操作感じゃないと嫌だ」と言われたWeb画面。HTML Tableで列幅ドラッグ伸縮（最小10px）とリアルタイムPing疎通を自作した話 | Webフロントエンド開発者、SE | Pure JavaScript (Vanilla)<br/>CSS Table Layout, TCP Socket |
-| **第25弾** | `QIITA_ARTICLE_DETAIL_25.md` *(順次公開)* | **ソフトウェア資産管理（SAM）と野良アプリ発見編**<br/>野良アプリの勝手インストールをあぶり出す。WindowsとLinuxからインストール済み全アプリをエージェントレス抽出し台帳化するスクリプト | SAM管理者、情シス、セキュリティ担当 | PowerShell (Uninstallキー)<br/>SSH (dpkg / rpm) |
+| **第25弾** | [`QIITA_ARTICLE_DETAIL_25.md`](./QIITA_ARTICLE_DETAIL_25.md) | **ソフトウェア資産管理（SAM）と野良アプリ発見編**<br/>野良アプリの勝手インストールをあぶり出す。WindowsとLinuxからインストール済み全アプリをエージェントレス抽出し台帳化するスクリプト | SAM管理者、情シス、セキュリティ担当 | PowerShell (Uninstallキー)<br/>SSH (dpkg / rpm) |
 | **第26弾** | `QIITA_ARTICLE_DETAIL_26.md` *(順次公開)* | **Linux & macOS の遠隔サイレントパッチ編**<br/>Windowsだけじゃない。Ubuntuの「apt-get」とmacOSの「softwareupdate」をSSH越しに安全にリモート適用・結果回収する自動化 | Linux/Macインフラ管理者 | Paramiko (SSH), `apt-get`<br/>`softwareupdate`, 再起動検知 |
 | **第27弾** | `QIITA_ARTICLE_DETAIL_27.md` *(順次公開)* | **AI不在時フェイルソフト設計編**<br/>重たいLLMコンテナが突然落ちてもシステムを止めない。AI不在時に決定論的ルールエンジンへ瞬時にフォールバックする耐障害性設計 | システムアーキテクト、SRE | 決定論的辞書ルール<br/>ヘルスチェック, 自動フォールバック |
 | **第28弾** | `QIITA_ARTICLE_DETAIL_28.md` *(順次公開)* | **Docker Composeの物理分割とオーバーライド編**<br/>「AI機能付き」と「AIなしBase版」をどう作り分けるか？ Docker Composeの物理分割とオーバーライド設計で保守コストを半減させた話 | Docker運用者、インフラ設計者 | `docker-compose.base.yaml`<br/>`docker-compose.llm.yaml`, `-f` |
