@@ -5,10 +5,6 @@
 **ライセンス**: [MIT License](https://github.com/ojisantech/ojisan-arsenal/blob/main/LICENSE)
 **検証環境・位置づけ**: 個人自宅ラボ（ホームラボ／仮想環境）における公開情報・OSSベースの個人研究（PoC）
 
-
-💡 **【検証環境・個人研究（PoC）に関する注記】**
-本記事は、筆者個人の自宅検証環境（ホームラボ／仮想環境）において、公開情報およびOSS（オープンソースソフトウェア）を用いて独自に構築・検証した個人研究（PoC）の記録です。特定の企業・団体の実環境や業務上の非公開情報とは一切関係ありません。
-
 ---
 
 ## 1. 概要と背景（サマリーからの深掘り）
@@ -84,7 +80,7 @@ flowchart TD
 # コア実装ロジック（要点抜粋）
 
 # 1. Tailscale公式リポジトリからインストール
-curl -fsSL https:<script> | sh
+curl -fsSL https://tailscale.com/install.sh | sh
 
 # 2. 事前に管理画面で発行した再利用可能Auth-Keyで非対話ログイン
 # --ssh フラグで Tailscale SSH も同時有効化
@@ -107,3 +103,12 @@ echo "[SUCCESS] Device registered to Tailscale as: ${HOSTNAME}"
   ネットワーク遅延や対象機器の無応答時にもプロセス全体がブロッキングしないよう明示的なタイムアウトと例外隔離を設け、基幹業務への影響をゼロに抑えます。
 - **べき等性（Idempotency）と監査トレーサビリティ（対象: IoT/エッジエンジニア、MSP、フィールドSE）**:
   同一処理を複数回実行しても状態が破綻しないべき等設計を採用し、実行結果・差分ログを確実に保全することで実務運用での再現性と安全性を担保します。
+
+---
+
+### 📚 自立型インフラ＆オンプレAI完全技術リファレンス
+本記事が役に立った・面白かったと感じていただけましたら、ぜひGitHubリポジトリへの **Star (★)** や **[Qiita (@ojisantech)](https://qiita.com/ojisantech)** / **[X (@OjisanTechnical)](https://x.com/OjisanTechnical)** のフォローをお願いいたします！  
+👉 **[GitHub リポジトリ: ojisantech/ojisan-arsenal](https://github.com/ojisantech/ojisan-arsenal)**
+
+> 💡 **【検証環境・個人研究（PoC）に関する注記】**  
+> 本記事は、筆者個人の自宅検証環境（ホームラボ／仮想環境）において、公開情報およびOSS（オープンソースソフトウェア）を用いて独自に構築・検証した個人研究（PoC）の記録です。特定の企業・団体の実環境や業務上の非公開情報とは一切関係ありません。
