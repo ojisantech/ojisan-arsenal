@@ -1,4 +1,4 @@
-# 【第15弾 詳細解説】Tailscaleによる100台エッジAI無料保守編 - ルーターのポート開放も固定IPも不要。100拠点のオンプレエッジAIサーバーをTailscale（ZTNA）で安全にリモート保守する設計と無料枠活用法
+# 【第15弾 詳細解説】Tailscaleによる遠隔エッジAIセキュア保守編 - ルーターのポート開放も固定IPも不要。遠隔拠点のオンプレエッジAIサーバーをTailscale（ZTNA）で安全にリモート保守する設計と個人検証向け無料枠活用法
 
 **対象読者**: IoT/エッジエンジニア、MSP、フィールドSE
 **主要技術スタック**: Tailscale (WireGuard / ZTNA), DERP, Tailscale SSH
@@ -25,7 +25,7 @@
 
 この「遠隔アクセスの三重苦」を一撃で解決し、現在デファクトスタンダードになりつつあるのが、**ZTNA（Zero Trust Network Access）技術を用いた「Tailscale」** です。
 
-本記事では、なぜTailscaleが最強なのか、他手法との比較、そして**「無料枠（Personalプラン）で最大100台のオンサイト・エッジサーバーを完全無料で安全に保守する設計」** を解説します。
+本記事では、なぜTailscaleが最強なのか、他手法との比較、そして**「個人利用向け無料枠（Personalプラン）で最大100台の個人検証エッジサーバーを安全に保守する設計（※商用・法人業務時は商用プラン契約が必須）」** を解説します。
 
 従来の画一的なアプローチや商用ブラックボックス製品に頼る運用では、ライセンス費用の高騰や仕様変更に伴うベンダーロックイン、さらには現場特有のエッジケースに対する対応力の欠如が深刻なボトルネックとなります。
 本稿では、オープンソースおよび標準技術の基本原理に立ち返り、外部コストゼロかつ自立運用可能なアーキテクチャの完全実装と運用基準を詳細に解説します。
@@ -67,7 +67,7 @@ flowchart TD
 2. **なぜTailscaleは「ルーターの穴あけなし」で繋がるのか？**:
    Tailscaleの真髄は、**STUN/ICE技術を駆使した「NATトラバーサル（NAT越え）」** にあります。
 3. **無料枠（Personalプラン）で「100台のエッジ」を管理する構成**:
-   Tailscaleは個人のホビー向けとして非常に寛大な無料枠を提供しています。
+   Tailscaleは個人のホビー・非商用検証向けとして非常に寛大な無料枠（Personalプラン）を提供しています（※利用規約上、Personal無料プランは個人の非商用・個人検証用途に限定されており、法人業務や商用保守で用いる場合は必ずStarter/Premium等の商用有償プランを契約する必要があります）。
 
 ---
 
@@ -85,7 +85,7 @@ curl -fsSL https://tailscale.com/install.sh | sh
 # 2. 事前に管理画面で発行した再利用可能Auth-Keyで非対話ログイン
 # --ssh フラグで Tailscale SSH も同時有効化
 TS_AUTHKEY="tskey-auth-xxxxxxxxxxxxxxxxxxxxxxxx-xxxxxxxx"
-HOSTNAME="edge-market-$(hostname)"
+HOSTNAME="edge-node-$(hostname)"
 
 sudo tailscale up \
     --authkey="${TS_AUTHKEY}" \
@@ -98,7 +98,7 @@ echo "[SUCCESS] Device registered to Tailscale as: ${HOSTNAME}"
 
 ### 主要パラメータ・設定値の技術的根拠
 - **主要技術スタック（Tailscale (WireGuard / ZTNA), DERP, Tailscale SSH）の選定と最小権限設計**:
-  **Tailscaleによる100台エッジAI無料保守編** - ルーターのポート開放も固定IPも不要。100拠点のオンプレエッジAIサーバーをTailscale（ZTNA）で安全にリモート保守する設計と無料枠活用法 の実現にあたり、外部の過剰な依存や特権常駐を排し、Tailscale (WireGuard / ZTNA), DERP, Tailscale SSH を軸とした省フットプリントかつセキュアな実行境界を構成しています。
+  **Tailscaleによる遠隔エッジAIセキュア保守編** - ルーターのポート開放も固定IPも不要。遠隔拠点のオンプレエッジAIサーバーをTailscale（ZTNA）で安全にリモート保守する設計と個人検証向け無料枠活用法 の実現にあたり、外部の過剰な依存や特権常駐を排し、Tailscale (WireGuard / ZTNA), DERP, Tailscale SSH を軸とした省フットプリントかつセキュアな実行境界を構成しています。
 - **タイムアウト境界とフェイルソフト耐性**:
   ネットワーク遅延や対象機器の無応答時にもプロセス全体がブロッキングしないよう明示的なタイムアウトと例外隔離を設け、基幹業務への影響をゼロに抑えます。
 - **べき等性（Idempotency）と監査トレーサビリティ（対象: IoT/エッジエンジニア、MSP、フィールドSE）**:

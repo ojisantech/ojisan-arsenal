@@ -39,21 +39,21 @@
 | **第5弾** | [`QIITA_ARTICLE_DETAIL_5.md`](./QIITA_ARTICLE_DETAIL_5.md) | **Bluetooth/BLE電波探査（空間シャドーIT）編**<br/>「LANもWi-Fiも繋いでないから安全」は大間違い。Bluetooth/BLE電波を探査して見えない空間シャドーITを可視化する自宅ラボ検証PoC | 物理セキュリティ、監査部門、IoT推進者 | Linux BlueZ (`bluetoothctl`)<br/>RSSI距離推定 |
 | **第6弾** | [`QIITA_ARTICLE_DETAIL_6.md`](./QIITA_ARTICLE_DETAIL_6.md) | **100%実機トポロジー ＆ ワンクリック遠隔接続編**<br/>「仮想ゴミノードで画面が埋まる…」にサヨナラ。HTML5 Canvasで実機100%の7大分類トポロジーを描画し、ワンクリックでRDP/SSH接続するハブを作った話【個人検証PoC】 | インフラエンジニア、運用監視担当 | HTML5 Canvas<br/>.rdp動的生成, TCP Socket |
 | **第7弾** | [`QIITA_ARTICLE_DETAIL_7.md`](./QIITA_ARTICLE_DETAIL_7.md) | **OSSライセンス監査・GPL汚染回避編**<br/>自作ツールを商用化しようとしたら「python-nmap (GPL-3.0)」でコード全公開の危機に。GPL汚染を根絶してクリーンな構成に仕上げた個人検証記録 | 個人開発者、スタートアップ、技術法務 | `subprocess` + `ElementTree`<br/>AGPL/LGPL隔離 |
-| **第8弾** | [`QIITA_ARTICLE_DETAIL_8.md`](./QIITA_ARTICLE_DETAIL_8.md) | **エージェントレス思想 ＆ マスターキー防衛編**<br/>「全LAN内PC端末に常駐エージェントを入れる」は本当に安全か？ CrowdStrike障害以降に再考するエージェントレス型資産管理のメリデメとマスターキー防衛 | セキュリティアーキテクト、CIO、情シス責任者 | WinRM, SSH公開鍵認証<br/>認証付き暗号（Fernet / AES-256-GCM） |
+| **第8弾** | [`QIITA_ARTICLE_DETAIL_8.md`](./QIITA_ARTICLE_DETAIL_8.md) | **エージェントレス思想 ＆ マスターキー防衛編**<br/>「全LAN内PC端末に常駐エージェントを入れる」は本当に安全か？ 大規模エージェント障害以降に再考するエージェントレス型資産管理のメリデメとマスターキー防衛 | セキュリティアーキテクト、CIO、情シス責任者 | WinRM, SSH公開鍵認証<br/>認証付き暗号（Fernet / AES-256-GCM） |
 | **第9弾** | [`QIITA_ARTICLE_DETAIL_9.md`](./QIITA_ARTICLE_DETAIL_9.md) | **Windows 11怪奇現象 ＆ WinRM現場トラブル編**<br/>Windows 11 なのに「Win32_OperatingSystem」が Windows 10 と返してくる怪奇現象。自宅ラボでWinRMエージェントレス管理を実装してハマった5つの罠と解決策 | Windowsインフラ管理者、ヘルプデスクSE | PowerShell, WMI BuildNumber<br/>UACリモート制限解除 |
 | **第10弾** | [`QIITA_ARTICLE_DETAIL_10.md`](./QIITA_ARTICLE_DETAIL_10.md) | **20系統脆弱性フィード ＆ ローカルキャッシュ編**<br/>NVDのAPI上限・遅延に泣かない。CISA KEV・EPSS・国内JVN・OSベンダーOVALなど「20系統の脆弱性フィード」をローカルで超高速突合する設計 | セキュリティエンジニア、SOC、診断士 | CISA KEV, FIRST EPSS<br/>OVAL, SQLiteキャッシュ |
 | **第11弾** | `QIITA_ARTICLE_DETAIL_11.md` *(順次公開)* | **Intel N100ミニPC 自立型アプライアンス編**<br/>原価3万円のIntel N100ミニPCで「LANに挿すだけで自立稼働する資産管理アプライアンス（PoC）」を自宅ラボで作ってみた（TDP 10W・ファンレス・2.5GbE Dual） | ホームラボ愛好家、自作派、ハードウェアSE | Intel N100, Ubuntu 24.04<br/>USBクローニング, Docker |
 
 ---
 
-### 🐟 シリーズ B：現場DX・オンプレミスAI・エッジ運用
+### 🤖 シリーズ B：ローカルエッジAI・ハンズフリー・エッジ運用
 | 弾数 | ファイル | タイトル・テーマ | 対象読者 | 主要技術 |
 | :---: | :--- | :--- | :--- | :--- |
 | **第12弾** | [`QIITA_ARTICLE_DETAIL_12.md`](./QIITA_ARTICLE_DETAIL_12.md) | **複合機スキャン ➔ Samba ➔ Dify自動RAG登録編**<br/>「現場にWeb画面からPDFをアップロードさせようとするな」スキャンPDFを共有フォルダに放り込むだけでDifyに自動RAG登録されるPython監視パイプライン構築PoC | DX推進担当、情シス、LAN内RAG導入者 | Python `watchdog`<br/>Samba (SMB), Dify Dataset API |
-| **第13弾** | [`QIITA_ARTICLE_DETAIL_13.md`](./QIITA_ARTICLE_DETAIL_13.md) | **水濡れ現場向け Web Speech API × Dify音声UI編**<br/>手が濡れてても手袋しててもOK。水濡れ現場想定で「声で質問して声で答える」Dify音声対話UIをWeb Speech APIだけで作った話（個人検証PoC） | フロントエンド開発者、工場・現場DX担当 | Web Speech API<br/>Vanilla JS, Dify Chat API |
+| **第13弾** | [`QIITA_ARTICLE_DETAIL_13.md`](./QIITA_ARTICLE_DETAIL_13.md) | **ハンズフリー作業向け Web Speech API × Dify音声UI編**<br/>両手が塞がっていても手袋しててもOK。ハンズフリー作業想定で「声で質問して声で答える」Dify音声対話UIをWeb Speech APIだけで作った話（個人検証PoC） | フロントエンド開発者、工場・現場DX担当 | Web Speech API<br/>Vanilla JS, Dify Chat API |
 | **第14弾** | [`QIITA_ARTICLE_DETAIL_14.md`](./QIITA_ARTICLE_DETAIL_14.md) | **自作AI基盤CPU爆死 ➔ Dify分離アーキテクチャ編**<br/>自作AI基盤（FastAPI + Whisper + Voicevox + Qdrant）がCPU 100%スパイクで爆死した話。自宅ラボ検証で安定稼働した「Difyバックエンド ＋ Nginx軽量UI」分離アーキテクチャの結論 | AIエンジニア、インフラエンジニア | Dify オフロード<br/>Nginx, Docker Compose |
-| **第15弾** | [`QIITA_ARTICLE_DETAIL_15.md`](./QIITA_ARTICLE_DETAIL_15.md) | **Tailscaleによる100台エッジAI無料保守編**<br/>ルーターのポート開放も固定IPも不要。100拠点のオンプレエッジAIサーバーをTailscale（ZTNA）で安全にリモート保守する設計と無料枠活用法 | IoT/エッジエンジニア、MSP、フィールドSE | Tailscale (WireGuard / ZTNA)<br/>DERP, Tailscale SSH |
-| **第16弾** | `QIITA_ARTICLE_DETAIL_16.md` *(順次公開)* | **カメラ × Vision LLM による現物伝票の構造化編**<br/>紙の現物伝票をスマホで撮るだけ。Vision LLMで仕入れ品目・数量を瞬時にJSON構造化するプロンプトと現場BPMN設計 | アナログ現場DX、物流・市場担当SE | Vision LLM (マルチモーダル)<br/>Base64, JSON Schema |
+| **第15弾** | [`QIITA_ARTICLE_DETAIL_15.md`](./QIITA_ARTICLE_DETAIL_15.md) | **Tailscaleによる遠隔エッジAIセキュア保守編**<br/>ルーターのポート開放も固定IPも不要。遠隔拠点のオンプレエッジAIサーバーをTailscale（ZTNA）で安全にリモート保守する設計と個人検証向け無料枠活用法 | IoT/エッジエンジニア、MSP、フィールドSE | Tailscale (WireGuard / ZTNA)<br/>DERP, Tailscale SSH |
+| **第16弾** | `QIITA_ARTICLE_DETAIL_16.md` *(順次公開)* | **カメラ × Vision LLM による現物伝票の構造化編**<br/>紙の現物伝票をスマホで撮るだけ。Vision LLMで仕入れ品目・数量を瞬時にJSON構造化するプロンプトと現場BPMN設計 | アナログ業務効率化、物流・倉庫担当SE | Vision LLM (マルチモーダル)<br/>Base64, JSON Schema |
 | **第17弾** | `QIITA_ARTICLE_DETAIL_17.md` *(順次公開)* | **職人の暗黙知・ボイスナレッジ化編**<br/>「あのベテランにしか分からない」をなくす。現場でボソッと呟いたノウハウ音声をAIが自動で構造化・ベクトル蓄積する業務フロー | 業務継承・ナレッジマネジメント | 音声認識 (STT)<br/>LLM正規化, VectorDB (RAG) |
 
 ---
@@ -62,7 +62,7 @@
 | 弾数 | ファイル | タイトル・テーマ | 対象読者 | 主要技術 |
 | :---: | :--- | :--- | :--- | :--- |
 | **第18弾** | `QIITA_ARTICLE_DETAIL_18.md` *(順次公開)* | **ゼロコンフィグ機器探索（mDNS / SSDP）編**<br/>IPアドレスが分からなくても見つけ出せる。mDNSとSSDPでLAN内のスマート家電・プリンタ・Macを一網打尽にするPython探索術【自宅ラボ検証】 | ネットワークエンジニア、情シス | mDNS (Bonjour / 5353)<br/>SSDP (UPnP / 1900), zeroconf |
-| **第19弾** | [`QIITA_ARTICLE_DETAIL_19.md`](./QIITA_ARTICLE_DETAIL_19.md) | **モバイル・私用スマホの受動特定編**<br/>スマホ（iPhone/Android）のWi-Fi接続をどう見分けるか？ 受信パケットからOSを判別するエージェントレス判定ロジック【自宅ラボ検証PoC】 | セキュリティ担当、ネットワーク管理者 | 初期TTL (64/128)<br/>User-Agent, DHCP Option 55 |
+| **第19弾** | [`QIITA_ARTICLE_DETAIL_19.md`](./QIITA_ARTICLE_DETAIL_19.md) | **モバイル端末の受動OS識別編**<br/>スマホ（iPhone/Android）のWi-Fi接続をどう見分けるか？ 受信パケットからOSを判別するエージェントレス判定ロジック【自宅ラボ検証PoC】 | セキュリティ担当、ネットワーク管理者 | 初期TTL (64/128)<br/>User-Agent, DHCP Option 55 |
 | **第20弾** | [`QIITA_ARTICLE_DETAIL_20.md`](./QIITA_ARTICLE_DETAIL_20.md) | **未知端末の即時アラート（超軽量通知）編**<br/>見知らぬMACアドレスが現れた瞬間、1秒で画面に警報を飛ばす。SQLite×ポーリングで作る超軽量リアルタイム検知パイプライン | フルスタックエンジニア、情シス | SQLite `notifications`<br/>MAC正規化, ショートポーリング |
 
 ---
@@ -124,7 +124,7 @@
 | 弾数 | ファイル | タイトル・テーマ | 対象読者 | 主要技術 |
 | :---: | :--- | :--- | :--- | :--- |
 | **第51弾** | `QIITA_ARTICLE_DETAIL_51.md` *(順次公開)* | **SNMP v2c/v3 スイッチポート帯域監視編**<br/>Zabbix不要！PythonだけでLAN内スイッチの全ポート帯域・パケットエラーをSNMP監視して異常時にWebhook通知する軽量スクリプト | ネットワーク運用者、SE | pysnmp, SNMP v2c/v3, 64bitカウンタ<br/>ポートエラー検知, Webhook通知 |
-| **第52弾** | `QIITA_ARTICLE_DETAIL_52.md` *(順次公開)* | **NetFlow v5 トラフィック解析・通信内訳可視化編**<br/>誰がLAN内の帯域を食い潰しているのか？NetFlow/IPFIXをPythonで受信して「犯人端末」と宛先を暴く軽量コレクター自作 | ネットワークSE、情シス | NetFlow v5, UDP 2055, Python raw socket<br/>Top Talkers集計, 帯域圧迫特定 |
+| **第52弾** | `QIITA_ARTICLE_DETAIL_52.md` *(順次公開)* | **NetFlow v5 トラフィック解析・通信内訳可視化編**<br/>どの端末がLAN内の帯域を消費しているのか？NetFlow/IPFIXをPythonで受信して「高負荷端末」と通信量を可視化する軽量コレクター自作 | ネットワークSE、情シス | NetFlow v5, UDP 2055, Python raw socket<br/>Top Talkers集計, 帯域圧迫特定 |
 | **第53弾** | `QIITA_ARTICLE_DETAIL_53.md` *(順次公開)* | **rsyslog × SQLite 軽量中央ログ収集基盤編**<br/>ELKスタックは重すぎる！rsyslogとSQLiteで作る「メモリ50MB」のネットワーク機器ログ集約＆全文検索基盤 | 低予算インフラSE、中小情シス | rsyslog (`ompgsql` / テンプレート), SQLite3<br/>Syslog UDP 514, WALモード, FTS5 |
 | **第54弾** | `QIITA_ARTICLE_DETAIL_54.md` *(順次公開)* | **TCP SYN-ACK RTT ジッター計測編**<br/>Pingだけでは見抜けない！TCP SYN-ACK往復時間（RTT）で拠点間VPNの「本当の品質」とジッターを常時ロギングする | VPN運用担当、クラウドインフラSE | TCP Handshake RTT, Python socket<br/>ジッター・分散計算, 外形品質監視 |
 | **第55弾** | `QIITA_ARTICLE_DETAIL_55.md` *(順次公開)* | **Wi-Fi 2.4G/5G 電波干渉調査編**<br/>LAN内のWi-Fiが遅い原因を突き止める！Linuxのiw/wavemonで近隣APの電波干渉・チャンネル重複を可視化する調査術 | LAN内環境管理者、情シス | `iw dev scan`, 2.4GHz/5GHz チャンネル設計<br/>Beacon RSSI解析, ステルスSSID |
@@ -282,7 +282,7 @@
 | **第146弾** | `QIITA_ARTICLE_DETAIL_146.md` *(順次公開)* | **Cloudflare Tunnel によるポート開放不要公開編**<br/>Cloudflare Zero Trust (Cloudflare Tunnels) でルーター穴あけ不要のセキュアLAN内Web公開 | 自宅サーバー派、情シス、拠点管理者 | `cloudflared` (QUIC トンネル)<br/>Cloudflare Access, ポート開放完全0 |
 | **第147弾** | `QIITA_ARTICLE_DETAIL_147.md` *(順次公開)* | **WireGuard高速メッシュVPN ＆ QRコード自動生成編**<br/>WireGuardによる高速メッシュVPN自作とクライアント自動設定QRコード生成スクリプト | リモートワーク管理者、情シス | `WireGuard` (Linux Kernel)<br/>`qrencode` スマホ即時キッティング |
 | **第148弾** | `QIITA_ARTICLE_DETAIL_148.md` *(順次公開)* | **JWT即時ブラックリスト失効（Redis TTL）設計編**<br/>JWTトークンの改ざん防止・有効期限切れ・即時ブラックリスト失効管理（Redis連携）設計 | API設計者、バックエンドエンジニア | `jti` (JWT ID), Redis TTL<br/>ログアウト即時無効化, メモリ自動蒸発 |
-| **第149弾** | `QIITA_ARTICLE_DETAIL_149.md` *(順次公開)* | **Samba AD-DC による完全フリーActive Directory編**<br/>Samba AD-DC によるオンプレミスクラウドフリーActive Directoryドメイン構築とGPO集中管理 | 中小企業情シス、Windows運用SE | `samba-tool` domain provision<br/>CAL完全不要, Windows RSAT GPO管理 |
+| **第149弾** | `QIITA_ARTICLE_DETAIL_149.md` *(順次公開)* | **Samba AD-DC による完全フリーActive Directory編**<br/>Samba AD-DC によるオンプレミスクラウドフリーActive Directoryドメイン構築とGPO集中管理 | 中小企業情シス、Windows運用SE | `samba-tool` domain provision<br/>LinuxベースAD-DC構築, Windows RSAT GPO管理 |
 | **第150弾** | `QIITA_ARTICLE_DETAIL_150.md` *(順次公開)* | **RBAC (ロールベースアクセス制御) 認可設計編**<br/>RBAC (ロールベースアクセス制御) のDBテーブル設計とFastAPI認可デコレータ完全実装 | Webアプリケーション設計者 | 5テーブル正規化 (RBAC)<br/>FastAPI Depends 依存性注入, 権限制御 |
 
 ---
@@ -292,7 +292,7 @@
 | :---: | :--- | :--- | :--- | :--- |
 | **第151弾** | `QIITA_ARTICLE_DETAIL_151.md` *(順次公開)* | **シリアル通信（RS-485 / UART）工場機器直結編**<br/>Raspberry Pi / Linux SBC のシリアル通信（UART / RS-485）による工場機器・計測器直結自動化 | 工場DX担当、IoTエンジニア | `pyserial`, USB-RS485<br/>1.2km伝送, レガシー計測器自動回収 |
 | **第152弾** | `QIITA_ARTICLE_DETAIL_152.md` *(順次公開)* | **超軽量MQTTブローカー（Mosquitto）データ収集編**<br/>MQTTブローカー（Mosquitto）による大量エッジセンサーデータ超軽量収集とPub/Sub設計 | IoTアーキテクト、組込エンジニア | `Eclipse Mosquitto` (メモリ4MB)<br/>MQTT 2バイトヘッダ, QoS 0/1/2 |
-| **第153弾** | `QIITA_ARTICLE_DETAIL_153.md` *(順次公開)* | **Modbus TCP / RTU による産業用PLC連携編**<br/>Modbus TCP / RTU によるPLC機器データ読み出しPython自動化（pymodbus）と現場連携 | 製造業IT担当、OT/IT統合SE | `pymodbus`, Modbus TCP (:502)<br/>保持レジスタ読取, 三菱/オムロンPLC |
+| **第153弾** | `QIITA_ARTICLE_DETAIL_153.md` *(順次公開)* | **Modbus TCP / RTU による産業用PLC連携編**<br/>Modbus TCP / RTU によるPLC機器データ読み出しPython自動化（pymodbus）と現場連携 | 製造業IT担当、OT/IT統合SE | `pymodbus`, Modbus TCP (:502)<br/>保持レジスタ読取, 産業用Modbus対応PLC |
 | **第154弾** | `QIITA_ARTICLE_DETAIL_154.md` *(順次公開)* | **GPIOリレーによる物理コールドリセット自作編**<br/>GPIO制御とリレー回路による物理サーバー強制コールドリセット自作（IPMI未搭載機救済） | フィールドエンジニア、ハードウェアSE | RPi GPIO + 5V機械式リレー<br/>マザーボードPWR_SW短絡 (5秒長押し) |
 | **第155弾** | `QIITA_ARTICLE_DETAIL_155.md` *(順次公開)* | **BLEビーコンによるLAN内備品リアルタイム追跡編**<br/>BLEビーコン（iBeacon / Eddystone）によるLAN内備品・資材のリアルタイム位置トラッキング | 総務・情シス、備品管理担当 | `bleak` (Bluetooth Low Energy)<br/>RSSI電波強度距離推定, ルーム特定 |
 | **第156弾** | `QIITA_ARTICLE_DETAIL_156.md` *(順次公開)* | **LoRaWAN長距離無線 ＆ 私設LPWAモニタリング編**<br/>LoRaWAN長距離無線による電源・ネットのない屋外施設・倉庫モニタリング基盤 | スマート農業、屋外施設管理者 | `LoRaWAN` (920MHz 技適)<br/>`ChirpStack`, 見通し5km月額0円伝送 |
@@ -346,7 +346,7 @@
 | **第186弾** | `QIITA_ARTICLE_DETAIL_186.md` *(順次公開)* | **FWログ相関分析 ＆ C2ビーコニング数学検知編**<br/>ファイアウォールログ・WAFログの自動相関分析とC2通信ビーコニング検知アルゴリズム | SOCアナリスト、ネットワーク監視SE | 通信間隔デルタ統計分析 (`numpy`)<br/>変動係数 (CV < 0.15), 潜伏C2通信捕捉 |
 | **第187弾** | `QIITA_ARTICLE_DETAIL_187.md` *(順次公開)* | **DNSトンネリング検知 ＆ エントロピー解析編**<br/>DNSトンネリング攻撃の検出（長大サブドメイン・高頻度クエリ検知アルゴリズム） | DNS管理者、ネットワークセキュリティSE | シャノン・エントロピー計算 (閾値3.8)<br/>長大サブドメイン検知, ポート53流出遮断 |
 | **第188弾** | `QIITA_ARTICLE_DETAIL_188.md` *(順次公開)* | **Hashcat パスワードクラック耐性検証編**<br/>パスワードクラック耐性検証（Hashcat / John the Ripper）と辞書攻撃対策・強化手順 | 認証基盤設計者、セキュリティ監査 | `Hashcat`, GPU並列クラック<br/>`Argon2id` (メモリ64MB), bcrypt コスト調律 |
-| **第189弾** | `QIITA_ARTICLE_DETAIL_189.md` *(順次公開)* | **ランサムウェア挙動模倣ストレステスト編**<br/>ランサムウェア挙動模倣スクリプトによるEDR / バックアップ検知能力ストレステスト | セキュリティ監査、SRE | 大量ファイル擬似暗号化シミュレータ<br/>高エントロピー化, カナリーファイル監視 |
+| **第189弾** | `QIITA_ARTICLE_DETAIL_189.md` *(順次公開)* | **カナリーファイル監視・異常I/O検知テスト編**<br/>カナリーファイル監視・高頻度ファイルI/OによるEDR / バックアップ異常検知パイプラインの動作検証 | セキュリティ監査、SRE | 大量ファイル擬似暗号化シミュレータ<br/>高エントロピー化, カナリーファイル監視 |
 | **第190弾** | `QIITA_ARTICLE_DETAIL_190.md` *(順次公開)* | **CSIRTインシデント即時隔離プレイブック編**<br/>CSIRTインシデント対応プレイブック自動化（通信遮断・証拠保全・端末隔離）パイプライン | CSIRT隊長、セキュリティ運用責任者 | `iptables DROP` (ワンコマンド隔離)<br/>揮発性証拠高速保全, SHA-256マニフェスト |
 
 ---

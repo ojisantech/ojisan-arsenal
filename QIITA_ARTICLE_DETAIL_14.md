@@ -24,7 +24,7 @@
 * **LLM推論**: Ollama
 * **フロントエンド**: React SPA
 
-ローカルPCで開発しているときは「完璧だ、これで現場に納品できる！」と有頂天でした。
+手元のメインPCで開発しているときは「完璧だ、これで自宅ラボで実用運用できる！」と有頂天でした。
 しかし、いざオンプレミスサーバー（またはエッジPC）にデプロイし、現場で複数人が同時に使い始めた瞬間、**地獄の悪夢**が始まりました。
 
 * 音声認識が走った瞬間に **全CPUコアが100%に張り付く**
@@ -107,7 +107,7 @@ services:
   # 現場専用カスタムUIの配信（超軽量Nginx）
   custom-ui:
     image: nginx:alpine
-    container_name: aura-custom-ui
+    container_name: homelab-custom-ui
     restart: always
     ports:
       - "3001:80"
@@ -119,7 +119,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.sync
-    container_name: aura-samba-sync
+    container_name: homelab-samba-sync
     restart: always
     environment:
       - DIFY_API_URL=http://dify-api:5001/v1

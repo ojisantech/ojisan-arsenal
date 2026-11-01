@@ -1,4 +1,4 @@
-# 【第13弾 詳細解説】水濡れ現場向け Web Speech API × Dify音声UI編 - 手が濡れてても手袋しててもOK。水濡れ現場想定で「声で質問して声で答える」Dify音声対話UIをWeb Speech APIだけで作った話（個人検証PoC）
+# 【第13弾 詳細解説】ハンズフリー作業向け Web Speech API × Dify音声UI編 - 両手が塞がっていても手袋しててもOK。ハンズフリー作業想定で「声で質問して声で答える」Dify音声対話UIをWeb Speech APIだけで作った話（個人検証PoC）
 
 **対象読者**: フロントエンド開発者、工場・現場DX担当
 **主要技術スタック**: Web Speech API, Vanilla JS, Dify Chat API
@@ -12,10 +12,10 @@
 ### なぜこの技術が現場で不可欠なのか
 ITエンジニアがAIチャットを作るとき、画面の真ん中に「テキスト入力ボックス」と「送信ボタン」を置きがちです。
 
-しかし、**水産市場、青果市場、食品加工場、飲食店の厨房** といった現場を想像してみてください。
+しかし、**自宅ガレージでのDIY整備、家庭菜園、調理中、あるいは倉庫での機材ピッキング** といった作業環境を想像してみてください。
 
-* **手袋に水や魚の脂、小麦粉がついている**
-* **両手に包丁や重い発泡スチロール箱を持っている**
+* **作業用手袋をしていて手が汚れている・濡れている**
+* **両手に工具や重い機材ボックスを持っている**
 * **濡れた手でスマホのタッチパネルを触っても誤タップするか反応しない**
 
 このような現場では、テキスト入力は**「100%不可能」**です。
@@ -37,19 +37,19 @@ ITエンジニアがAIチャットを作るとき、画面の真ん中に「テ�
 ```mermaid
 sequenceDiagram
     autonumber
-    actor Worker as 🐟 現場作業員 (両手が濡れている)
+    actor Worker as 🧤 作業者 (手袋着用・両手作業中)
     participant Browser as 📱 現場タブレット (Web Speech API)
     participant Dify as 🧠 Dify バックエンド (/v1/chat-messages)
 
-    Worker->>Browser: 「昨日入荷したノルウェー産サーモンの在庫は？」(発話)
+    Worker->>Browser: 「ラック2段目の予備SSDの在庫数は？」(発話)
     Note over Browser: SpeechRecognition がブラウザ内で即時テキスト化
 
     Browser->>Dify: POST /v1/chat-messages (テキスト送信)
     Dify->>Dify: LAN内ナレッジ検索 (RAG) ＆ 回答生成
-    Dify-->>Browser: JSON { answer: "サーモンは残り12箱、第2冷蔵庫にあります。" }
+    Dify-->>Browser: JSON { answer: "予備SSDは残り4個、パーツボックスBにあります。" }
 
     Note over Browser: speechSynthesis が日本語音声で即時発話
-    Browser-->>Worker: 🔊 「サーモンは残り12箱、第2冷蔵庫にあります」(音声回答)
+    Browser-->>Worker: 🔊 「予備SSDは残り4個、パーツボックスBにあります」(音声回答)
 ```
 
 ### 内部動作メカニズムのステップ解説
@@ -146,7 +146,7 @@ function speakText(text) {
 
 ### 主要パラメータ・設定値の技術的根拠
 - **主要技術スタック（Web Speech API, Vanilla JS, Dify Chat API）の選定と最小権限設計**:
-  **水濡れ現場向け Web Speech API × Dify音声UI編** - 手が濡れてても手袋しててもOK。水濡れ現場想定で「声で質問して声で答える」Dify音声対話UIをWeb Speech APIだけで作った話（個人検証PoC） の実現にあたり、外部の過剰な依存や特権常駐を排し、Web Speech API, Vanilla JS, Dify Chat API を軸とした省フットプリントかつセキュアな実行境界を構成しています。
+  **ハンズフリー作業向け Web Speech API × Dify音声UI編** - 両手が塞がっていても手袋しててもOK。ハンズフリー作業想定で「声で質問して声で答える」Dify音声対話UIをWeb Speech APIだけで作った話（個人検証PoC） の実現にあたり、外部の過剰な依存や特権常駐を排し、Web Speech API, Vanilla JS, Dify Chat API を軸とした省フットプリントかつセキュアな実行境界を構成しています。
 - **タイムアウト境界とフェイルソフト耐性**:
   ネットワーク遅延や対象機器の無応答時にもプロセス全体がブロッキングしないよう明示的なタイムアウトと例外隔離を設け、基幹業務への影響をゼロに抑えます。
 - **べき等性（Idempotency）と監査トレーサビリティ（対象: フロントエンド開発者、工場・現場DX担当）**:
