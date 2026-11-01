@@ -27,13 +27,13 @@
 > 全200弾の詳細技術リファレンス（アーキテクチャ図、処理フロー、要点コード抜粋等）は、Qiita連載に合わせて順次公開しています。ぜひ **Star (★)** を押して最新アップデートをお待ちください！（※ライセンス・免責事項は[ページ最下部](#-ライセンス--免責事項--サポートポリシー)に記載しています）
 
 ### 🏗️ 本リポジトリ全200記事の出自（ベースとなった自宅ラボ自作システムと開発経緯）
-本リポジトリおよびQiita連載の全200記事は、筆者が自宅検証ラボ（Intel N100ミニPC / Ubuntu / Windows 11 / Docker環境）でゼロから自作・運用している**「① 自作IT資産管理＆脆弱性診断基盤」**および**「② 自作音声入出力＆ローカルRAG基盤」**の2大システムの開発過程・設計試行錯誤・トラブルシューティングを要素技術ごとに分解・体系化した一次検証記録です。
+本リポジトリおよびQiita連載の全200記事は、筆者が自宅検証ラボ（Intel N100ミニPC / Ubuntu / Windows 11 / Docker環境）でゼロから自作・運用している**「自作IT資産管理＆脆弱性診断基盤」**および**「自作音声入出力＆ローカルRAG基盤」**の2大システムの開発過程・設計試行錯誤・トラブルシューティングを要素技術ごとに分解・体系化した一次検証記録です。
 
 | 開発フェーズ・自宅ラボ自作基盤 | 該当記事 | 実際に自宅ラボで構築・検証した実装内容（記事の出自） |
 | :--- | :---: | :--- |
-| **① 自作IT資産管理＆脆弱性診断基盤**<br/>*(Agentless Asset & Vulnerability Manager)* | **#1〜#11**<br/>**#18〜#28** | ・WinRM/SSHエージェントレス遠隔パッチ適用＆手動パッチ除外DB（SQLite）<br/>・Snipe-IT API自動同期、Ollama（`qwen2.5:1.5b`）ローカル脆弱性要約<br/>・BLE/mDNS/SSDP/受動パケットによる空間・未知端末探査と即時通知<br/>・HTML5 Canvas実機トポロジー描画、ExcelライクUI、GPLライブラリ排除 |
-| **② 自作音声入出力＆ローカルRAG基盤**<br/>*(Hands-Free Voice I/O & Edge RAG)* | **#12〜#17** | ・複合機スキャン ➔ Samba共有 ➔ Python `watchdog` ➔ Dify自動RAG登録<br/>・Web Speech API（STT/TTS）× Dify音声対話UI、Vision LLM伝票OCR<br/>・FastAPI + Whisper + Voicevox + Qdrant のCPU 100%スパイク検証とDify分離設計<br/>・Tailscale（WireGuard）によるポート開放ゼロの遠隔エッジ保守 |
-| **③ 上記①・②を支えるインフラ・OS・DB・セキュリティ要素技術検証**<br/>*(HomeLab Infrastructure & Hardening PoC)* | **#29〜#200** | ・上記①・②を自宅ラボで開発・長期運用する中で実践した、Linux/Windows/ネットワーク制御、SQLite WAL最適化、コンテナ分離、認証・暗号化、ログ解析・防御テスト、および将来的なマイクロSaaS化を見据えたアーキテクチャ検証の要素技術PoC記録 |
+| **自作IT資産管理＆脆弱性診断基盤**<br/>*(Agentless Asset & Vulnerability Manager)* | **#1〜#11**<br/>**#18〜#28** | ・WinRM/SSHエージェントレス遠隔パッチ適用＆手動パッチ除外DB（SQLite）<br/>・Snipe-IT API自動同期、Ollama（`qwen2.5:1.5b`）ローカル脆弱性要約<br/>・BLE/mDNS/SSDP/受動パケットによる空間・未知端末探査と即時通知<br/>・HTML5 Canvas実機トポロジー描画、ExcelライクUI、GPLライブラリ排除 |
+| **自作音声入出力＆ローカルRAG基盤**<br/>*(Hands-Free Voice I/O & Edge RAG)* | **#12〜#17** | ・複合機スキャン ➔ Samba共有 ➔ Python `watchdog` ➔ Dify自動RAG登録<br/>・Web Speech API（STT/TTS）× Dify音声対話UI、Vision LLM伝票OCR<br/>・FastAPI + Whisper + Voicevox + Qdrant のCPU 100%スパイク検証とDify分離設計<br/>・Tailscale（WireGuard）によるポート開放ゼロの遠隔エッジ保守 |
+| **上記2基盤を支えるインフラ・OS・DB・セキュリティ要素技術検証**<br/>*(HomeLab Infrastructure & Hardening PoC)* | **#29〜#200** | ・上記2つの自作基盤を自宅ラボで開発・長期運用する中で実践した、Linux/Windows/ネットワーク制御、SQLite WAL最適化、コンテナ分離、認証・暗号化、ログ解析・防御テスト、および将来的なマイクロSaaS化を見据えたアーキテクチャ検証の要素技術PoC記録 |
 
 ---
 
