@@ -17,7 +17,7 @@
 > **「キラキラしたAIも好きですが、最後に人を救うのは `SSH` と `grep` だと信じています」**
 
 ### ☕ 著者プロフィール（Author Profile）
-コーヒーと黒い画面とファンレスミニPC（Intel N100）を愛するインフラ＆セキュリティ好きのおじさん。休日に自宅検証ラボ（HomeLab）で枯れた技術とLLM/OSSを組み合わせ「高額SaaSに頼らない自立型インフラ」を組む個人研究（PoC）を無償公開中。
+コーヒーと黒い画面とファンレスミニPC（Intel Core i5）を愛するインフラ＆セキュリティ好きのおじさん。休日に自宅検証ラボ（HomeLab）で枯れた技術とLLM/OSSを組み合わせ「高額SaaSに頼らない自立型インフラ」を組む個人研究（PoC）を無償公開中。
 
 * 📗 **Qiita 連載記事一覧**: [https://qiita.com/ojisantech](https://qiita.com/ojisantech)
 * 🐦 **X (旧Twitter)**: [https://x.com/OjisanTechnical](https://x.com/OjisanTechnical)
@@ -27,7 +27,7 @@
 > 全200弾の詳細技術リファレンス（アーキテクチャ図、処理フロー、要点コード抜粋等）は、Qiita連載に合わせて順次公開しています。ぜひ **Star (★)** を押して最新アップデートをお待ちください！（※ライセンス・免責事項は[ページ最下部](#-ライセンス--免責事項--サポートポリシー)に記載しています）
 
 ### 🏗️ 本リポジトリ全200記事の出自（ベースとなった自宅ラボ自作システムと開発経緯）
-本リポジトリおよびQiita連載の全200記事は、筆者が自宅検証ラボ（Intel N100ミニPC / Ubuntu / Windows 11 / Docker環境）でゼロから自作・運用している**「１）自作IT資産管理＆脆弱性診断基盤」**および**「２）自作音声入出力＆ローカルRAG基盤」**の2大システムの開発過程・設計試行錯誤・トラブルシューティングを要素技術ごとに分解・体系化した一次検証記録です。
+本リポジトリおよびQiita連載の全200記事は、筆者が自宅検証ラボ（Intel Core i5ミニPC / Ubuntu / Windows 11 / Docker環境）でゼロから自作・運用している**「１）自作IT資産管理＆脆弱性診断基盤」**および**「２）自作音声入出力＆ローカルRAG基盤」**の2大システムの開発過程・設計試行錯誤・トラブルシューティングを要素技術ごとに分解・体系化した一次検証記録です。
 
 | 開発フェーズ・自宅ラボ自作基盤 | 該当記事 | 実際に自宅ラボで構築・検証した実装内容（記事の出自） |
 | :--- | :---: | :--- |
@@ -51,7 +51,7 @@
 | **第8弾** | [`QIITA_ARTICLE_DETAIL_8.md`](./QIITA_ARTICLE_DETAIL_8.md) | **エージェントレス思想 ＆ マスターキー防衛編**<br/>「全LAN内PC端末に常駐エージェントを入れる」は本当に安全か？ 大規模エージェント障害以降に再考するエージェントレス型資産管理のメリデメとマスターキー防衛 | セキュリティアーキテクト、CIO、情シス責任者 | WinRM, SSH公開鍵認証<br/>認証付き暗号（Fernet / AES-256-GCM） |
 | **第9弾** | [`QIITA_ARTICLE_DETAIL_9.md`](./QIITA_ARTICLE_DETAIL_9.md) | **Windows 11怪奇現象 ＆ WinRM現場トラブル編**<br/>Windows 11 なのに「Win32_OperatingSystem」が Windows 10 と返してくる怪奇現象。自宅ラボでWinRMエージェントレス管理を実装してハマった5つの罠と解決策 | Windowsインフラ管理者、ヘルプデスクSE | PowerShell, WMI BuildNumber<br/>UACリモート制限解除 |
 | **第10弾** | [`QIITA_ARTICLE_DETAIL_10.md`](./QIITA_ARTICLE_DETAIL_10.md) | **20系統脆弱性フィード ＆ ローカルキャッシュ編**<br/>NVDのAPI上限・遅延に泣かない。CISA KEV・EPSS・国内JVN・OSベンダーOVALなど「20系統の脆弱性フィード」をローカルで超高速突合する設計 | セキュリティエンジニア、SOC、診断士 | CISA KEV, FIRST EPSS<br/>OVAL, SQLiteキャッシュ |
-| **第11弾** | `QIITA_ARTICLE_DETAIL_11.md` *(順次公開)* | **Intel N100ミニPC 自立型アプライアンス編**<br/>原価3万円のIntel N100ミニPCで「LANに挿すだけで自立稼働する資産管理アプライアンス（PoC）」を自宅ラボで作ってみた（TDP 10W・ファンレス・2.5GbE Dual） | ホームラボ愛好家、自作派、ハードウェアSE | Intel N100, Ubuntu 24.04<br/>USBクローニング, Docker |
+| **第11弾** | `QIITA_ARTICLE_DETAIL_11.md` *(順次公開)* | **Intel Core i5ミニPC 自立型アプライアンス編**<br/>原価3万円のIntel Core i5ミニPCで「LANに挿すだけで自立稼働する資産管理アプライアンス（PoC）」を自宅ラボで作ってみた（TDP 10W・ファンレス・2.5GbE Dual） | ホームラボ愛好家、自作派、ハードウェアSE | Intel Core i5, Ubuntu 24.04<br/>USBクローニング, Docker |
 
 ---
 
@@ -100,7 +100,7 @@
 ### 🛠️ シリーズ G：インフラ現場トラブル・泥臭い深層トラブルシュート編
 | 弾数 | ファイル | タイトル・テーマ | 対象読者 | 主要技術 |
 | :---: | :--- | :--- | :--- | :--- |
-| **第31弾** | `QIITA_ARTICLE_DETAIL_31.md` *(順次公開)* | **DNSキャッシュの罠とFlush自動化編**<br/>DNSキャッシュの罠。TTLが切れているのに名前解決が変わらないLinux/Windowsの闇とFlush自動化 | インフラエンジニア、情シス、Webマスター | `resolvectl flush-caches`<br/>`Clear-DnsClientCache`, Chrome |
+| **第31弾** | [`QIITA_ARTICLE_DETAIL_31.md`](./QIITA_ARTICLE_DETAIL_31.md) | **DNSキャッシュの罠とFlush自動化編**<br/>DNSキャッシュの罠。TTLが切れているのに名前解決が変わらないLinux/Windowsの闇とFlush自動化 | インフラエンジニア、情シス、Webマスター | `resolvectl flush-caches`<br/>`Clear-DnsClientCache`, Chrome |
 | **第32弾** | `QIITA_ARTICLE_DETAIL_32.md` *(順次公開)* | **MTU/MSS不整合によるパケット消失編**<br/>MTU/MSS不整合によるパケット消失。Pingは通るのにWebやSSHが開かない怪奇現象の調査手順 | ネットワークエンジニア、VPN運用者 | DFビットPing, TCP MSS Clamping<br/>`iptables`, `netsh` |
 | **第33弾** | `QIITA_ARTICLE_DETAIL_33.md` *(順次公開)* | **ディスク容量100%と「df vs du」問題編**<br/>ディスク容量100%の真犯人。消したはずのログをプロセスが掴み続けて容量が減らない「df vs du」問題 | SRE、Linux運用保守担当 | `lsof +L1`, `/proc/<PID>/fd`<br/>`truncate -s 0` |
 | **第34弾** | `QIITA_ARTICLE_DETAIL_34.md` *(順次公開)* | **NTP時刻ズレと認証死防衛編**<br/>NTP時刻ズレが引き起こす認証死。KerberosやSSLが全滅する前に仕込むchrony設定と監視 | インフラ設計者、Active Directory管理者 | `chrony` (`makestep`), RTC<br/>時刻オフセット監視スクリプト |
