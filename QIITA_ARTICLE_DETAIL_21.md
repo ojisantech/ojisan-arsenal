@@ -59,7 +59,7 @@ flowchart TD
     TC --> Runner
     Runner -->|"1. 質問送信 (履歴リセット)"| LLM
     LLM -->|"実データ参照 (RAG/Function Calling)"| DB
-    LLM -->>|"2. 生成回答返却"| Runner
+    LLM -->|"2. 生成回答返却"| Runner
 
     subgraph Evaluation ["⚖️ Keyword Match 判定アルゴリズム"]
         direction TB
