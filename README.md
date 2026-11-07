@@ -116,7 +116,7 @@
 ### 🖥️ シリーズ H：ハードウェア・ホワイトボックス・BMC/オンプレ深層編
 | 弾数 | ファイル | タイトル・テーマ | 対象読者 | 主要技術 |
 | :---: | :--- | :--- | :--- | :--- |
-| **第41弾** | `QIITA_ARTICLE_DETAIL_41.md` *(順次公開)* | **ファンレスPCの熱設計とサーマル対策編**<br/>手のひらファンレスPCを24時間サーバーにする熱設計とサーマルスロットリング対策 | 自宅サーバー愛好家、エッジ開発者 | 縦置き自然対流, 5V静音ファン<br/>`intel-rapl` TDP制限, 温度監視 |
+| **第41弾** | [`QIITA_ARTICLE_DETAIL_41.md`](./QIITA_ARTICLE_DETAIL_41.md) | **ファンレスPCの熱設計とサーマル対策編**<br/>手のひらファンレスPCを24時間サーバーにする熱設計とサーマルスロットリング対策 | 自宅サーバー愛好家、エッジ開発者 | 縦置き自然対流, 5V静音ファン<br/>`intel-rapl` TDP制限, 温度監視 |
 | **第42弾** | `QIITA_ARTICLE_DETAIL_42.md` *(順次公開)* | **IPMI/BMCリモート電源制御と自動復旧編**<br/>IPMI / BMC を使ったリモート電源制御。OSがハングしてもWebから物理リセットする技術 | データセンター保守、インフラ運用SE | `ipmitool` (RMCP+), Serial-over-LAN<br/>Python死活監視自動物理リセット |
 | **第43弾** | `QIITA_ARTICLE_DETAIL_43.md` *(順次公開)* | **SSD寿命監視とsmartctl自動警告編**<br/>SSDの突然死を防ぐ。smartctlでNVMe/SATAの残り寿命とTBWを自動監視・通知するスクリプト | ストレージ管理者、SRE | `smartctl` (JSON), Percentage Used<br/>TBW換算, Slack通知スクリプト |
 | **第44弾** | `QIITA_ARTICLE_DETAIL_44.md` *(順次公開)* | **PXEネットワークブート無人インストール編**<br/>PXEネットワークブート環境構築。USBメモリ不要、LAN経由でOSを一発自動インストールする技術 | キッティング担当、情シス、製造SE | ProxyDHCP (`dnsmasq`), iPXE<br/>Ubuntu `autoinstall` (cloud-init) |
