@@ -109,7 +109,7 @@
 | **第37弾** | [`QIITA_ARTICLE_DETAIL_37.md`](./QIITA_ARTICLE_DETAIL_37.md) | **Linuxカーネルパニック防止とOOM Killer調律編**<br/>Linuxカーネルパニックを防ぐ。OOM Killerの優先度調整（oom_score_adj）とスワップ調律で重要サービスを死守する設計 | インフラエンジニア、DBA、SRE | `oom_score_adj` (-1000/1000)<br/>`vm.swappiness=10`, Docker Compose |
 | **第38弾** | `QIITA_ARTICLE_DETAIL_38.md` *(順次公開)* | **ステートフルFWの罠と非対称ルーティング解消編**<br/>ファイアウォールのステートフルインスペクションの罠。非対称ルーティングで戻りパケットが消える問題の解決手順 | ネットワーク設計者、セキュリティ担当 | 非対称ルーティング, RPF (`rp_filter`)<br/>ポリシーベースルーティング (`ip rule`) |
 | **第39弾** | `QIITA_ARTICLE_DETAIL_39.md` *(順次公開)* | **logrotateの落とし穴とHUPシグナル編**<br/>logrotateの落とし穴。HUPシグナル送り忘れでログファイルが肥大化し続ける事故の防衛 | インフラエンジニア、運用自動化担当 | `postrotate` (`kill -HUP`), `delaycompress`<br/>`copytruncate` (自作アプリ救済) |
-| **第40弾** | `QIITA_ARTICLE_DETAIL_40.md` *(順次公開)* | **SSL/TLS証明書更新忘れ防止と外形監視編**<br/>SSL/TLS証明書更新忘れの時限爆弾。Let's Encrypt自動更新スクリプトと更新失敗アラートの鉄壁設計 | Webマスター、セキュリティ担当、情シス | Certbot `--deploy-hook`, OpenSSL<br/>30日前Slack通知スクリプト |
+| **第40弾** | [`QIITA_ARTICLE_DETAIL_40.md`](./QIITA_ARTICLE_DETAIL_40.md) | **SSL/TLS証明書更新忘れ防止と外形監視編**<br/>SSL/TLS証明書更新忘れの時限爆弾。Let's Encrypt自動更新スクリプトと更新失敗アラートの鉄壁設計 | Webマスター、セキュリティ担当、情シス | Certbot `--deploy-hook`, OpenSSL<br/>30日前Slack通知スクリプト |
 
 ---
 
