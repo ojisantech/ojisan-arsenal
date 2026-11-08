@@ -69,12 +69,16 @@ sequenceDiagram
 1. **完全閉域直結（`10.254.254.0/24`）による野良DHCPの完全防止**:
    社内LANでPXEサーバーを立てると、既存のDHCPと競合して業務端末の通信を破壊する「野良DHCP障害」を起こします。本設計では増設したUSB-C LANアダプターに対象PCをLAN直結し、`10.254.254.0/24` の完全閉域網を敷くことで、社内ネットワークへの影響を物理的にゼロに抑えます。
 
-2. **VirtualBox USBパススルーによるTFTP開通（NDISブリッジバイパス）**:
-   Windowsホスト上のVirtualBoxで「ブリッジアダプター」を使用すると、Windows側のNDISパケットフィルターがUDP 69番ポート（TFTP）をドロップし、DHCPは通るのにブートファイルが落ちてこない現象が発生します。
-   VirtualBoxの「USB 3.0 (xHCI) フィルター」機能でUSB-C LANアダプターをLinux VMへ直接パススルーすることにより、ホストOSを100%バイパスしてTFTP通信を確実に開通させます。
+2. **【現場実証】数時間を溶かした「DHCPは通るのにTFTPだけ死ぬ」問題とUSBパススルー突破**:
+   Windowsホスト上のVirtualBoxで「ブリッジアダプター」を使用して直結PXE環境を組むと、極めて厄介な現象が発生します。
+   * **現象**: クライアントPCはDHCP Discoverを送り、`10.254.254.x` のIPは正常に取得できる。しかし直後のTFTP接続要求（UDP 69番）がサーバーに届かず、`TFTP open timeout` で数分間フリーズしたのちSSD起動に落ちる。
+   * **苦闘の軌跡**: Windows Defender無効化、プロミスキャスモード変更、LANケーブル交換、dnsmasqのTFTP設定見直しなどを幾度繰り返してもパケットは1つも届かず、数時間以上が完全に空費される。
+   * **原因の真相**: Windowsホスト側の VirtualBox NDIS6 Bridged Networking Driver が、USB-C LANアダプター経由の低レイヤUDPパケット（TFTP）を途中で遮断・ドロップしていた。
+   * **根本解決策**: 仮想ブリッジを完全無効化し、VirtualBoxの **USB 3.0 (xHCI) フィルター** でUSB-C LANアダプターをLinux VMに直接パススルー。Windowsのネットワークスタックを100%バイパスすることで、TFTP通信が確実に開通する。
 
-3. **Linuxカーネルでの命名規則（`enx<MACアドレス>`）への追従**:
-   USBパススルーされたアダプターは、Linux側で `enx<MACアドレス>`（例：`enx806d97194b46`）として認識されます。Netplan（`/etc/netplan/99-static-ip.yaml`）および `dnsmasq.conf` の `interface` 句をこの物理インターフェース名と同期させます。
+3. **Linuxカーネルでの命名規則（`enx<MACアドレス>`）への追従とコンテナ再起動**:
+   USBパススルーへ切り替えると、仮想NIC名（`enp0s8`等）が消滅し、Predictable Network Interface Names に従い **`enx<MACアドレス>`（例：`enx806d97194b46`）** として認識されます。
+   Netplan（`/etc/netplan/99-static-ip.yaml`）および `dnsmasq.conf` の `interface` 句を直ちに物理NIC名へ更新し、`docker compose up -d --force-recreate` でコンテナを再バインドすることで、TFTP/HTTP配信が即座に起動します。
 
 4. **ネットワーク対応GRUB (`grubnetx64.efi.signed`) の採用**:
    Ubuntu ISO直下の `grubx64.efi` はローカルCD/USB専用でネットワークドライバを持ちません。ISO内のdebパッケージから抽出した `grubnetx64.efi.signed` をTFTPに配置することで、GRUB起動後にHTTPプロトコルへ昇格し、GBクラスのISOイメージを爆速ストリーミングします。
