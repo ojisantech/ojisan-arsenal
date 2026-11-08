@@ -153,7 +153,7 @@ autoinstall:
   identity:
     hostname: pxe-client
     username: ubuntu
-    password: "$6$salt$IxDD3jeSOb5eB1CX5LBsqZFVkJdido3OUILO5Ifz5IGAWmMBPj45AM1gq.5dI/jE4FzJt2fGjW1P.bK3Vw8n/"
+    password: "$6$salt$yjWjuAFfgUnLR2vKIfOlt1kj5vCHf82eTnwff.EaHThL13zSmfxL6elnOnOlLJqhWKI7Iej7KLWS/WW8myUeF1" # 平文: ubuntu
   ssh:
     install-server: yes
     allow-pw: yes
