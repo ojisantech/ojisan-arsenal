@@ -172,14 +172,44 @@ autoinstall:
 
 ## 4. トラブルシューティング対応表と現場アンチパターン
 
-| 現象・エラー | 原因 | 解決策 |
+### 網羅的トラブルシューティング対応表
+
+| 現象・エラー | 根本原因 | 現場での回避策・完全解決手順 |
 |---|---|---|
-| **DHCP取得後に `TFTP open timeout` でPXE停止** | WindowsホストのNDISブリッジがUDP 69番をブロック | VirtualBoxのブリッジをやめ、USB 3.0 (xHCI) フィルターでUSB-C LANアダプターを直接Linuxゲストへパススルーする |
-| **`dnsmasq: unknown interface` でコンテナ停止** | USBパススルーによりNIC名が `enp0s8` から `enx...` に変化した | `ip link` で確認した `enx<MACアドレス>` 名に `netplan` と `dnsmasq.conf` を書き換えて適用 |
-| **`bootx64.efi` 後にGRUBメニューが出ずSSD起動** | ISO直下の `grubx64.efi` はローカルCD/USB専用 | `pool/main/g/grub2-signed/...` 内の `grubnetx64.efi.signed` を抽出して配置 |
-| **`Unknown command` または autoinstall が起動しない** | GRUB設定のセミコロン `;` がコマンド区切りと誤認された | `ds=nocloud-net\;s=http://...` のようにバックスラッシュでエスケープ |
-| **ケーブル挿し直し後にDHCPが応答しない** | リンクダウンで `dnsmasq`（`bind-interfaces`）が停止した | `docker ps` で確認し、対象端末接続後に `docker compose restart` を実行 |
-| **PC本体のネット閲覧が不能になった** | 増設NICにデフォルトGWやDNSを設定してルーティングが衝突 | 増設NIC側は `addresses: [10.254.254.1/24]` のみとしGW/DNSを完全削除 |
+| **DHCP取得後に `TFTP open timeout` (PXE-E32) でPXE停止** | Windowsホスト側の VirtualBox NDIS6 Bridged Networking Driver が、リンクアップ直後の低レイヤUDPパケット（UDP 69番）を勝手にドロップ・遮断している。 | VirtualBoxの「ブリッジアダプター」を完全無効化し、**USB 3.0 (xHCI) フィルターでUSB Type-C LANアダプターをLinux VMに直接パススルー**してホストOSのネットワークスタックを完全に迂回する。 |
+| **`dnsmasq: unknown interface` でコンテナ起動クラッシュ・再起動ループ** | USBパススルー切り替えに伴い、Linuxカーネル（Predictable Network Interface Names）がNIC名を `enp0s8` 等から **`enx<MACアドレス>`**（例: `enx806d97194b46`）へ自動変更したため。 | `ip link` で認識された物理MACベースのNIC名を確認し、`/etc/netplan/99-static-ip.yaml` および `dnsmasq.conf` の `interface=` 記述を新NIC名へ修正して反映する。 |
+| **端末のLAN抜線・電源OFF後に次の端末でDHCPが一切応答しない** | 1対1直結環境で対象PCの抜線や電源OFFにより増設NICが `NO-CARRIER`（リンクダウン）となり、`bind-interfaces` モードの `dnsmasq` がソケットを見失って異常終了・停止する。 | 対象端末をLANケーブルで直結・リンクアップさせた後、`docker ps` で状態を確認し、**`docker compose restart`** を実行してソケットを再バインドする運用フローとする。 |
+| **PC本体のWi-Fi/有線LANでのインターネット閲覧が突然切断される** | 増設した閉域網NIC側のNetplan設定で、誤ってデフォルトゲートウェイ（`gateway4` / `routes`）やDNSを設定し、PCのデフォルトルートが閉域網側に奪われたため。 | 増設NIC側は `dhcp4: no`、`addresses: [10.254.254.1/24]` のみ定義し、**ゲートウェイとDNS設定は1行も記述しない（完全閉域化）** を徹底する。 |
+| **1対1直結時にPXEブートがスキップされ内蔵SSD/OSが起動してしまう** | ハブを介さない直結接続によるAuto MDI-X・速度交渉（オートネゴシエーション）の確立に数秒要し、せっかちなUEFI PXE ROMがリンクアップ前にタイムアウト判定するため。 | 対象端末のBIOS/UEFIで「Network Boot Delay」や「PXE Wait Time」を数秒設定するか、対象端末の電源を入れる前にLANケーブルを確実に両端結線しておく。 |
+| **`bootx64.efi` 読込後にGRUBメニューが出ず内蔵SSDから起動してしまう** | Ubuntu ISOのルート直下にある `grubx64.efi` はローカルCD/USBメディア専用であり、ネットワーク（PXE/TFTP）通信スタックが組み込まれていない。 | ISO内の `pool/main/g/grub2-signed/...` からネットワーク対応バイナリ **`grubnetx64.efi.signed`** を抽出し、TFTPルートに `bootx64.efi` として配置する。 |
+| **GRUB起動時に `Unknown command` や autoinstall がスキップされる** | `grub.cfg` のカーネル引数で `ds=nocloud-net;s=http://...` と記述した際、GRUBインタープリターがセミコロン `;` をコマンド区切りと誤認識したため。 | セミコロンの直前にバックスラッシュを付与し、**`ds=nocloud-net\;s=http://10.254.254.1/cloud-init/`** とエスケープする。 |
+| **USB Type-C LANアダプターが通信中に突然切断または低速化する** | ホストOS（Windows）の「USBのセレクティブサスペンド」や省電力イーサネット（EEE）により、通信アイドリング時にType-C給電が絞られたため。 | Windowsの電源プラン設定で「USBのセレクティブサスペンド」を無効化し、デバイスマネージャーのNICプロパティで「電力の節電のためにコンピュータがこのデバイスの電源をオフにすることを許可する」をオフにする。 |
+| **DHCPブロードキャストがコンテナに届かない** | Dockerのデフォルトブリッジネットワーク（NAT）を使用しているため、L2ブロードキャスト（255.255.255.255 / UDP 67）がコンテナ内に転送されない。 | `docker-compose.yml` で `pxe-dnsmasq` サービスに **`network_mode: "host"`** を指定し、さらにRAWソケット制御用に **`cap_add: [NET_ADMIN]`** を付与する。 |
+| **autoinstall 実行時にインストーラーが停止、またはパスワード認証に失敗する** | `user-data` の `password` 欄に平文のパスワードを記述したため、cloud-init のバリデーションエラーまたは不正なハッシュ値として処理された。 | 平文ではなく、ホスト側で `openssl passwd -6 <パスワード>` を実行して生成した **SHA-512 暗号化ハッシュ文字列** を設定する。 |
+
+---
+
+### 現場で絶対にやってはいけないアンチパターン 5選
+
+#### ❌ アンチパターン 1: Windowsホストの仮想ブリッジ（NDIS）経由でPXEを流す
+* **実態**: 「手元のVirtualBoxでブリッジ接続すれば手軽に動くだろう」と考えると、WindowsのNDISドライバーがリンク確立直後の低レイヤUDPパケット（TFTP/UDP 69）をドロップし、DHCPだけ通ってTFTPが死ぬという最悪の遅延トラップに陥ります。
+* **正解**: USB Type-C LANアダプターを使用し、VirtualBoxの **USB 3.0 (xHCI) フィルターでゲストLinux OSに丸ごとパススルー** すること。ホストOSのネットワークスタックを100%バイパスするのが絶対の鉄則です。
+
+#### ❌ アンチパターン 2: 増設した閉域網NICにデフォルトゲートウェイやDNSを設定する
+* **実態**: 普段の癖でNetplanやインターフェース設定に `gateway4` や `routes: default`、`nameservers` を書いてしまうと、作業用PCのインターネット接続経路（Wi-Fi等）が奪われ、作業中に突然ブラウザやSSHが不通になります。
+* **正解**: キッティング用の増設NICは `10.254.254.1/24` のIPアドレスのみを与え、**デフォルトルートやDNSは一切定義しない**こと。
+
+#### ❌ アンチパターン 3: 社内LANや既存ネットワークに直結してPXE/DHCPを起動する（野良DHCP事故）
+* **実態**: 既存の社内LANや家庭内ルーター配下のスイッチにPXEサーバーを接続してDHCPを有効化すると、フロア全体の一般PCに意図しないIPアドレスやPXEブート情報が配布され、全社的な通信障害（いわゆる「野良DHCP障害」）を引き起こします。
+* **正解**: 必ず専用の増設USB-C NICを用意し、**作業端末と対象PCを1対1直結（または完全孤立した独立スイッチ）で隔離した専用閉域網** で実施すること。
+
+#### ❌ アンチパターン 4: ISO付属の `grubx64.efi` をそのままTFTPブートローダーとして使う
+* **実態**: Ubuntu公式ISOの `/EFI/BOOT/` に置かれている `grubx64.efi` は、USBメモリやDVDメディアなど「ローカルストレージ」から起動することを前提にビルドされており、PXE/ネットワークプロトコルスタックが省かれています。これを配置してもPXEからGRUBメニューは立ち上がりません。
+* **正解**: ISO内部のアーカイブ（`pool/main/g/grub2-signed/...`）に格納されている **ネットワーク対応版 `grubnetx64.efi.signed`** を抽出し、TFTPルートの `bootx64.efi` として配置すること。
+
+#### ❌ アンチパターン 5: LANケーブル抜き差し後にコンテナの生存確認をせず対象PCの電源を入れる
+* **実態**: キッティング完了後にLANケーブルを抜いて次のPCに差し替えると、増設NICが一瞬 `NO-CARRIER` となり、`dnsmasq` がインターフェースを見失ってコンテナごと停止することがあります。これに気づかず対象PCを起動するとDHCPが降ってきません。
+* **正解**: 直結環境では「ケーブル接続・リンクアップ確認 ➔ `docker ps` でコンテナ確認（必要に応じて `docker compose restart`） ➔ 対象PCの電源ON」という確実なルーティンを守ること。
 
 ---
 
