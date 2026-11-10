@@ -69,7 +69,7 @@ sequenceDiagram
 1. **完全閉域直結（`10.254.254.0/24`）による野良DHCPの完全防止**:
    社内LANでPXEサーバーを立てると、既存のDHCPと競合して業務端末の通信を破壊する「野良DHCP障害」を起こします。本設計では増設したUSB-C LANアダプターに対象PCをLAN直結し、`10.254.254.0/24` の完全閉域網を敷くことで、社内ネットワークへの影響を物理的にゼロに抑えます。
 
-2. **【現場実証】数時間を溶かした「DHCPは通るのにTFTPだけ死ぬ」問題とUSBパススルー突破**:
+2. **【現場実証】数時間を溶かした「DHCPは通るのにTFTPだけ停止する」問題とUSBパススルー突破**:
    Windowsホスト上のVirtualBoxで「ブリッジアダプター」を使用して直結PXE環境を組むと、極めて厄介な現象が発生します。
    * **現象**: クライアントPCはDHCP Discoverを送り、`10.254.254.x` のIPは正常に取得できる。しかし直後のTFTP接続要求（UDP 69番）がサーバーに届かず、`TFTP open timeout` で数分間フリーズしたのちSSD起動に落ちる。
    * **苦闘の軌跡**: Windows Defender無効化、プロミスキャスモード変更、LANケーブル交換、dnsmasqのTFTP設定見直しなどを幾度繰り返してもパケットは1つも届かず、数時間以上が完全に空費される。
@@ -82,6 +82,12 @@ sequenceDiagram
 
 4. **ネットワーク対応GRUB (`grubnetx64.efi.signed`) の採用**:
    Ubuntu ISO直下の `grubx64.efi` はローカルCD/USB専用でネットワークドライバを持ちません。ISO内のdebパッケージから抽出した `grubnetx64.efi.signed` をTFTPに配置することで、GRUB起動後にHTTPプロトコルへ昇格し、GBクラスのISOイメージを爆速ストリーミングします。
+
+5. **【実戦ドはまり注意点】パソコン＋増設NIC構成における全体の流れ上の落とし穴**:
+   「手元のPC＋増設USB NIC」の直結環境において、運用全体のフローの中で以下の実戦トラップに遭遇しました。構築時は以下の挙動にご注意ください：
+   * **端末抜き差し・リンクダウンによるコンテナソケット消失**: LANケーブルの抜き差しや対象PC電源OFFで増設NICがリンクダウンすると、`dnsmasq`（`bind-interfaces`）がソケットを見失いコンテナ停止することがあります。対象端末を接続してリンクアップを確認した後に `docker compose restart` を行う運用フローが安定します。
+   * **ホストPC側既存ネットワークとのルーティング衝突回避**: 増設NIC側にデフォルトゲートウェイやDNSを一切定義せず、本体Wi-Fi/LANのインターネット経路と完全分離（固定IP `10.254.254.1/24` のみ付与）を死守します。
+   * **1対1直結のオートネゴシエーション遅延対策**: ハブなし直結ではリンクアップに数秒を要し、UEFI PXEがリンク確立前にタイムアウトして内蔵SSD起動に落ちる場合があります。BIOSの「PXE Wait Time」設定や事前結線を徹底します。
 
 ---
 
@@ -172,6 +178,8 @@ autoinstall:
 | **`dnsmasq: unknown interface` でコンテナ停止** | USBパススルーによりNIC名が `enp0s8` から `enx...` に変化した | `ip link` で確認した `enx<MACアドレス>` 名に `netplan` と `dnsmasq.conf` を書き換えて適用 |
 | **`bootx64.efi` 後にGRUBメニューが出ずSSD起動** | ISO直下の `grubx64.efi` はローカルCD/USB専用 | `pool/main/g/grub2-signed/...` 内の `grubnetx64.efi.signed` を抽出して配置 |
 | **`Unknown command` または autoinstall が起動しない** | GRUB設定のセミコロン `;` がコマンド区切りと誤認された | `ds=nocloud-net\;s=http://...` のようにバックスラッシュでエスケープ |
+| **ケーブル挿し直し後にDHCPが応答しない** | リンクダウンで `dnsmasq`（`bind-interfaces`）が停止した | `docker ps` で確認し、対象端末接続後に `docker compose restart` を実行 |
+| **PC本体のネット閲覧が不能になった** | 増設NICにデフォルトGWやDNSを設定してルーティングが衝突 | 増設NIC側は `addresses: [10.254.254.1/24]` のみとしGW/DNSを完全削除 |
 
 ---
 
