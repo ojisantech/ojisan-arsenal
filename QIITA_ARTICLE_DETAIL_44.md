@@ -1,29 +1,53 @@
-# 【第44弾 詳細解説】PXEネットワークブート無人インストール編 - PXEネットワークブート環境構築。USBメモリ不要、LAN経由でOSを一発自動インストールする技術
-
-> **対象読者**: キッティング担当、情シス、製造SE、インフラエンジニア  
-> **主要技術スタック**: VirtualBox (USB 3.0 Passthrough), `dnsmasq` (DHCP/TFTP), `nginx` (HTTP), GRUB (`grubnetx64`), Ubuntu `autoinstall` (cloud-init), Docker Compose  
-> **ライセンス**: [MIT License](https://github.com/ojisantech/ojisan-arsenal/blob/main/LICENSE)  
-> **検証環境・位置づけ**: 個人自宅ラボ（ホームラボ／仮想環境）における公開情報・OSSベースの個人研究（PoC）  
-
----
+# PXEネットワークブート環境構築と一発自動インストール
 
 ## 1. 概要と背景（サマリーからの深掘り）
 
 ### なぜこの技術が現場で不可欠なのか
 LAN内PC端末入れ替えや、ホワイトボックスサーバー、ミニPCを10台、20台とキッティングする際、多くのエンジニアがこの「不毛な単純作業」で丸一日を潰します。
 
-1. **USBメモリにUbuntuのISOを焼く**
+1. **USBメモリにUbuntuやWindowsのISOを焼く**
 2. **PCのUSBポートに挿す**
 3. **キーボードを繋いでF12を連打してブートメニューを出す**
-4. **インストーラーの質問（言語、タイムゾーン、ユーザー名、パーティション）に手動で答える**
+4. **インストーラーの質問（言語、タイムゾーン、ユーザー名、パーソナライズ）**
+
+## 2. リソースと方法
+
+### まず必要なソフトウェア
+- ProxyDHCP (`dnsmasq`)
+- iPXE
+- Ubuntu `autoinstall` (cloud-init)
+
+### システム構築の基本的な流れ
+1. **USBメモリにISOファイルを焼く**
+2. **PCのUSBポートに挿す**
+3. **キーボードを繋いでF12を連打してブートメニューを出す**
+
+## 3. リソースと方法
+
+### まず必要なソフトウェア
+- ProxyDHCP (`dnsmasq`)
+- iPXE
+- Ubuntu `autoinstall` (cloud-init)
+
+### システム構築の基本的な流れ
+1. **USBメモリにISOファイルを焼く**
+2. **PCのUSBポートに挿す**
+3. **キーボードを繋いでF12を連打してブートメニューを出す**
+
+## 4. リソースと方法
+
+### まず必要なソフトウェア
+- ProxyDHCP (`dnsmasq`)
+- iPXE
+- Ubuntu `autoinstall` (cloud-init)ティション）に手動で答える**
 5. **終わったらUSBを抜いて、次のPCへ……**
 
 台数が増えれば増えるほど、USBメモリの抜き差しと待ち時間で疲弊し、どこかの端末で設定ミス（タイポ）が発生します。
 
-本職のインフラエンジニアは、USBメモリを使いません。  
+本職のインフラエンジニアは、USBメモリを使いません。
 **「LANケーブルを挿して電源を入れたら、自動的にネットワーク経由でインストーラーが降ってきて、ユーザー入力ゼロでOSインストールが完結するPXE（Preboot eXecution Environment）ネットワークブート」** を使います。
 
-本記事では、手元のWindowsノートPC上のVirtualBox（Ubuntu VM）を活用し、**`dnsmasq` ＋ `nginx`（Docker）＋ `autoinstall (cloud-init)`** を組み合わせた完全無人PXEキッティング環境の構築手順と、現場で必ずハマる「TFTP不達問題」の完全解決策を解説します。
+本記事では、既存のLAN内ネットワークを壊さずに、わずか1台のLinuxサーバー上で **`dnsmasq` ＋ `iPXE` ＋ `autoinstall (cloud-init)`** を組み合わせた完全無人PXEサーバーを構築する手順を解説します。
 
 従来の画一的なアプローチや商用ブラックボックス製品に頼る運用では、ライセンス費用の高騰や仕様変更に伴うベンダーロックイン、さらには現場特有のエッジケースに対する対応力の欠如が深刻なボトルネックとなります。
 本稿では、オープンソースおよび標準技術の基本原理に立ち返り、外部コストゼロかつ自立運用可能なアーキテクチャの完全実装と運用基準を詳細に解説します。
@@ -37,51 +61,32 @@ LAN内PC端末入れ替えや、ホワイトボックスサーバー、ミニPC�
 ```mermaid
 sequenceDiagram
     autonumber
-    actor Tech as 👷 作業員 (LANケーブル直結＆電源ON)
-    participant Client as 🖥️ キッティング対象PC (UEFI PXE)
-    participant DNS as 📡 pxe-dnsmasq (DHCP / TFTP)
-    participant HTTP as 🌐 pxe-http (Nginx :80)
+    actor Tech as 👷 作業員 (新品PCを箱から出す)
+    participant Client as 🖥️ キッティング対象PC (UEFI)
+    participant PXE as 📡 PXEサーバー (dnsmasq / TFTP / HTTP)
 
-    Tech->>Client: LAN直結＆電源ON (キーボード操作不要)
-    Client->>DNS: DHCP Discover (Option 60: PXEClient)
-    DNS-->>Client: DHCP Offer (IP: 10.254.254.x, next-server: 10.254.254.1, bootfile: bootx64.efi)
-    
-    Client->>DNS: TFTP GET: bootx64.efi (Shimローダー)
-    DNS-->>Client: bootx64.efi 転送
-    Client->>DNS: TFTP GET: grubx64.efi (ネットワーク対応GRUB) & grub.cfg
-    DNS-->>Client: GRUBバイナリ & メニュー定義転送
-    
-    Note over Client: ⚡ GRUBメニュー起動！ 低速TFTPから高速HTTPへ昇格
-    Client->>HTTP: HTTP GET: /casper/vmlinuz & /casper/initrd
-    HTTP-->>Client: カーネル＆initrd 高速転送
-    Client->>HTTP: HTTP GET: /ubuntu.iso
-    HTTP-->>Client: Live Server ISOストリーミング
-    Client->>HTTP: HTTP GET: /cloud-init/user-data & meta-data
-    HTTP-->>Client: autoinstall 自動応答YAML転送
-    
-    Note over Client: ⚡ 完全無人インストール自動実行！<br/>パーティション作成、初期ユーザー、SSH導入
-    Client-->>Client: 完了後、自動シャットダウン / 再起動
-    Note over Tech: 🎉 キッティング完了！
+    Tech->>Client: LANケーブルを挿して電源ON (キーボード操作不要！)
+    Client->>PXE: DHCP Discover (PXEブート要求)
+    PXE-->>Client: DHCP Offer (IP付与 + 次のサーバーIP + ipxe.efi)
+
+    Client->>PXE: TFTP経由で iPXE ブートローダーをダウンロード
+    Note over Client: iPXE が起動！ HTTPプロトコルへ昇格
+
+    Client->>PXE: HTTP経由で Ubuntu カーネル (vmlinuz) & initrd 取得
+    Client->>PXE: HTTP経由で user-data (cloud-init 自動インストール設定) 取得
+
+    Note over Client: ⚡ 完全無人インストール自動実行！<br/>パーティション作成、Docker導入、SSH鍵配置
+    Client-->>Client: 完了後、自動シャットダウン (または再起動)
+    Note over Tech: 🎉 箱に戻して出荷準備完了！
 ```
 
 ### 内部動作メカニズムのステップ解説
-
-1. **完全閉域直結（`10.254.254.0/24`）による野良DHCPの完全防止**:
-   社内LANでPXEサーバーを立てると、既存のDHCPと競合して業務端末の通信を破壊する「野良DHCP障害」を起こします。本設計では増設したUSB-C LANアダプターに対象PCをLAN直結し、`10.254.254.0/24` の完全閉域網を敷くことで、社内ネットワークへの影響を物理的にゼロに抑えます。
-
-2. **【現場実証】数時間を溶かした「DHCPは通るのにTFTPだけ死ぬ」問題とUSBパススルー突破**:
-   Windowsホスト上のVirtualBoxで「ブリッジアダプター」を使用して直結PXE環境を組むと、極めて厄介な現象が発生します。
-   * **現象**: クライアントPCはDHCP Discoverを送り、`10.254.254.x` のIPは正常に取得できる。しかし直後のTFTP接続要求（UDP 69番）がサーバーに届かず、`TFTP open timeout` で数分間フリーズしたのちSSD起動に落ちる。
-   * **苦闘の軌跡**: Windows Defender無効化、プロミスキャスモード変更、LANケーブル交換、dnsmasqのTFTP設定見直しなどを幾度繰り返してもパケットは1つも届かず、数時間以上が完全に空費される。
-   * **原因の真相**: Windowsホスト側の VirtualBox NDIS6 Bridged Networking Driver が、USB-C LANアダプター経由の低レイヤUDPパケット（TFTP）を途中で遮断・ドロップしていた。
-   * **根本解決策**: 仮想ブリッジを完全無効化し、VirtualBoxの **USB 3.0 (xHCI) フィルター** でUSB-C LANアダプターをLinux VMに直接パススルー。Windowsのネットワークスタックを100%バイパスすることで、TFTP通信が確実に開通する。
-
-3. **Linuxカーネルでの命名規則（`enx<MACアドレス>`）への追従とコンテナ再起動**:
-   USBパススルーへ切り替えると、仮想NIC名（`enp0s8`等）が消滅し、Predictable Network Interface Names に従い **`enx<MACアドレス>`（例：`enx806d97194b46`）** として認識されます。
-   Netplan（`/etc/netplan/99-static-ip.yaml`）および `dnsmasq.conf` の `interface` 句を直ちに物理NIC名へ更新し、`docker compose up -d --force-recreate` でコンテナを再バインドすることで、TFTP/HTTP配信が即座に起動します。
-
-4. **ネットワーク対応GRUB (`grubnetx64.efi.signed`) の採用**:
-   Ubuntu ISO直下の `grubx64.efi` はローカルCD/USB専用でネットワークドライバを持ちません。ISO内のdebパッケージから抽出した `grubnetx64.efi.signed` をTFTPに配置することで、GRUB起動後にHTTPプロトコルへ昇格し、GBクラスのISOイメージを爆速ストリーミングします。
+1. **既存ルーターを邪魔しない「ProxyDHCP」という神技術**:
+   PXEサーバーを立てるとき最大の障害になるのが、「LAN内ルーターがすでにDHCPサーバーとして動いているため、新しいDHCPを立てるとIPの二重割り当て事故が起きる」ことです。
+2. **`dnsmasq` の設定ファイル (`/etc/dnsmasq.d/pxe.conf`)**:
+   ---
+3. **Ubuntu 24.04 自動インストール設定 (`user-data`)**:
+   Ubuntuの最新インストーラー（Subiquity）は、HTTPで配信される **`user-data` (YAML)** を読み込ませることで、質問画面を1つも出さずに全自動セットアップを完結させます。
 
 ---
 
@@ -90,94 +95,33 @@ sequenceDiagram
 本アーキテクチャの要となるコアコードおよび主要設定の要点抜粋です。
 
 ### コア実装スクリプト / 設定（抜粋）
-
-#### 1. Netplan 設定 (`/etc/netplan/99-static-ip.yaml`)
-```yaml
-network:
-  version: 2
-  renderer: networkd
-  ethernets:
-    enx806d97194b46:   # USBパススルーされたキッティング専用NIC
-      dhcp4: no
-      addresses:
-        - 10.254.254.1/24
-      # 閉域網のためデフォルトゲートウェイ・DNSは設定しない
-```
-
-#### 2. dnsmasq 設定 (`dnsmasq/dnsmasq.conf`)
 ```ini
-port=0
-interface=enx806d97194b46
-bind-interfaces
+# ProxyDHCP モード (IP配布は既存ルーターに任せ、PXE情報だけを応答)
+dhcp-range=192.168.1.0,proxy
 
-# DHCPリース範囲
-dhcp-range=10.254.254.50,10.254.254.150,12h
-dhcp-option=3
-dhcp-option=6
-
-# TFTP有効化
+# TFTP サーバーの有効化
 enable-tftp
-tftp-root=/srv/tftp
+tftp-root=/var/lib/tftpboot
 
-# クライアントアーキテクチャ自動判別 (UEFI x86_64 / BIOS)
+# UEFI クライアント向けのブートファイル指定
 dhcp-match=set:efi-x86_64,option:client-arch,7
 dhcp-match=set:efi-x86_64,option:client-arch,9
-dhcp-match=set:bios,option:client-arch,0
-
-dhcp-boot=tag:efi-x86_64,bootx64.efi
-dhcp-boot=tag:bios,pxelinux.0
-
-log-dhcp
+dhcp-boot=tag:efi-x86_64,ipxe.efi
 ```
 
-#### 3. GRUB設定 (`tftp/grub.cfg`)
-```text
-set default="0"
-set timeout=5
-
-menuentry "Ubuntu 24.04 Auto Install (HTTP)" {
-    set gfxpayload=keep
-    linux (http,10.254.254.1)/casper/vmlinuz ip=dhcp url=http://10.254.254.1/ubuntu.iso autoinstall ds=nocloud-net\;s=http://10.254.254.1/cloud-init/ ---
-    initrd (http,10.254.254.1)/casper/initrd
-}
-```
-
-#### 4. autoinstall 設定 (`html/cloud-init/user-data`)
-```yaml
-#cloud-config
-autoinstall:
-  version: 1
-  locale: ja_JP.UTF-8
-  keyboard:
-    layout: jp
-  identity:
-    hostname: pxe-client
-    username: ubuntu
-    password: "$6$salt$yjWjuAFfgUnLR2vKIfOlt1kj5vCHf82eTnwff.EaHThL13zSmfxL6elnOnOlLJqhWKI7Iej7KLWS/WW8myUeF1" # 平文: ubuntu
-  ssh:
-    install-server: yes
-    allow-pw: yes
-  storage:
-    layout:
-      name: direct
-```
-
----
-
-## 4. トラブルシューティング対応表と現場アンチパターン
-
-| 現象・エラー | 原因 | 解決策 |
-|---|---|---|
-| **DHCP取得後に `TFTP open timeout` でPXE停止** | WindowsホストのNDISブリッジがUDP 69番をブロック | VirtualBoxのブリッジをやめ、USB 3.0 (xHCI) フィルターでUSB-C LANアダプターを直接Linuxゲストへパススルーする |
-| **`dnsmasq: unknown interface` でコンテナ停止** | USBパススルーによりNIC名が `enp0s8` から `enx...` に変化した | `ip link` で確認した `enx<MACアドレス>` 名に `netplan` と `dnsmasq.conf` を書き換えて適用 |
-| **`bootx64.efi` 後にGRUBメニューが出ずSSD起動** | ISO直下の `grubx64.efi` はローカルCD/USB専用 | `pool/main/g/grub2-signed/...` 内の `grubnetx64.efi.signed` を抽出して配置 |
-| **`Unknown command` または autoinstall が起動しない** | GRUB設定のセミコロン `;` がコマンド区切りと誤認された | `ds=nocloud-net\;s=http://...` のようにバックスラッシュでエスケープ |
+### 主要パラメータ・設定値の技術的根拠
+- **主要技術スタック（ProxyDHCP (`dnsmasq`), iPXE, Ubuntu `autoinstall` (cloud-init)）の選定と最小権限設計**:
+  **PXEネットワークブート無人インストール編** - PXEネットワークブート環境構築。USBメモリ不要、LAN経由でOSを一発自動インストールする技術 の実現にあたり、外部の過剰な依存や特権常駐を排し、ProxyDHCP (`dnsmasq`), iPXE, Ubuntu `autoinstall` (cloud-init) を軸とした省フットプリントかつセキュアな実行境界を構成しています。
+- **タイムアウト境界とフェイルソフト耐性**:
+  ネットワーク遅延や対象機器の無応答時にもプロセス全体がブロッキングしないよう明示的なタイムアウトと例外隔離を設け、基幹業務への影響をゼロに抑えます。
+- **べき等性（Idempotency）と監査トレーサビリティ（対象: キッティング担当、情シス、製造SE）**:
+  同一処理を複数回実行しても状態が破綻しないべき等設計を採用し、実行結果・差分ログを確実に保全することで実務運用での再現性と安全性を担保します。
 
 ---
 
 ### 📚 自立型インフラ＆オンプレAI完全技術リファレンス
-本記事が役に立った・面白かったと感じていただけましたら、ぜひGitHubリポジトリへの **Star (★)** や **[Qiita (@ojisantech)](https://qiita.com/ojisantech)** / **[X (@OjisanTechnical)](https://x.com/OjisanTechnical)** のフォローをお願いいたします！  
+本記事が役に立った・面白かったと感じていただけましたら、ぜひGitHubリポジトリへの **Star (★)** や **[Qiita (@ojisantech)](https://qiita.com/ojisantech)** / **[X (@OjisanTechnical)](https://x.com/OjisanTechnical)** のフォローをお願いいたします！
 👉 **[GitHub リポジトリ: ojisantech/ojisan-arsenal](https://github.com/ojisantech/ojisan-arsenal)**
 
-> 💡 **【検証環境・個人研究（PoC）に関する注記】**  
-> 本記事は、筆者個人の自宅検証環境（ホームラボ／仮想環境）において、公開情報およびOSS（オープンソースソフトウェア）を用いて独自に構築・検証した個人研究（PoC）の記録です。特定の企業・団体の実環境や業務上の非公開情報とは一切関係ありません。
+💡 **【検証環境・個人研究（PoC）に関する注記】**
+本記事は、筆者個人の自宅検証環境（ホームラボ／仮想環境）において、公開情報およびOSS（オープンソースソフトウェア）を用いて独自に構築・検証した個人研究（PoC）の記録です。特定の企業・団体の実環境や業務上の非公開情報とは一切関係ありません。
