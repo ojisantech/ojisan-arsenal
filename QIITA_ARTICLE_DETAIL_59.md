@@ -1,4 +1,4 @@
-# 【第59弾 詳細解説】CoreDNS 悪意ドメイン一括ブロック・シンクホール編 - LAN内DNSをCoreDNS/dnsmasqで防御壁に！悪意あるドメイン・広告・C2サーバーを一括ブロックするRPZ/シンクホール構築
+# 【第59弾 詳細解説】CoreDNS 悪意ドメイン一括ブロック・シンクホール編 - LAN内DNSをCoreDNSで防御壁に！悪意あるドメイン・広告を一括ブロックするDNSシンクホール構築
 
 > **対象読者**: セキュリティSE、インフラ・ネットワーク管理者、情シス、自宅ラボ愛好家  
 > **主要技術スタック**: CoreDNS (`hosts` プラグイン), Docker Compose, Python, DNS Sinkhole (0.0.0.0), C2遮断, StevenBlack hosts, Prometheus  
@@ -326,6 +326,8 @@ CoreDNSの `log` プラグインは標準出力に各クエリの判定結果を
   50万件を超える過激なリストを適用すると、LINEのスタンプ配信サーバーやCDNドメイン（Cloudflare/Akamai）が誤遮断され、「画像が表示されない」「アプリが起動しない」といったLAN内・家庭内クレームに繋がります。標準的なStevenBlack hosts（約13万件）が最もバランスに優れています。
 - **アンチパターン3：一時ファイルを使わずに直接 `blocklist.hosts` を上書きする**  
   ダウンロードや正規化処理中に `blocklist.hosts` を直接書き換えると、書き込み途中の破損ファイルをCoreDNSが読み込んで構文エラーを起こし、DNSサービス全体が停止します。必ずアトミック置換（`os.replace`）を徹底してください。
+- **アンチパターン4：Windowsやルーターが配布する「IPv6 DNS」によるシンクホール迂回**  
+  WindowsやWi-Fiルーター（RA）が配布するIPv6 DNSサーバー（リンクローカルアドレス `fe80::...` 等）が有効になっている場合、IPv4でCoreDNSを設定していてもOSがIPv6 DNSを優先してしまい、シンクホールを迂回して広告や悪性ドメインが名前解決されてしまいます。PowerShellの `Get-DnsClientServerAddress` 等で実際に利用中のDNSアドレスを確認し、必要に応じて端末側でIPv6 DNSを無効化するか、CoreDNSをIPv6でもリッスンさせて配布してください。
 
 ---
 
@@ -334,7 +336,7 @@ CoreDNSの `log` プラグインは標準出力に各クエリの判定結果を
 | 障害事象・エラーメッセージ | 想定原因 | 一次切り分け・復旧コマンド |
 | :--- | :--- | :--- |
 | **`bind: address already in use` でコンテナが起動しない** | ホストOSの `systemd-resolved` が 53番ポートを占有している | `sudo lsof -i :53` で占有PIDを確認。`/etc/systemd/resolved.conf` で `DNSStubListener=no` を設定し `systemctl restart systemd-resolved` を実行。 |
-| **広告がブロックされず表示され続ける** | ① 代替DNSに外部IPが設定されている<br/>② ブラウザのセキュアDNS（DoH）が有効 | クライアント端末で `nslookup doubleclick.net` を実行。`0.0.0.0` 以外（正規IP）が返る場合は、端末のDNS設定とブラウザのDoH設定を確認。 |
+| **広告がブロックされず表示され続ける** | ① 代替DNSに外部IPが設定されている<br/>② ブラウザのセキュアDNS（DoH）が有効<br/>③ Windows/ルーターのIPv6 DNSによる迂回 | クライアント端末で `nslookup doubleclick.net` を実行。`0.0.0.0` 以外（正規IP）が返る場合は、端末のDNS設定とブラウザのDoH設定、および `Get-DnsClientServerAddress` でIPv6 DNSが優先されていないか確認。 |
 | **特定の業務サイトや決済画面が開かない（誤検知）** | ブロックリストに対象ドメインが含まれている | `grep "ドメイン名" blocklist.hosts` で該当行を特定。`whitelist.hosts` に追加してCoreDNSをリロード。 |
 | **リスト更新後にCoreDNSがリロードされない** | `hosts` プラグイン内に `reload 10s` が未記述、またはファイルの更新時刻が変化していない | `Corefile` 内の `hosts` ブロック内に `reload 10s` が正しく記述されているか確認。`docker compose logs coredns` でリロードログを確認。 |
 
