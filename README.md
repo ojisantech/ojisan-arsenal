@@ -81,7 +81,7 @@
 | :---: | :--- | :--- | :--- | :--- |
 | **第21弾** | [`QIITA_ARTICLE_DETAIL_21.md`](./QIITA_ARTICLE_DETAIL_21.md) | **LLMハルシネーション自動テスト（CI/CD）編**<br/>LAN内AIボットの「嘘（ハルシネーション）」を許さない。CI/CDで回す事実整合性ベンチマークテスト自動化スイート（TC01〜TC10） | QAエンジニア、プロンプト開発者 | Python (`pytest`)<br/>Keyword Match, CI/CD |
 | **第22弾** | [`QIITA_ARTICLE_DETAIL_22.md`](./QIITA_ARTICLE_DETAIL_22.md) | **決定論的Guardrail（検閲・安全機構）編**<br/>LAN内機密や不適切発言をLLMに喋らせない。プロンプトインジェクションを防ぐ「決定論的Guardrailバリデーター」の実装 | AIセキュリティ、コンプライアンス担当 | 正規表現パターンマッチ<br/>入出力インターセプター |
-| **第23弾** | `QIITA_ARTICLE_DETAIL_23.md` *(順次公開)* | **CPU環境でのローカルLLM最適化編**<br/>GPUなしの普通のCPUサーバーで「Qwen2.5-1.5B」をサクサク動かす。Ollamaと量子化モデルのメモリチューニングと高速化設定 | オンプレミスAI導入担当、エッジ開発者 | Ollama, Qwen2.5:1.5b (Q4)<br/>Modelfile, CPU制限 |
+| **第23弾** | [`QIITA_ARTICLE_DETAIL_23.md`](./QIITA_ARTICLE_DETAIL_23.md) | **CPU環境でのローカルLLM最適化編**<br/>GPUなしの普通のCPUサーバーで「Qwen2.5-1.5B」をサクサク動かす。Ollamaと量子化モデルのメモリチューニングと高速化設定 | オンプレミスAI導入担当、エッジ開発者 | Ollama, Qwen2.5:1.5b (Q4)<br/>Modelfile, CPU制限 |
 
 ---
 
@@ -138,7 +138,7 @@
 | **第54弾** | `QIITA_ARTICLE_DETAIL_54.md` *(順次公開)* | **TCP SYN-ACK RTT ジッター計測編**<br/>Pingだけでは見抜けない！TCP SYN-ACK往復時間（RTT）で拠点間VPNの「本当の品質」とジッターを常時ロギングする | VPN運用担当、クラウドインフラSE | TCP Handshake RTT, Python socket<br/>ジッター・分散計算, 外形品質監視 |
 | **第55弾** | `QIITA_ARTICLE_DETAIL_55.md` *(順次公開)* | **Wi-Fi 2.4G/5G 電波干渉調査編**<br/>LAN内のWi-Fiが遅い原因を突き止める！Linuxのiw/wavemonで近隣APの電波干渉・チャンネル重複を可視化する調査術 | LAN内環境管理者、情シス | `iw dev scan`, 2.4GHz/5GHz チャンネル設計<br/>Beacon RSSI解析, ステルスSSID |
 | **第56弾** | `QIITA_ARTICLE_DETAIL_56.md` *(順次公開)* | **ARPポイズニング（なりすまし）監視編**<br/>LAN内に忍び寄るMITM攻撃を許さない！Pythonで作る軽量ARPポイズニング（なりすまし）監視ツール | セキュリティ担当、ネットワークSE | `/proc/net/arp`, IP-MAC整合性監視<br/>MITM検知, 静的ARP固定化防衛 |
-| **第57弾** | `QIITA_ARTICLE_DETAIL_57.md` *(順次公開)* | **野良IPv6の危険性と無効化・ステルス検知編**<br/>LAN内で密かに動く「野良IPv6」が情シスの死角になる理由と、Linux/ルーターでの確実な無効化・ステルス検知法 | 情シス、インフラ設計者 | SLAAC攻撃, 偽RA (Router Advertisement)<br/>ICMPv6 Type 134 Raw Socket, sysctl |
+| **第57弾** | [`QIITA_ARTICLE_DETAIL_57.md`](./QIITA_ARTICLE_DETAIL_57.md) | **野良IPv6の危険性と無効化・ステルス検知編**<br/>LAN内で密かに動く「野良IPv6」が情シスの死角になる理由と、Linux/ルーターでの確実な無効化・ステルス検知法 | 情シス、インフラ設計者 | SLAAC攻撃, 偽RA (Router Advertisement)<br/>ICMPv6 Type 134 Raw Socket, sysctl |
 | **第58弾** | `QIITA_ARTICLE_DETAIL_58.md` *(順次公開)* | **ポートミラーリング（SPAN）パケット常時キャプチャ編**<br/>スイッチのポートミラーリング（SPAN）とLinuxで作る！月額0円の常時パケットキャプチャ＆ローテーション監視基盤 | トラブルシューター、SRE | SPANポート, プロミスキャスモード<br/>`tcpdump` リングバッファ (`-C -W`), Wireshark |
 | **第59弾** | [`QIITA_ARTICLE_DETAIL_59.md`](./QIITA_ARTICLE_DETAIL_59.md) | **CoreDNS 悪意ドメイン一括ブロック・シンクホール編**<br/>LAN内DNSをCoreDNSで防御壁に！悪意あるドメイン・広告を一括ブロックするDNSシンクホール構築 | セキュリティSE、DNS管理者 | CoreDNS (`hosts` プラグイン), Docker<br/>DNSシンクホール (0.0.0.0), C2遮断 |
 | **第60弾** | `QIITA_ARTICLE_DETAIL_60.md` *(順次公開)* | **ネットワーク機器Configバックアップ自動化編**<br/>ルーター・L2/L3スイッチのConfigバックアップを「全自動」にする！ParamikoとGitで作るゼロ円Config管理基盤 | ネットワーク運用担当、インフラ自動化 | Paramiko (SSH), `show running-config`<br/>Git自動コミット・差分追跡, マスキング |
