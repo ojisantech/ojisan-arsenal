@@ -75,14 +75,14 @@ sequenceDiagram
     participant Upstream as 上位DNS (1.1.1.1 / 8.8.8.8)
     actor Attacker as 悪質広告 / C2サーバー / フィッシング
 
-    Note over User, CoreDNS: ① 悪意ある通信・広告リクエストの遮断フロー
+    Note over User, CoreDNS: 1. 悪意ある通信・広告リクエストの遮断フロー
     User->>CoreDNS: A問い合わせ: adserver.malicious-domain.xyz
     CoreDNS->>List: hostsプラグインによる高速マッチング (O(1))
     List-->>CoreDNS: ブラックリスト一致 (0.0.0.0)
     CoreDNS-->>User: 0.0.0.0 を返却 (即座に解決完了)
     User--xAttacker: 接続試行 (0.0.0.0のため接続失敗・通信不成立)
 
-    Note over User, Upstream: ② 正規Webアクセスの高速フォワードフロー
+    Note over User, Upstream: 2. 正規Webアクセスの高速フォワードフロー
     User->>CoreDNS: A問い合わせ: example.com (正規サイト)
     CoreDNS->>List: hostsプラグインによる照合
     List-->>CoreDNS: 不一致 (fallthrough)
@@ -109,7 +109,7 @@ sequenceDiagram
 
 本アーキテクチャの中核となる「Corefile」「docker-compose.yaml」「update_blocklist.py」の完全コード解説です。
 
-### ① `Corefile` 設定（完全版：ホワイトリスト＆メトリクス対応）
+### 1. `Corefile` 設定（完全版：ホワイトリスト＆メトリクス対応）
 
 ```corefile
 # Corefile: CoreDNS シンクホール中核設定
@@ -145,7 +145,7 @@ sequenceDiagram
 }
 ```
 
-### ② `docker-compose.yaml` 設定（完全版）
+### 2. `docker-compose.yaml` 設定（完全版）
 
 ```yaml
 version: "3.8"
@@ -168,7 +168,7 @@ services:
       - "9153:9153/tcp"
 ```
 
-### ③ `update_blocklist.py` 自動更新スクリプト（要点抜粋）
+### 3. `update_blocklist.py` 自動更新スクリプト（要点抜粋）
 
 ```python
 #!/usr/bin/env python3
@@ -208,7 +208,7 @@ if __name__ == "__main__":
 
 ---
 
-### ④ 検証環境での動作ログと実測データ
+### 4. 検証環境での動作ログと実測データ
 
 自宅ラボ（Ubuntu 24.04 / `192.168.1.50`）上での実測テスト結果です。
 
@@ -287,7 +287,7 @@ UbuntuなどのLinuxホストでは、環境やDockerのバインド設定（全
 
 ## 6. セキュリティ運用設計・高度な機能拡張
 
-### ① ホワイトリスト優先読み込み設計（`whitelist.hosts`）
+### 1. ホワイトリスト優先読み込み設計（`whitelist.hosts`）
 StevenBlack hostsなどの公開リストには稀に業務で必要なSaaSやアフィリエイト連携（ECサイト決済画面等）が含まれている場合があります。CoreDNSでは**設定ファイルの上位に記述されたブロックが優先評価される**ため、ホワイトリストを上位に定義することで誤検知を確実に回避できます。
 
 ```corefile
@@ -306,12 +306,12 @@ StevenBlack hostsなどの公開リストには稀に業務で必要なSaaSや�
 }
 ```
 
-### ② Prometheus + Grafana によるメトリクス可視化
+### 2. Prometheus + Grafana によるメトリクス可視化
 CoreDNSには標準で `prometheus` プラグインが組み込まれています。
 - `Corefile` に `prometheus :9153` を設定し、`docker-compose.yaml` でポート `9153` を開放。
 - Prometheusで `coredns_dns_requests_total` や `coredns_dns_responses_total`（rcode別）をスクレイピングすることで、**「LAN全体の名前解決数」「ブロックされたクエリ数（0.0.0.0返却率）」「上位フォワードのレイテンシ推移」** をGrafanaダッシュボード上でリアルタイム監視できます。
 
-### ③ ブロック検知ログのSOC・チャット通知（Slack / Discord / Teams）
+### 3. ブロック検知ログのSOC・チャット通知（Slack / Discord / Teams）
 CoreDNSの `log` プラグインは標準出力に各クエリの判定結果を出力します。  
 これを軽量ログシッパー（Fluent Bit / Vector）や簡単なPython監視スクリプトでテイル（監視）し、**「既知のマルウェアC2ドメインに対する問い合わせ（0.0.0.0返却）」**を検知した瞬間に、送信元クライアントIPと対象ドメインをWebhook経由でチャットツールへアラート通知する運用を組むことで、感染端末の特定と初動対応を迅速化できます。
 
@@ -336,7 +336,7 @@ CoreDNSの `log` プラグインは標準出力に各クエリの判定結果を
 | 障害事象・エラーメッセージ | 想定原因 | 一次切り分け・復旧コマンド |
 | :--- | :--- | :--- |
 | **`bind: address already in use` でコンテナが起動しない** | ホストOSの `systemd-resolved` が 53番ポートを占有している | `sudo lsof -i :53` で占有PIDを確認。`/etc/systemd/resolved.conf` で `DNSStubListener=no` を設定し `systemctl restart systemd-resolved` を実行。 |
-| **広告がブロックされず表示され続ける** | ① 代替DNSに外部IPが設定されている<br/>② ブラウザのセキュアDNS（DoH）が有効<br/>③ Windows/ルーターのIPv6 DNSによる迂回 | クライアント端末で `nslookup doubleclick.net` を実行。`0.0.0.0` 以外（正規IP）が返る場合は、端末のDNS設定とブラウザのDoH設定、および `Get-DnsClientServerAddress` でIPv6 DNSが優先されていないか確認。 |
+| **広告がブロックされず表示され続ける** | 1. 代替DNSに外部IPが設定されている<br/>2. ブラウザのセキュアDNS（DoH）が有効<br/>3. Windows/ルーターのIPv6 DNSによる迂回 | クライアント端末で `nslookup doubleclick.net` を実行。`0.0.0.0` 以外（正規IP）が返る場合は、端末のDNS設定とブラウザのDoH設定、および `Get-DnsClientServerAddress` でIPv6 DNSが優先されていないか確認。 |
 | **特定の業務サイトや決済画面が開かない（誤検知）** | ブロックリストに対象ドメインが含まれている | `grep "ドメイン名" blocklist.hosts` で該当行を特定。`whitelist.hosts` に追加してCoreDNSをリロード。 |
 | **リスト更新後にCoreDNSがリロードされない** | `hosts` プラグイン内に `reload 10s` が未記述、またはファイルの更新時刻が変化していない | `Corefile` 内の `hosts` ブロック内に `reload 10s` が正しく記述されているか確認。`docker compose logs coredns` でリロードログを確認。 |
 
