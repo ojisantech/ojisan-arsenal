@@ -266,17 +266,24 @@ class LLMBackend:
 
 本章のデータは、シミュレーションや推定値ではなく、LAN内のCore i5実機サーバー（`192.168.1.18`）上で直接APIを叩いて実測した生データです。
 
-### 4.1 実機検証環境スペック
-| 項目 | スペック / 構成 | 技術的意味・備考 |
+### 4.1 実機検証環境スペック（ハードウェア＆OS詳細構成）
+| 項目 | 実機スペック / 構成詳細 | 技術的意味・ベンチマーク上の役割 |
 | :--- | :--- | :--- |
-| **マシン形状** | 1L 超小型省スペース デスクトップPC | 外部グラボ増設スロットなし |
-| **CPU** | **Intel(R) Core(TM) i5-8400T CPU @ 1.70GHz** | 6物理コア / 6スレッド (HTなし) / TDP 35W |
-| **L3 キャッシュ** | 9 MB SmartCache (6コア共有) | スレッド競合時のボトルネック要因 |
-| **内蔵GPU** | Intel UHD Graphics 630 | 推論には使用せず **純粋CPU推論** |
-| **搭載メモリ (RAM)** | **DDR4 32 GB (実効 30 GiB)** | モデル常駐・KVキャッシュ保持の鍵 |
-| **OS / カーネル** | Ubuntu 26.04 LTS (Linux 7.0.0-43-generic) | |
-| **コンテナ基盤** | Docker 29.9.3 / Compose v2 | `ollama/ollama:latest` |
-| **検証モデル** | `qwen2.5:1.5b` (Q4_K_M, 986MB), `local-assistant`, `qwen2.5:0.5b` | |
+| **ハードウェア筐体** | **ASUSTeK VivoMini VC65-C1** (超小型 2L シャーシ) | 外部dGPU増設スロットなし・静音ファン・ACアダプタ給電 |
+| **CPU** | **Intel(R) Core(TM) i5-8400T CPU @ 1.70GHz** | **6物理コア / 6スレッド** (HT非搭載、省電力35Wデスクトップ向け) |
+| **CPUクロック** | ベース 1.70 GHz / 最大ブースト 3.30 GHz (アイドル時 800 MHz) | AVX2高負荷推論時も35W枠内で安定高クロックを維持 |
+| **キャッシュ構成** | **L1d 192KB (32KB×6) / L1i 192KB (32KB×6)**<br/>**L2 1.5MB (256KB×6) / L3 9MB (6コア共有 SmartCache)** | L3キャッシュ（9MB）が4スレッド推論時の主要バッファとして機能 |
+| **拡張命令セット** | **AVX2, FMA3, BMI2, AES-NI** | llama.cpp / Ollamaの量子化テンソルGEMV並列演算にフル活用 |
+| **内蔵GPU (iGPU)** | Intel UHD Graphics 630 (Base 350MHz / Boost 1.05GHz) | 推論には使用せず **純粋CPU推論**（画面出力および待機のみ） |
+| **搭載メモリ (RAM)** | **DDR4 32 GB (実効 30 GiB, Swap 8.0 GiB)** | モデル重み（1.15GB）および長文KVキャッシュを常駐保持 |
+| **プライマリストレージ** | **KIOXIA EXCERIA SSD 960GB (SATA 6Gb/s, sda: 894.3GB)** | Dockerイメージ・コンテナ・ローカルモデル配置先 |
+| **内蔵ドライブ** | MATSHITA BD-MLT UJ272 (Slim Blu-ray Drive) | |
+| **ネットワーク** | **Intel Gigabit Ethernet 1000BASE-T (`eno1`: 192.168.1.18/24)** | LAN内クライアント・Web UIとの高速低遅延通信 |
+| **無線LAN** | IEEE 802.11ac Wi-Fi (`wlp1s0`) | |
+| **BIOSバージョン** | 0801 (ASUS UEFI BIOS) | |
+| **OS / カーネル** | **Ubuntu 26.04 LTS (Linux 7.0.0-43-generic x86_64)** | cgroups v2 による厳密なCPUクォータ（cpus: '4.0'）を制御 |
+| **コンテナ実行基盤** | **Docker 29.9.3 / Docker Compose v2** | `ollama/ollama:latest` |
+| **検証モデル** | `qwen2.5:1.5b` (Q4_K_M, 986MB), `local-assistant:latest`, `qwen2.5:0.5b` | |
 
 ---
 
@@ -364,18 +371,31 @@ Core i5-8400T（4スレッド）でのサイズ別性能比較です。
 
 #### ① 実機ホストシステム情報（生出力）
 ```bash
+$ cat /sys/devices/virtual/dmi/id/sys_vendor && cat /sys/devices/virtual/dmi/id/product_name
+ASUSTeK COMPUTER INC.
+VC65-C1
+
 $ uname -a
 Linux ubuntu2604 7.0.0-43-generic #43-Ubuntu SMP PREEMPT_DYNAMIC Fri Oct 23 13:25:25 UTC 2026 x86_64 GNU/Linux
 
-$ lscpu | grep -E "Model name|CPU\(s\):|L3"
+$ lscpu | grep -E "Model name|CPU\(s\):|CPU max|L1d|L2|L3"
 CPU(s):                                  6
 Model name:                              Intel(R) Core(TM) i5-8400T CPU @ 1.70GHz
+CPU max MHz:                             3300.0000
+L1d cache:                               192 KiB (6 instances)
+L2 cache:                                1.5 MiB (6 instances)
 L3 cache:                                9 MiB (1 instance)
 
 $ free -h
                total        used        free      shared  buff/cache   available
-Mem:            30Gi       2.8Gi        22Gi        35Mi       5.9Gi        27Gi
+Mem:            30Gi       3.5Gi        21Gi        35Mi       5.9Gi        26Gi
 Swap:          8.0Gi          0B       8.0Gi
+
+$ lsblk -o NAME,SIZE,TYPE,MOUNTPOINT,MODEL | grep -E "NAME|sda"
+NAME     SIZE TYPE MOUNTPOINT MODEL
+sda    894.3G disk            KIOXIA-EXCERIA S
+├─sda1     1G part /boot/efi  
+└─sda2 893.2G part /          
 ```
 
 #### ② Ollama API 生レスポンス（オンメモリ常駐・KVキャッシュヒット時の実測JSON）
