@@ -60,6 +60,19 @@ flowchart TD
     class Rogue danger;
 ```
 
+```text
+【正常時：IPv4通信】
+[クライアントPC] ──(IPv4通信)──> [UTM / プロキシ / DNSフィルタ] ──> [インターネット]
+                                  ※ポリシー検査・ログ監査が正常に機能
+
+【異常時：Rogue RAによるIPv6経路奪取】
+[未承認ルーター / 攻撃者PC] ──(Rogue RA: Type 134)──> [クライアントPC]
+                                                        │ (SLAAC自動構成)
+                                                        ▼
+[インターネット] <──(未監視のIPv6通信)──────── [新デフォルトGW形成]
+                      ※IPv4専用UTMやDNSフィルタを迂回するリスク
+```
+
 ### 内部動作メカニズムのステップ解説
 1. **対象環境の検知・一次データ収集（Rogue RA, ICMPv6 Type 134 Raw Socket, sysctl）**:
    SLAACによる不正な経路生成や未承認ルーターの存在を検知するため、ICMPv6 Type 134 Raw Socketを用いてLAN内のRAパケットを低負荷にリアルタイム捕捉します。
@@ -114,7 +127,7 @@ EOF
 sudo sysctl --system
 ```
 
-確認コマンド（inet6 アドレスが表示されないことを確認）：
+確認コマンド（グローバルまたはリンクローカルの inet6 アドレスが表示されないことを確認 ※環境により loopback ::1 が残る場合があります）：
 ```bash
 ip -6 addr show
 ```
@@ -148,7 +161,18 @@ interface GigabitEthernet0/1
 
 ---
 
-### 3.3 野良ルーター広告 (RA) 検知スクリプト（BSD Raw Socket実装）
+### 3.3 事前確認：tcpdump による ICMPv6 (RA) の即時キャプチャ
+
+監視スクリプトをデーモン常駐化する前に、現時点でLAN内にRAパケットが送出されているかどうかを即座に裏取り・確認するには、`tcpdump` で ICMPv6 Type 134 をフィルタリングするのが最も確実です。
+
+```bash
+# eth0 インターフェースで ICMPv6 Type 134 (Router Advertisement) をリアルタイムキャプチャ
+sudo tcpdump -n -v -i eth0 'icmp6 and ip6[40] == 134'
+```
+
+---
+
+### 3.4 野良ルーター広告 (RA) 検知スクリプト（BSD Raw Socket実装）
 
 外部ライブラリ（Scapy等）に依存せず、Linux標準のBSD Raw Socket（`AF_INET6`, `SOCK_RAW`, `IPPROTO_ICMPV6`）を用いて、LAN内を流れるICMPv6 Type 134（Router Advertisement）をリアルタイム捕捉する完全スクリプトです。
 
@@ -198,6 +222,7 @@ def start_ra_monitor():
                 print(f"   送信元 IPv6 アドレス : {src_ip}")
                 print(f"   Router Lifetime       : {router_lifetime} 秒")
                 print("   ⚠️  未承認ルーター (Rogue RA) または不正なSLAAC経路広告の可能性があります")
+                print("   ⚠️  送信元アドレスが想定機器（正規ルーター）か確認してください")
                 print("=" * 60)
     except KeyboardInterrupt:
         print("\n[*] 監視を停止しました。")
@@ -208,9 +233,26 @@ if __name__ == "__main__":
     start_ra_monitor()
 ```
 
+単体実行コマンド：
+```bash
+sudo python3 detect_rogue_ra.py
+```
+
+検知時の出力サンプル：
+```text
+[*] IPv6 Router Advertisement (RA) 監視を開始しました (待ち受け中)...
+============================================================
+📢 [NOTICE - RAパケット検知] 2026-11-15 09:30:15
+   送信元 IPv6 アドレス : fe80::aaaa:bbbb:cccc:dddd
+   Router Lifetime       : 1800 秒
+   ⚠️  未承認ルーター (Rogue RA) または不正なSLAAC経路広告の可能性があります
+   ⚠️  送信元アドレスが想定機器（正規ルーター）か確認してください
+============================================================
+```
+
 ---
 
-### 3.4 24時間365日の常駐運用（systemd化 または crontab）
+### 3.5 24時間365日の常駐運用（systemd化 または crontab）
 
 本スクリプトはリアルタイムでパケットを待ち受ける常駐プロセス（ブロッキング待機）のため、通常のcronによる定期実行（`* * * * *` など）を行うとプロセスが多重起動してしまいます。実務では以下のいずれかで常駐運用します。
 
