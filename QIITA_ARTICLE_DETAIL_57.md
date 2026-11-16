@@ -19,10 +19,10 @@
 もしLAN内に未承認の端末（勝手に持ち込まれたWi-Fiルーターや、内部に侵入した攻撃者端末）が接続され、RAパケットを定期的に送信し始めたらどうなるでしょうか？
 クライアントPCは「IPv6のデフォルト経路ができた」と判断し、**意図しないIPv6経路が形成されることで、既存のIPv4ベースの監視・制御ポリシー（UTMやプロキシ、DNSフィルタ等）を迂回するリスク**が生じます（Rogue RA / SLAACによる意図しない経路奪取）。
 
-> ⚠️ **ネットワーク構成による影響度の違い**:  
-> - **L3スイッチでIPv6 ACLやフィルタがない場合**: IPv6通信がそのまま通過し、UTM等のIPv4ポリシーが迂回されるリスクが高まります。  
-> - **次世代FW (NGFW) やデュアルスタック機器でIPv6インスペクションが有効な場合**: 迂回されずに検知・遮断が可能です。  
-> 現場の境界防御・内部監視ポリシーが「IPv4専用」前提で運用されている場合こそ、このIPv6経路の発生が死角となります。
+⚠️ **ネットワーク構成による影響度の違い**:
+- **L3スイッチでIPv6 ACLやフィルタがない場合**: IPv6通信がそのまま通過し、UTM等のIPv4ポリシーが迂回されるリスクが高まります。
+- **次世代FW (NGFW) やデュアルスタック機器でIPv6インスペクションが有効な場合**: 迂回されずに検知・遮断が可能です。
+現場の境界防御・内部監視ポリシーが「IPv4専用」前提で運用されている場合こそ、このIPv6経路の発生が死角となります。
 
 本記事では、IPv4専用環境において意図しないIPv6通信を抑制するホストおよびネットワーク機器（ルーター／スイッチ）の設定と、LAN内に流れるRAパケットを検知する手法を解説します。
 
@@ -83,9 +83,9 @@ flowchart TD
 
 ---
 
-> 📌 **サーバー運用の役割分担（方針の整理）**:  
-> - **管理対象サーバー（一般の業務・インフラホスト）**: 不要な通信リスクを低減するため、カーネルレベルでIPv6スタックごと無効化（3.1項）  
-> - **監視専用サーバー**: パケット検知のためIPv6スタック自体は維持しつつ、自ホストがRAの影響を受けないよう `accept_ra = 0` / `autoconf = 0` を設定（3.3項）
+📌 **サーバー運用の役割分担（方針の整理）**:
+- **管理対象サーバー（一般の業務・インフラホスト）**: 不要な通信リスクを低減するため、カーネルレベルでIPv6スタックごと無効化（3.1項）
+- **監視専用サーバー**: パケット検知のためIPv6スタック自体は維持しつつ、自ホストがRAの影響を受けないよう `accept_ra = 0` / `autoconf = 0` を設定（3.3項）
 
 ---
 
@@ -132,8 +132,8 @@ sudo sysctl --system
 ip -6 addr show
 ```
 
-> ⚠️ **環境ごとの追加考慮事項**:  
-> UbuntuやRHEL等で `systemd-networkd`、`NetworkManager`、あるいは Docker や Kubernetes を利用している環境では、`sysctl` に加えて各ネットワークスタックやコンテナデーモン側でのIPv6無効化設定が必要になる場合があります。
+⚠️ **環境ごとの追加考慮事項**:
+UbuntuやRHEL等で `systemd-networkd`、`NetworkManager`、あるいは Docker や Kubernetes を利用している環境では、`sysctl` に加えて各ネットワークスタックやコンテナデーモン側でのIPv6無効化設定が必要になる場合があります。
 
 ---
 
@@ -290,119 +290,8 @@ cronを使用する場合は、定期実行ではなくサーバー起動時に�
 @reboot /usr/bin/<スクリプト> >> /var/log/detect_rogue_ra.log 2>&1 &
 ```
 
-> 💡 **実務運用のポイント**:  
-> 監視役となるLinuxマシンでは、パケットを受信するためにIPv6スタック自体は有効にしておきつつ、自身が偽RAに釣られて不正なデフォルトゲートウェイを設定されないよう、`net.ipv6.conf.all.accept_ra = 0` および `net.ipv6.conf.all.autoconf = 0` を設定しておくのが鉄則です。
-
----
-
-## 4. 実機（192.168.1.18）検証環境スペックと試験結果レポート
-
-本章では、実際にLAN内の実機サーバー（`192.168.1.18`）上で設定を適用し、各種コマンドおよびパケットキャプチャを実行して採取した実機検証結果を公開します。
-
-### 4.1 実機検証環境スペック
-| 項目 | 実機スペック / 構成詳細 | 技術的意味・検証上の役割 |
-| :--- | :--- | :--- |
-| **ハードウェア筐体** | **ASUSTeK VivoMini VC65-C1** (超小型 2L シャーシ) | 省電力・静音オンプレミス常駐検証サーバー |
-| **CPU** | **Intel(R) Core(TM) i5-8400T CPU @ 1.70GHz** | 6物理コア / 6スレッド (TDP 35W 省電力デスクトップ向け) |
-| **搭載メモリ (RAM)** | **DDR4 32 GB (実効 30 GiB, Swap 8.0 GiB)** | 大容量メモリ環境における安定運用 |
-| **ストレージ** | **KIOXIA EXCERIA SSD 960GB (SATA 6Gb/s)** | OS・各種システムログ配置先 |
-| **有線LAN (NIC)** | **Intel Gigabit Ethernet 1000BASE-T (`eno1`: 192.168.1.18/24)** | LAN内トラフィックの観測・キャプチャ対象NIC |
-| **MACアドレス** | `04:d4:c4:69:b3:ed` | 実機物理NICの固有ハードウェアアドレス |
-| **OS / カーネル** | **Ubuntu 26.04 LTS (Linux 7.0.0-43-generic x86_64)** | 最新カーネル環境でのsysctlネットワーク制御 |
-
----
-
-### 4.2 実機でのsysctl無効化設定と反映確認
-
-実機ホスト（`192.168.1.18`）において、`/etc/sysctl.d/99-disable-ipv6.conf` を配備し、全インターフェースでIPv6スタックを完全に遮断した状態の実測出力です。
-
-#### 実機設定ファイル（生出力）
-```bash
-$ cat /etc/sysctl.d/99-disable-ipv6.conf
-net.ipv6.conf.all.disable_ipv6 = 1
-net.ipv6.conf.default.disable_ipv6 = 1
-net.ipv6.conf.lo.disable_ipv6 = 1
-```
-
-#### 反映ステータスの実測確認
-```bash
-$ sysctl net.ipv6.conf.all.disable_ipv6 net.ipv6.conf.eno1.disable_ipv6 net.ipv6.conf.eno1.accept_ra
-net.ipv6.conf.all.disable_ipv6 = 1
-net.ipv6.conf.eno1.disable_ipv6 = 1
-net.ipv6.conf.eno1.accept_ra = 0
-
-$ ip -6 addr show eno1
-# (出力なし: リンクローカル fe80:: すら生成されない完全遮断状態)
-
-$ ip -6 route show
-# (出力なし: IPv6ルーティングテーブルは完全空)
-```
-
-有線NIC（`eno1`）に対して `inet 192.168.1.18/24` のIPv4のみがバインドされ、意図しないIPv6アドレスの自己生成（SLAAC）が完全に抑止されていることを実機で確認しました。
-
----
-
-### 4.3 実機LANにおけるICMPv6パケットキャプチャ試験
-
-実機（`192.168.1.18`）の物理NIC `eno1` において、LAN内に不要なICMPv6パケット（RAパケットやNeighbor Solicitation等）が送出・漏洩していないかを `tcpdump` を用いて実測キャプチャ検証しました。
-
-```bash
-$ sudo tcpdump -n -i eno1 'icmp6'
-tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
-listening on eno1, link-type EN10MB (Ethernet), snapshot length 262144 bytes
-
-0 packets captured
-0 packets received by filter
-0 packets dropped by kernel
-```
-* **検証結果**: 一定時間の観測においてICMPv6パケットの捕捉数は **0 packets（完全ゼロ）** であり、LAN内において不要なIPv6トラフィックや野良ルーター広告が流れていない正常状態であることを裏付けました。
-
----
-
-### 4.4 ステルス検知モードでのBSD Raw Socket動作試験
-
-本PoCの重要な技術的ポイントである、**「監視サーバー自身はIPv6アドレスを持たず（`disable_ipv6 = 1`）、攻撃者や不正ルーターからのIPv6攻撃対象にならないステルス状態を維持したまま、Raw SocketでLAN内の不正RAパケットを待ち受け・検知できるか？」** を実機上で検証しました。
-
-```python
-# 実機上でのRaw Socket作成テスト (CAP_NET_RAW権限下)
-import socket
-s = socket.socket(socket.AF_INET6, socket.SOCK_RAW, socket.IPPROTO_ICMPV6)
-print(s)
-# 実測出力: <socket.socket fd=3, family=10, type=3, proto=58, laddr=('::', 58, 0, 0)>
-```
-* **検証結果**: `net.ipv6.conf.all.disable_ipv6 = 1` によりホストのIPスタックが無効化されていても、Linuxカーネルはプロトコル番号 58（ICMPv6）のRaw Socket記述子を正常に生成可能であることが実証されました。これにより、**自機を踏み台にされるリスクをゼロに抑えた「完全ステルス型RA監視プローブ」** の成立が確認できました。
-
----
-
-## 5. 現場運用の泥臭い落とし穴とアンチパターン
-
-### 避けるべき現場アンチパターン
-1. **`net.ipv6.conf.lo.disable_ipv6 = 1` によるローカルサービス（localhost）の起動障害**:  
-   すべてのインターフェースでIPv6を一括無効化すると、一部のミドルウェア（Postfix, Nginx, Javaアプリケーションなど）が `localhost` を `::1` に名前解決しようとして `Cannot assign requested address` エラーで起動不能に陥るケースがあります。ローカルループバックで問題が発生する場合は、`net.ipv6.conf.lo.disable_ipv6 = 0` とし、物理NIC（`eno1` や `eth0`）のみを対象に無効化するのが安全です。
-2. **ホストで無効化してもDockerコンテナ内部でIPv6が有効なまま残る罠**:  
-   ホストOS側で `sysctl` を投入しても、Dockerデーモンが独自にブリッジネットワーク（`docker0`）を生成する際、コンテナ側のネットワーク名前空間でIPv6が中途半端に有効化される場合があります。コンテナ環境でも完全抑止する場合は、`/etc/docker/daemon.json` で明示的に制御するか、Compose側でネットワーク設定を調律してください。
-3. **民生用Wi-Fiルーターの「IPv6ブリッジ / パススルー」機能による意図しないRA流入**:  
-   「社内はIPv4専用」として構築していても、会議室や執務エリアに設置された家庭用・民生用Wi-Fiルーター（ブリッジモード動作）が、WAN側のプロバイダから流れてくるRAパケットをそのままLAN内に垂れ流してしまう事故が多発します。本稿の検知スクリプトを常駐させておくことで、こうした「勝手に流入したRA」を即座にアラート捕捉できます。
-
----
-
-## 6. トラブルシューティングガイド
-
-| 障害事象・エラーメッセージ | 想定原因 | 一次切り分け・復旧コマンド |
-| :--- | :--- | :--- |
-| **`PermissionError: [Errno 1] Operation not permitted`** | Raw Socketの作成に必要な特権（root または `CAP_NET_RAW`）が不足している | `sudo` で実行するか、Pythonバイナリ／スクリプトに `sudo setcap cap_net_raw+ep $(which python3)` を付与。 |
-| **`OSError: [Errno 97] Address family not supported by protocol`** | カーネルモジュール `ipv6` そのものがブラックリスト登録・アンロードされている | カーネル自体からIPv6が除外されている場合はRaw Socketも作れません。sysctlによる無効化（モジュールはロード状態を維持）へ切り替え。 |
-| **特定のWebサーバーやDBが `localhost` 接続でハング・エラーになる** | `/etc/hosts` に `::1 localhost` が残っており、IPv6無効化後に名前解決でエラー発生 | `/etc/hosts` を確認し、`::1` 行をコメントアウトして `127.0.0.1 localhost` のみを有効化。 |
-
----
-
-## 7. 実務FAQ（よくある質問と回答）
-
-**Q1: IPv6を完全無効化するのと、RAだけを拒否する（`accept_ra = 0`）のはどちらが推奨されますか？**  
-**A1**: 将来的にIPv6への移行計画があるLANや、社内DNS/Active DirectoryでIPv6リンクローカルを利用している環境では、`net.ipv6.conf.all.accept_ra = 0` および `autoconf = 0`（意図しない経路奪取のみを抑止）が推奨されます。一方、UTMや監視が完全IPv4専用でIPv6通信の一切を許可しないポリシーであれば、`disable_ipv6 = 1` による完全遮断が最も確実です。
-
-**Q2: 監視スクリプトは常時どれくらいのCPU・メモリを消費しますか？**  
-**A2**: 本スクリプトはRaw Socketのブロッキング待機（`sock.recvfrom`）でパケット着信時のみCPUを消費するため、アイドル時のCPU利用率は **0.0%**、メモリ消費量もPython標準ランタイムのわずか **15〜20MB程度** です。小型ミニPCや監視サーバーの片隅で常時稼働させても負荷影響は皆無です。
+💡 **実務運用のポイント**:
+監視役となるLinuxマシンでは、パケットを受信するためにIPv6スタック自体は有効にしておきつつ、自身が偽RAに釣られて不正なデフォルトゲートウェイを設定されないよう、`net.ipv6.conf.all.accept_ra = 0` および `net.ipv6.conf.all.autoconf = 0` を設定しておくのが鉄則です。
 
 ---
 
